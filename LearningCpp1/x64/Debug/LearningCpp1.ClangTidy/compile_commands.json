@@ -1,0 +1,12 @@
+[
+  {
+    "directory": "C:\\Users\\mcaglar\\source\\repos\\LearningCpp1\\LearningCpp1",
+    "command": "\"C:\\Windows\\system32\\CL.exe\" \/c \/ZI \/JMC \/nologo \/W3 \/WX- \/diagnostics:column \/Od \/D CODE_ANALYSIS \/D _DEBUG \/D _CONSOLE \/D _UNICODE \/D UNICODE \/EHsc \/RTC1 \/MDd \/GS \/fp:precise \/std:c++latest \/permissive- \/Fo\"x64\\Debug\\\\\" \/Gd \/TP   \"C:\\Users\\mcaglar\\source\\repos\\LearningCpp1\\LearningCpp1\\LearningCpp1.cpp\"",
+    "file": "C:\\Users\\mcaglar\\source\\repos\\LearningCpp1\\LearningCpp1\\LearningCpp1.cpp"
+  },
+  {
+    "directory": "C:\\Users\\mcaglar\\source\\repos\\LearningCpp1\\LearningCpp1",
+    "command": "\"C:\\Windows\\system32\\CL.exe\" \/c \/ZI \/JMC \/nologo \/W3 \/WX- \/diagnostics:column \/Od \/D CODE_ANALYSIS \/D _DEBUG \/D _CONSOLE \/D _UNICODE \/D UNICODE \/EHsc \/RTC1 \/MDd \/GS \/fp:precise \/std:c++latest \/permissive- \/Fo\"x64\\Debug\\\\\" \/Gd \/TP   \"C:\\Users\\mcaglar\\source\\repos\\LearningCpp1\\LearningCpp1\\MyMath.cpp\"",
+    "file": "C:\\Users\\mcaglar\\source\\repos\\LearningCpp1\\LearningCpp1\\MyMath.cpp"
+  }
+]

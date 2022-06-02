@@ -1,0 +1,16 @@
+warning: argument unused during compilation: '/ZI' [clang-diagnostic-unused-command-line-argument]
+C:\Users\mcaglar\source\repos\LearningCpp1\LearningCpp1\LearningCpp1.cpp:25:42: warning: illegal character encoding in string literal [clang-diagnostic-invalid-source-encoding]
+        std::cout << "Hello World!\n Mustafa Sel<E7>uk";
+                                                ^~~~
+C:\Users\mcaglar\source\repos\LearningCpp1\LearningCpp1\LearningCpp1.cpp:181:33: warning: illegal character encoding in string literal [clang-diagnostic-invalid-source-encoding]
+        std::cout << "\nc++ ve ++c fark<FD>\n";
+                                       ^~~~
+C:\Users\mcaglar\source\repos\LearningCpp1\LearningCpp1\LearningCpp1.cpp:201:7: warning: Value stored to 'result' during its initialization is never read [clang-analyzer-deadcode.DeadStores]
+        auto result = Add(5, 3);
+             ^~~~~~   ~~~~~~~~~
+C:\Users\mcaglar\source\repos\LearningCpp1\LearningCpp1\LearningCpp1.cpp:201:7: note: Value stored to 'result' during its initialization is never read
+        auto result = Add(5, 3);
+             ^~~~~~   ~~~~~~~~~
+C:\Users\mcaglar\source\repos\LearningCpp1\LearningCpp1\LearningCpp1.cpp:201:7: warning: unused variable 'result' [clang-diagnostic-unused-variable]
+        auto result = Add(5, 3);
+             ^
