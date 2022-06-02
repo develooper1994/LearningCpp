@@ -103,7 +103,6 @@ void LoopFor() {
 		std::cout << a.at(i) << "\n";
 	}
 }
-
 void loopWhile() {
 	std::array<std::array<int, 6>, 6> myarray;
 	for (size_t i = 0; i < myarray.size(); i++)
@@ -165,6 +164,13 @@ void loopWhile() {
 
 	std::cout << "trace= " << trace << "||" << "normal= " << normal << "\n";
 }
+void fibonacciExercise()
+{
+	// call function from another file
+	int n = 10;
+	fibonacci_series(n);
+	fib_power(n);
+}
 
 void Operators()
 {
@@ -197,8 +203,7 @@ int main()
 	// LoopFor();
 	// loopWhile();
 	// Operators();
-
-	auto result = Add(5, 3);
+	fibonacciExercise();
 
 
 	return 0;
@@ -230,7 +235,7 @@ int main()
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
+// Tips for Getting Started:
 //   1. Use the Solution Explorer window to add/manage files
 //   2. Use the Team Explorer window to connect to source control
 //   3. Use the Output window to see build output and other messages
