@@ -12,9 +12,8 @@
 #include <array>
 #include <vector>
 //math
-#include <math.h>
+#include <cmath>
 #include <complex>
-// My Headers
-#include "UtilityHeader.h"
-#include "MyMath.h"
-#include "EducationFunctions.h"
+// Lesson Headers
+#include "LanguageBasicsHeaders.h"
+#include "MemoryHeaders.h"

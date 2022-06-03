@@ -523,3 +523,83 @@ void FunctionPointer() {
 	pfn(5, '*');
 	cout << "End of FunctionPointer\n";
 }
+
+// a namespace definition must appear either at file scope or immediately within another namespace definition
+
+namespace Astronomy {
+	float Calculation(float x, float y)
+	{
+		return (x + y) / 2;
+	}
+}
+namespace Chemistry {
+	float Calculation(float x, float y)
+	{
+		return x * y;
+	}
+}
+namespace Sorting {
+	void quicksort() {}
+	void bubblesort() {}
+	void mergesort() {}
+	namespace Comparision {
+		void Less() {}
+		void Greater() {}
+	}
+}
+namespace {
+	// If you want something internal use like this. It is similar to C# seal classes
+	// It is internal function. It cannot access from another file. It is only visible in "EducationFunction.h"
+	void Internal() {}
+}
+void NamespaceCpp()
+{
+	auto x = 3.141f, y = 2.828f;
+	int res1 = Astronomy::Calculation(x, y);
+	int res2 = Chemistry::Calculation(x, y);
+	std::cout << "Astronomy::Calculation(x, y): " << res1 << '\n';
+	std::cout << "Chemistry::Calculation(x, y): " << res2 << '\n';
+	using Astronomy::Calculation;
+	res1 = Calculation(x, y);
+	res2 = Chemistry::Calculation(x, y);
+	std::cout << "Astronomy::Calculation(x, y): " << res1 << '\n';
+	std::cout << "Chemistry::Calculation(x, y): " << res2 << '\n';
+
+	/*
+	// It causes conflicts.	Which namespace? Astronomy or Chemistry?
+	using Chemistry::Calculation;
+	res2 = Calculation(x, y); // !!! ERROR !!!*/
+
+	// full qualified name for less and greater functions
+	Sorting::Comparision::Less();
+	Sorting::Comparision::Greater();
+
+	// nameless namespace functions can be used without declaring namespace
+	Internal();
+}
+
+
+void LanguageBasics_Main() {
+	// helloWorld();
+	// comments();
+	// ascii();
+	// BasicTypes();
+	// OutputInput();
+
+	//loops
+	// LoopFor();
+	// loopRangeBased();
+	// loopWhile();
+	// fibonacciExercise();
+
+	//Memory
+	// Initializations();
+	// pointers();
+	// references();
+	// PTRvsREF();
+	// constants();
+	// autoKeyWord();
+
+	// Operators();
+	// FunctionPointer();
+}

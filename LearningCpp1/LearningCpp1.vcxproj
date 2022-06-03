@@ -147,7 +147,10 @@
   <ItemGroup>
     <ClInclude Include="AllHeadersInOnePlace.h" />
     <ClInclude Include="AllMacrosInOnePlace.h" />
-    <ClInclude Include="EducationFunctions.h" />
+    <ClInclude Include="LanguageBasics.h" />
+    <ClInclude Include="LanguageBasicsHeaders.h" />
+    <ClInclude Include="Memory.h" />
+    <ClInclude Include="MemoryHeaders.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="UtilityHeader.h" />
   </ItemGroup>

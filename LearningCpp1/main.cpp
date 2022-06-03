@@ -14,28 +14,9 @@ r-value = right value. numbers, strings
 int main()
 {
 	settings();
-	// helloWorld();
-	// comments();
-	// ascii();
-	// BasicTypes();
-	// OutputInput();
+	LanguageBasics_Main();
+	Memory_Main();
 
-	//loops
-	// LoopFor();
-	// loopRangeBased();
-	// loopWhile();
-	// fibonacciExercise();
-
-	//Memory
-	// Initializations();
-	// pointers();
-	// references();
-	// PTRvsREF();
-	// constants();
-	// autoKeyWord();
-
-	// Operators();
-	FunctionPointer();
 	return 0;
 }
 

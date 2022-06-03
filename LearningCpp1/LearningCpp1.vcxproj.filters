@@ -13,30 +13,60 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Lessons">
+      <UniqueIdentifier>{059e6675-08e8-4ba3-91f2-d82cbff5605e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\LanguageBasics">
+      <UniqueIdentifier>{1eb4f125-82b5-4ce9-b0fe-cab436116515}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\LanguageBasics\Header Files">
+      <UniqueIdentifier>{89ac5398-d07c-4b39-8214-fed6a8311d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\LanguageBasics\Source Files">
+      <UniqueIdentifier>{86f2a56d-50db-4045-ac57-cf67c89bf00f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\Memory">
+      <UniqueIdentifier>{e3c05441-0bf3-4df2-9819-29f6a9f7d192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\Memory\Header Files">
+      <UniqueIdentifier>{9b266e2c-9f1f-44d1-ac2b-bc82e30ddc74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\Memory\Source Files">
+      <UniqueIdentifier>{a12608f0-db2f-4831-b0ff-cb677a7833d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MyMath.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Lessons\LanguageBasics\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MyMath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AllHeadersInOnePlace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AllMacrosInOnePlace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EducationFunctions.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="UtilityHeader.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyMath.h">
+      <Filter>Lessons\LanguageBasics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LanguageBasics.h">
+      <Filter>Lessons\LanguageBasics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LanguageBasicsHeaders.h">
+      <Filter>Lessons\LanguageBasics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryHeaders.h">
+      <Filter>Lessons\Memory\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory.h">
+      <Filter>Lessons\Memory\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
