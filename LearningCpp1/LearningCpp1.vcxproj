@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="AllHeadersInOnePlace.h" />
     <ClInclude Include="AllMacrosInOnePlace.h" />
+    <ClInclude Include="EducationFunctions.h" />
     <ClInclude Include="MyMath.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -21,7 +21,7 @@ Using extern C on a C++ functions allows us to call that function from C or othe
 //	return x + y;
 //}
 extern "C" {
-	int add(int x, int y)
+	int add(int x = 0, int y = 0)
 	{
 		return x + y;
 	}
