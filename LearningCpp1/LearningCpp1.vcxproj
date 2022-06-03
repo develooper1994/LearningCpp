@@ -149,6 +149,7 @@
     <ClInclude Include="AllMacrosInOnePlace.h" />
     <ClInclude Include="EducationFunctions.h" />
     <ClInclude Include="MyMath.h" />
+    <ClInclude Include="UtilityHeader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

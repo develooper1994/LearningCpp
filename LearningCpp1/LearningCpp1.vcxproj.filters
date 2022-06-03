@@ -35,5 +35,8 @@
     <ClInclude Include="EducationFunctions.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="UtilityHeader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,24 +1,6 @@
 #pragma once
 // I can write functions to header file but it is not recommended
 
-/*
-Inline functions are a suggestion for the compiler.
-Compiler can make functions inline automatically in "RELEASE" mode.
-It is kind a micro optimization.
-Inline function is replacement of macro function
-Inline eliminates function call overhead by copying function body into another function.
-It removes function from assembly so that it makes hard to debug.
-It may cause some linker errors and increases program size.
-*/
-// #define square(x) x*x // it is a macro function. DON'T USE IT.
-inline int square(int x)
-{
-	return x * x;
-}
-inline void settings() {
-	std::srand(std::time(nullptr));
-}
-
 void helloWorld() {
 	std::cout << "Hello World!\n Mustafa Selcuk";
 }
@@ -465,7 +447,7 @@ void constants() {
 			std::cout << "print function= " << *ptr << '\n';
 			*ptr = 56; // accidental change
 
-		}; // lambda(anonymous-small-inner) function
+		}; // lambda(anonymous-small-inner) function, function pointer
 		printPTR(&x);
 		cout << "main->x= " << x << '\n';
 
@@ -474,7 +456,7 @@ void constants() {
 		{
 			std::cout << "print function= " << ptr << '\n';
 			// ptr = 984653; // prevents accidental change
-		};
+		};  // lambda(anonymous-small-inner) function, function pointer
 		printREF(x); // pssing variable(lvalue) as referance
 		cout << "main->x= " << x << '\n';
 	}
@@ -524,4 +506,20 @@ void autoKeyWord() {
 	auto val{ 1 };
 	// auto list{ 1,2,3,4, }; // !!! ERROR !!! // Requires '=' operator
 	auto list = { 1,2,3,4, };  // std::initializer_list<int>
+}
+
+// Function Pointer
+void FunctionPointer() {
+	// It is an old c language function. Location of it doesn't matter. It will be executed at the exit. It is guarantied.
+	// atexit has function pointer inside.
+	atexit(EndMessage);
+	using namespace std;
+	cout << "function it self\n";
+	Print(5, '#');
+	void (*pfn) (int, char) = &Print;
+	cout << "function pointer\n";
+	(*pfn)(5, '\'');
+	// OR
+	pfn(5, '*');
+	cout << "End of FunctionPointer\n";
 }

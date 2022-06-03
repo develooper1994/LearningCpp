@@ -20,21 +20,22 @@ int main()
 	// BasicTypes();
 	// OutputInput();
 
-	// loops
+	//loops
 	// LoopFor();
-	loopRangeBased();
+	// loopRangeBased();
 	// loopWhile();
 	// fibonacciExercise();
 
-	// Memory
-	//Initializations();
-	//pointers();
-	//references();
-	//PTRvsREF();
-	//constants();
-	//autoKeyWord();
+	//Memory
+	// Initializations();
+	// pointers();
+	// references();
+	// PTRvsREF();
+	// constants();
+	// autoKeyWord();
 
 	// Operators();
+	FunctionPointer();
 	return 0;
 }
 

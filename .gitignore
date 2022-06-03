@@ -31,3 +31,5 @@
 *.out
 *.app
 /.vs
+/x64/Debug
+/LearningCpp1/x64/Debug
