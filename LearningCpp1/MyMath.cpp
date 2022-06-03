@@ -1,8 +1,46 @@
 #include <iostream>
 #include <vector>
-int add(int x, int y)
+/*
+<h1> Function Overloading < / h1>
+1.Confusion resolved in ***compile-time*** with "Name Mangling"
+2."Name Mangling"= Compiler generates unique names for functions.
+This allows linker to link the call with the correct overload function.
+It varies from compiler to compiler
+3."Name Mangling" suppressed with "extern "C"" on global functions and variables.
+Using extern C on a C++ functions allows us to call that function from C or other languages.
+
+***
+* "extern "C"" must be applied on the definition and declaration.
+* If you just apply "extern "C"" onto declaration but not onto implementation, it compiles but throws a linker error because function name is mangled and linked can't find it.
+***
+
+*/
+
+//extern "C" int add(int x, int y)
+//{
+//	return x + y;
+//}
+extern "C" {
+	int add(int x, int y)
+	{
+		return x + y;
+	}
+	int substract(int x, int y)
+	{
+		return x - y;
+	}
+}
+int add(const int& x, const int& y)
 {
 	return x + y;
+}
+float add(float x, float y)
+{
+	return x + y;
+}
+float add(float x, int y)
+{
+	return float(x + y);
 }
 
 int factorial(uint32_t x)

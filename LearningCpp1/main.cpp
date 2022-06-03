@@ -101,19 +101,21 @@ void LoopFor() {
 }
 void loopRangeBased() {
 	using namespace std;
+	int arr[]{ 10,20,30,40,50 };
 	{
-		int arr[]{ 10,20,30,40,50 };
 		cout << "basic for loop \n";
 		for (size_t i = 0; i < 5; i++)
 		{
 			cout << arr[i] << '\n';
 		}
 		cout << "range based for loop 1 \n";
+		// l-value(variable) range based loop
 		for (const auto& i : arr)	 // to prevent copy and changes of value I am using const reference
 		{
 			// i = 3; // const prevents changes.
 			cout << i << '\n';
 		}
+		// r-value(value) range based loop
 		cout << "range based for loop 2 \n";
 		for (const auto& i : { 10,20,30,40,50 })	 // to prevent copy and changes of value I am using const reference
 		{
@@ -123,30 +125,30 @@ void loopRangeBased() {
 	}
 
 	{
-		// How range based for loop works internally?
+		cout << "\nHow range based for loop works internally ?\n";
+		cout << "How pointers works internally ?\n";
+		// begin and end functions are defined inside all the container header files
+		// class should provide '!=' and '==' operators. And also class must provide iterators.
+		// be carriful sometimes begin and end are not the same.
 
+		int* beginArr = std::begin(arr); // &arr[0];
+		int* endArr = std::end(arr); // &arr[5];
+
+		// double reference(&&) means = convert to r-value(not variable, it is the value).
+		auto&& range = arr;
+		int* begin = std::begin(range);
+		int* end = std::end(range);
+		while (begin != end)
+		{
+			cout << *begin << '\n';
+			++begin;
+		}
+		// OR
+		for (; begin != end; ++begin)
+		{
+			auto temp = *begin;
+		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 void loopWhile() {
