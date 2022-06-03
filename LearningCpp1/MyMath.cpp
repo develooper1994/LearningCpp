@@ -5,7 +5,7 @@ int add(int x, int y)
 	return x + y;
 }
 
-int factorial(int x)
+int factorial(uint32_t x)
 {
 	if (x < 0)
 	{
@@ -20,7 +20,7 @@ int factorial(int x)
 	return temp;
 }
 
-std::vector<int> fibonacci_series(int n)
+std::vector<int> fibonacci_series(uint32_t n)
 {
 	// 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ……..
 	int temp1 = 0, temp2 = 1, next = 0;

@@ -144,6 +144,8 @@
     <ClCompile Include="MyMath.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AllHeadersInOnePlace.h" />
+    <ClInclude Include="AllMacrosInOnePlace.h" />
     <ClInclude Include="MyMath.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
