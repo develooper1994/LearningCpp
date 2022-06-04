@@ -7,7 +7,8 @@
 #include <inttypes.h>
 
 #include <ctime>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 //containers
 #include <array>
 #include <vector>
