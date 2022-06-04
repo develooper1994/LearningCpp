@@ -72,6 +72,12 @@
     <ClCompile Include="ClassesObjects.cpp">
       <Filter>Lessons\Classes and Objects\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Car.cpp">
+      <Filter>Lessons\Classes and Objects\Classes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawLine.cpp">
+      <Filter>Lessons\Classes and Objects\Classes\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -102,6 +108,12 @@
       <Filter>Lessons\Classes and Objects\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AllClassHeaders.h">
+      <Filter>Lessons\Classes and Objects\Classes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Car.h">
+      <Filter>Lessons\Classes and Objects\Classes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawLine.h">
       <Filter>Lessons\Classes and Objects\Classes\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
