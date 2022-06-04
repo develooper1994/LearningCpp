@@ -16,15 +16,6 @@
     <Filter Include="Lessons">
       <UniqueIdentifier>{059e6675-08e8-4ba3-91f2-d82cbff5605e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lessons\LanguageBasics">
-      <UniqueIdentifier>{1eb4f125-82b5-4ce9-b0fe-cab436116515}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lessons\LanguageBasics\Header Files">
-      <UniqueIdentifier>{89ac5398-d07c-4b39-8214-fed6a8311d4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lessons\LanguageBasics\Source Files">
-      <UniqueIdentifier>{86f2a56d-50db-4045-ac57-cf67c89bf00f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Lessons\Memory">
       <UniqueIdentifier>{e3c05441-0bf3-4df2-9819-29f6a9f7d192}</UniqueIdentifier>
     </Filter>
@@ -32,7 +23,34 @@
       <UniqueIdentifier>{9b266e2c-9f1f-44d1-ac2b-bc82e30ddc74}</UniqueIdentifier>
     </Filter>
     <Filter Include="Lessons\Memory\Source Files">
-      <UniqueIdentifier>{a12608f0-db2f-4831-b0ff-cb677a7833d4}</UniqueIdentifier>
+      <UniqueIdentifier>{6b7d1799-65c8-407a-8d43-9f6f9142755f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\Classes and Objects">
+      <UniqueIdentifier>{06a6afb0-c79f-49c9-8f20-d7ba1b0651d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\Basics of C++ Language">
+      <UniqueIdentifier>{1eb4f125-82b5-4ce9-b0fe-cab436116515}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\Basics of C++ Language\Header Files">
+      <UniqueIdentifier>{89ac5398-d07c-4b39-8214-fed6a8311d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\Basics of C++ Language\Source Files">
+      <UniqueIdentifier>{86f2a56d-50db-4045-ac57-cf67c89bf00f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\Classes and Objects\Source Files">
+      <UniqueIdentifier>{d8157144-561d-4a87-8843-b7717d7e99a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\Classes and Objects\Classes">
+      <UniqueIdentifier>{576299aa-5ca7-4155-9075-5e85999803e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\Classes and Objects\Header Files">
+      <UniqueIdentifier>{0b057a7a-b5e8-464a-803d-21e4b55a48c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\Classes and Objects\Classes\Header Files">
+      <UniqueIdentifier>{b2a81e1d-6136-4ad7-9459-3cf8de1869dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\Classes and Objects\Classes\Source Files">
+      <UniqueIdentifier>{467b2282-564e-4214-9227-412a6bbf3298}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,11 +58,23 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MyMath.cpp">
-      <Filter>Lessons\LanguageBasics\Source Files</Filter>
+      <Filter>Lessons\Basics of C++ Language\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory.cpp">
+      <Filter>Lessons\Memory\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LanguageBasics.cpp">
+      <Filter>Lessons\Basics of C++ Language\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilityHeader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassesObjects.cpp">
+      <Filter>Lessons\Classes and Objects\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AllHeadersInOnePlace.h">
+    <ClInclude Include="main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AllMacrosInOnePlace.h">
@@ -54,19 +84,25 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MyMath.h">
-      <Filter>Lessons\LanguageBasics\Header Files</Filter>
+      <Filter>Lessons\Basics of C++ Language\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LanguageBasics.h">
-      <Filter>Lessons\LanguageBasics\Header Files</Filter>
+      <Filter>Lessons\Basics of C++ Language\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LanguageBasicsHeaders.h">
-      <Filter>Lessons\LanguageBasics\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MemoryHeaders.h">
-      <Filter>Lessons\Memory\Header Files</Filter>
+      <Filter>Lessons\Basics of C++ Language\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Memory.h">
       <Filter>Lessons\Memory\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AllStandartHeaders.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassesObjects.h">
+      <Filter>Lessons\Classes and Objects\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AllClassHeaders.h">
+      <Filter>Lessons\Classes and Objects\Classes\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

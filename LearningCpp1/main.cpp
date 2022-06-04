@@ -1,21 +1,16 @@
-// LearningCpp1.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+#include "main.h"
 
-/*
-l-value = left value. VARIABLE
-	int x =3;
-	int& xref = x;
-r-value = right value. numbers, strings
 
-*/
-
-#include "AllHeadersInOnePlace.h"
 
 int main()
 {
 	settings();
-	LanguageBasics_Main();
-	Memory_Main();
+
+	// lesson main functions.
+
+	//LanguageBasics_Main();
+	//Memory_Main();
+	ClassesObjects_Main();
 
 	return 0;
 }

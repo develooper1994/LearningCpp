@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 //extern "C" int add(int, int);
 
 extern "C"
@@ -8,7 +9,7 @@ extern "C"
 }
 float add(float, float);
 int factorial(uint32_t);
-std::vector<int> fibonacci_series(uint32_t);
+std::vector<int> fibonacci_series(uint32_t n);
 int fib_power(int);
 
 

@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <string>
 #include <bitset>
@@ -15,6 +16,3 @@
 //math
 #include <cmath>
 #include <complex>
-// Lesson Headers
-#include "LanguageBasicsHeaders.h"
-#include "MemoryHeaders.h"

@@ -141,16 +141,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ClassesObjects.cpp" />
+    <ClCompile Include="LanguageBasics.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Memory.cpp" />
     <ClCompile Include="MyMath.cpp" />
+    <ClCompile Include="UtilityHeader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AllHeadersInOnePlace.h" />
+    <ClInclude Include="AllClassHeaders.h" />
+    <ClInclude Include="ClassesObjects.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="AllMacrosInOnePlace.h" />
+    <ClInclude Include="AllStandartHeaders.h" />
     <ClInclude Include="LanguageBasics.h" />
     <ClInclude Include="LanguageBasicsHeaders.h" />
     <ClInclude Include="Memory.h" />
-    <ClInclude Include="MemoryHeaders.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="UtilityHeader.h" />
   </ItemGroup>
