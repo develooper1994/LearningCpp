@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Car.h"
 #include "DrawLine.h"
+#include "Integer.h"
 /*****************************************************************//**
  * \file   ClassesObjects.cpp
  * \brief  /
@@ -33,6 +34,7 @@
 - Constructor types: Copy(swallow|deep) and Move
 * All constructors should provided in most cases!
 * Move constructor = swaps pointer addresses. (really fast)(eliminates and also leads to bugs.)
+To perform deep copy create a new slot(new <type>(data)).
 * Swallow copy constructor = only copy the address of variable (fast)(leads to bugs.)
 * Deep copy constructor = copy the entire data (slow)(prevents some bugs.)
 
@@ -115,12 +117,19 @@ void BeautifulLines()
 
 }
 
+void IntegerClass() {
+	using namespace std;
+	Integer i(5);
+	// I am now coping pointers inside of the objects. It is shallow copy(coping only the address of pointer not data). !!! Program will crash !!!
+	Integer i2(i); // copy constructor.
+	cout << i.GetValue() << '\n';
+}
 
 
 
 void ClassesObjects_Main()
 {
-	FirstClassCar();
+	//FirstClassCar();
 	//BeautifulLines();
-
+	IntegerClass();
 }

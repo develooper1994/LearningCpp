@@ -144,6 +144,7 @@
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="ClassesObjects.cpp" />
     <ClCompile Include="DrawLine.cpp" />
+    <ClCompile Include="Integer.cpp" />
     <ClCompile Include="LanguageBasics.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Memory.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Car.h" />
     <ClInclude Include="ClassesObjects.h" />
     <ClInclude Include="DrawLine.h" />
+    <ClInclude Include="Integer.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="AllMacrosInOnePlace.h" />
     <ClInclude Include="AllStandartHeaders.h" />
