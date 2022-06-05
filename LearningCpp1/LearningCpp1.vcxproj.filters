@@ -16,41 +16,59 @@
     <Filter Include="Lessons">
       <UniqueIdentifier>{059e6675-08e8-4ba3-91f2-d82cbff5605e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lessons\Memory">
-      <UniqueIdentifier>{e3c05441-0bf3-4df2-9819-29f6a9f7d192}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lessons\Memory\Header Files">
-      <UniqueIdentifier>{9b266e2c-9f1f-44d1-ac2b-bc82e30ddc74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lessons\Memory\Source Files">
-      <UniqueIdentifier>{6b7d1799-65c8-407a-8d43-9f6f9142755f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lessons\Classes and Objects">
-      <UniqueIdentifier>{06a6afb0-c79f-49c9-8f20-d7ba1b0651d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lessons\Basics of C++ Language">
+    <Filter Include="Lessons\1%29 Basics of C++ Language">
       <UniqueIdentifier>{1eb4f125-82b5-4ce9-b0fe-cab436116515}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lessons\Basics of C++ Language\Header Files">
+    <Filter Include="Lessons\1%29 Basics of C++ Language\Header Files">
       <UniqueIdentifier>{89ac5398-d07c-4b39-8214-fed6a8311d4f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lessons\Basics of C++ Language\Source Files">
+    <Filter Include="Lessons\1%29 Basics of C++ Language\Source Files">
       <UniqueIdentifier>{86f2a56d-50db-4045-ac57-cf67c89bf00f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lessons\Classes and Objects\Source Files">
+    <Filter Include="Lessons\2%29 Memory">
+      <UniqueIdentifier>{e3c05441-0bf3-4df2-9819-29f6a9f7d192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\2%29 Memory\Header Files">
+      <UniqueIdentifier>{9b266e2c-9f1f-44d1-ac2b-bc82e30ddc74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\2%29 Memory\Source Files">
+      <UniqueIdentifier>{6b7d1799-65c8-407a-8d43-9f6f9142755f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\3%29 Classes and Objects">
+      <UniqueIdentifier>{06a6afb0-c79f-49c9-8f20-d7ba1b0651d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\3%29 Classes and Objects\Source Files">
       <UniqueIdentifier>{d8157144-561d-4a87-8843-b7717d7e99a0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lessons\Classes and Objects\Classes">
+    <Filter Include="Lessons\3%29 Classes and Objects\Classes">
       <UniqueIdentifier>{576299aa-5ca7-4155-9075-5e85999803e5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lessons\Classes and Objects\Header Files">
-      <UniqueIdentifier>{0b057a7a-b5e8-464a-803d-21e4b55a48c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lessons\Classes and Objects\Classes\Header Files">
+    <Filter Include="Lessons\3%29 Classes and Objects\Classes\Header Files">
       <UniqueIdentifier>{b2a81e1d-6136-4ad7-9459-3cf8de1869dc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lessons\Classes and Objects\Classes\Source Files">
+    <Filter Include="Lessons\3%29 Classes and Objects\Classes\Source Files">
       <UniqueIdentifier>{467b2282-564e-4214-9227-412a6bbf3298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\3%29 Classes and Objects\Header Files">
+      <UniqueIdentifier>{0b057a7a-b5e8-464a-803d-21e4b55a48c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\4%29 L_R_Values.h">
+      <UniqueIdentifier>{e2265da0-37c1-4074-a905-e6020573da54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\4%29 L_R_Values.h\Header Files">
+      <UniqueIdentifier>{9faca170-80d1-4307-ad5b-7e076983c1dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\4%29 L_R_Values.h\Source Files">
+      <UniqueIdentifier>{4bdff84a-02a5-4632-ae87-f8533f489843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\4%29 L_R_Values.h\Classes">
+      <UniqueIdentifier>{3440c681-74f7-49d8-a849-81297b665393}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\4%29 L_R_Values.h\Classes\Header Files">
+      <UniqueIdentifier>{52645999-481d-4bc4-b5bf-78630fba9297}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\4%29 L_R_Values.h\Classes\Source Files">
+      <UniqueIdentifier>{73693404-9882-4cee-a4dc-dd062a7544a9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,28 +76,34 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MyMath.cpp">
-      <Filter>Lessons\Basics of C++ Language\Source Files</Filter>
+      <Filter>Lessons\1%29 Basics of C++ Language\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Memory.cpp">
-      <Filter>Lessons\Memory\Source Files</Filter>
+      <Filter>Lessons\2%29 Memory\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LanguageBasics.cpp">
-      <Filter>Lessons\Basics of C++ Language\Source Files</Filter>
+      <Filter>Lessons\1%29 Basics of C++ Language\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UtilityHeader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ClassesObjects.cpp">
-      <Filter>Lessons\Classes and Objects\Source Files</Filter>
+      <Filter>Lessons\3%29 Classes and Objects\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Car.cpp">
-      <Filter>Lessons\Classes and Objects\Classes\Source Files</Filter>
+      <Filter>Lessons\3%29 Classes and Objects\Classes\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DrawLine.cpp">
-      <Filter>Lessons\Classes and Objects\Classes\Source Files</Filter>
+      <Filter>Lessons\3%29 Classes and Objects\Classes\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Integer.cpp">
-      <Filter>Lessons\Classes and Objects\Classes\Source Files</Filter>
+      <Filter>Lessons\3%29 Classes and Objects\Classes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Buss.cpp">
+      <Filter>Lessons\3%29 Classes and Objects\Classes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="L_R_Values.cpp">
+      <Filter>Lessons\4%29 L_R_Values.h\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,34 +117,43 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MyMath.h">
-      <Filter>Lessons\Basics of C++ Language\Header Files</Filter>
+      <Filter>Lessons\1%29 Basics of C++ Language\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LanguageBasics.h">
-      <Filter>Lessons\Basics of C++ Language\Header Files</Filter>
+      <Filter>Lessons\1%29 Basics of C++ Language\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LanguageBasicsHeaders.h">
-      <Filter>Lessons\Basics of C++ Language\Header Files</Filter>
+      <Filter>Lessons\1%29 Basics of C++ Language\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Memory.h">
-      <Filter>Lessons\Memory\Header Files</Filter>
+      <Filter>Lessons\2%29 Memory\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AllStandartHeaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ClassesObjects.h">
-      <Filter>Lessons\Classes and Objects\Header Files</Filter>
+      <Filter>Lessons\3%29 Classes and Objects\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AllClassHeaders.h">
-      <Filter>Lessons\Classes and Objects\Classes\Header Files</Filter>
+      <Filter>Lessons\3%29 Classes and Objects\Classes\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Car.h">
-      <Filter>Lessons\Classes and Objects\Classes\Header Files</Filter>
+      <Filter>Lessons\3%29 Classes and Objects\Classes\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DrawLine.h">
-      <Filter>Lessons\Classes and Objects\Classes\Header Files</Filter>
+      <Filter>Lessons\3%29 Classes and Objects\Classes\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Integer.h">
-      <Filter>Lessons\Classes and Objects\Classes\Header Files</Filter>
+      <Filter>Lessons\3%29 Classes and Objects\Classes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Buss.h">
+      <Filter>Lessons\3%29 Classes and Objects\Classes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IntegerCpp11.h">
+      <Filter>Lessons\3%29 Classes and Objects\Classes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="L_R_Values.h">
+      <Filter>Lessons\4%29 L_R_Values.h\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

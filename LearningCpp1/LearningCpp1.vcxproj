@@ -141,11 +141,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Buss.cpp" />
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="ClassesObjects.cpp" />
     <ClCompile Include="DrawLine.cpp" />
     <ClCompile Include="Integer.cpp" />
     <ClCompile Include="LanguageBasics.cpp" />
+    <ClCompile Include="L_R_Values.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="MyMath.cpp" />
@@ -153,10 +155,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllClassHeaders.h" />
+    <ClInclude Include="Buss.h" />
     <ClInclude Include="Car.h" />
     <ClInclude Include="ClassesObjects.h" />
     <ClInclude Include="DrawLine.h" />
     <ClInclude Include="Integer.h" />
+    <ClInclude Include="IntegerCpp11.h" />
+    <ClInclude Include="L_R_Values.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="AllMacrosInOnePlace.h" />
     <ClInclude Include="AllStandartHeaders.h" />

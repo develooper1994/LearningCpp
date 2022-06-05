@@ -2,6 +2,7 @@
 #include "Car.h"
 #include "DrawLine.h"
 #include "Integer.h"
+#include "IntegerCpp11.h"
 /*****************************************************************//**
  * \file   ClassesObjects.cpp
  * \brief  /
@@ -117,12 +118,53 @@ void BeautifulLines()
 
 }
 
-void IntegerClass() {
+void SwallowCopy_DeepCopy_program_crashes() {
+	// !!! Program may crash due to security checks(shallow copy) !!!
+	// SwallowCopy
+	{
+		/*
+		I am now coping pointers inside of the objects.It is shallow copy(coping only the address of pointer not data).
+		If i change the data with some pointer, this will affect all swallow copied pointers.
+		*/
+		int* p1 = new int(5);
+		int* p2 = p1; // coping only the address of pointer not data
+	}
+	// DeepCopy
+	{
+		// We have to define user defined copy constructor.
+		int* p1 = new int(5);
+		int* p2 = new int(*p1);
+	}
+}
+
+void IntegerClass_SwallowCopy_program_crashes()
+{	// !!! Program will crash due to security checks !!!
 	using namespace std;
 	Integer i(5);
+	/*
+	// SwallowCopy_program_crashes
 	// I am now coping pointers inside of the objects. It is shallow copy(coping only the address of pointer not data). !!! Program will crash !!!
-	Integer i2(i); // copy constructor.
+	Integer i2(i); // shallow copy constructor. Automatically created
+	i = i2;	// shallow copy constructor. Automatically created
+	*/
+
+	// Integer(const Integer& obj);
+	// I fixed it :]. I created custom copy constructor.
+	Integer i2(i);
 	cout << i.GetValue() << '\n';
+}
+
+void IntegerCpp11_func()
+{
+	IntegerCpp11 i1, // default constructor
+		i2(3); // parameterized constructor
+	// !!! Compiler Error !!!
+	//IntegerCpp11 i3, // synthesized default constructor
+	//	i4(i3); // forbidden(deleted) copy constructor
+
+	i1.SetValue(10);
+	// i1.SetValue(10.5f); // !!! Compiler Error !!! // float assignments deleted.
+
 }
 
 
@@ -131,5 +173,10 @@ void ClassesObjects_Main()
 {
 	//FirstClassCar();
 	//BeautifulLines();
-	IntegerClass();
+
+	// Constructors
+	//SwallowCopy_DeepCopy_program_crashes(); // !!! Program may crash due to security checks(shallow copy) !!!
+	//IntegerClass_SwallowCopy_program_crashes();	// !!! Program will crash due to security checks !!!
+
+	IntegerCpp11_func();
 }

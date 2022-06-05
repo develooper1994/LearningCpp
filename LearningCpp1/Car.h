@@ -51,6 +51,7 @@ public:
 	// Constructors
 	Car();
 	Car(float amount);
+	Car(float amount, int pass);
 	// Destructors
 	~Car();
 	//Methods
@@ -63,4 +64,3 @@ public:
 	//Static Member Functions
 	static void GetShowCount();
 };
-

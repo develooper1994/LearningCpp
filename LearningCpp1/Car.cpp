@@ -1,18 +1,25 @@
 #include "Car.h"
 int Car::ClassCreationCount = 0;
 
+// There is some code reputation. If you want know how to eliminate it look at "buss" class.
+
 //Constructors
 Car::Car()
 {
 	++ClassCreationCount;
-	std::cout << "\nCar constructor" << ClassCreationCount << '.' << "object\n";;
+	fuel = 0;
+	speed = 0;
+	passengers = 0;
+	std::cout << "\Car() constructor" << ClassCreationCount << '.' << "object\n";;
 	// SetDefaults(); // I initialized values during declaration.
 }
 Car::Car(float amount)
 {
 	++ClassCreationCount;
 	fuel = amount;
-	std::cout << "\nCar constructor" << ClassCreationCount << '.' << "object\n";;
+	speed = 0;
+	passengers = 0;
+	std::cout << "\Car(float amount) constructor" << ClassCreationCount << '.' << "object\n";;
 }
 
 // Destructors

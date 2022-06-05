@@ -10,6 +10,11 @@ Integer::Integer(int lvalue)
 	int_ptr = new int(lvalue);
 }
 
+Integer::Integer(const Integer& obj)
+{
+	int_ptr = new int(*obj.int_ptr);
+}
+
 Integer::~Integer()
 {
 	delete int_ptr;
