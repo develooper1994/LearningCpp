@@ -14,6 +14,8 @@ All should be defined if a user implements any of them. !Otherwise it can lead t
 	- Destructor
 	- (deep) Copy constructor
 	- (deep) Copy assignment Operator => performs (deep) Copy constructor
+	- Move constructor
+	- Move assignment Operator => performs Move constructor
 */
 class Integer
 {
@@ -25,6 +27,12 @@ public:
 	Integer(int lvalue);
 	//copy-constructor
 	Integer(const Integer& obj); // It eliminates program crashes.
+	//copy-assignment operator
+	Integer operator=(const Integer& obj);
+	//move-constructor
+	Integer(Integer&& obj);
+	//move-assignment operator
+	Integer operator=(Integer&& obj);
 	//Destructor
 	~Integer();
 	int GetValue() const;
