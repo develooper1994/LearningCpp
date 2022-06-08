@@ -37,6 +37,23 @@ public:
 	~Integer();
 	int GetValue() const;
 	void SetValue(int value);
+
+	// Operators Overloading
+	// Math
+	Integer operator+(const Integer& obj) const; // doesn't modify the state of the object, so qualify it with const.
+	Integer operator-(const Integer& obj) const; // doesn't modify the state of the object, so qualify it with const.
+
+	// Increment
+	Integer& operator++(); // pre-increment // increment then return
+	Integer operator++(int); // post-increment // return then increment
+
+	// Comparisation
+	bool operator==(const Integer& obj) const;
+	bool operator<(const Integer& obj) const;
+	bool operator<=(const Integer& obj) const;
+	bool operator>(const Integer& obj) const;
+	bool operator>=(const Integer& obj) const;
+
 };
 
 void print(Integer);

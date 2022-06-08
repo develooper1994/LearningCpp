@@ -70,6 +70,24 @@
     <Filter Include="Lessons\4%29 L_R_Values.h\Classes\Source Files">
       <UniqueIdentifier>{73693404-9882-4cee-a4dc-dd062a7544a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lessons\5%29 Operator Overloading">
+      <UniqueIdentifier>{fdd3fd62-2a74-40bc-95d8-f3c5c6747f61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\5%29 Operator Overloading\Header Files">
+      <UniqueIdentifier>{964b7903-2884-443a-91a1-2013abdf878c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\5%29 Operator Overloading\Source Files">
+      <UniqueIdentifier>{b372cd51-085c-4b55-a06b-c7cc7b85902c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\5%29 Operator Overloading\Classes">
+      <UniqueIdentifier>{6c417220-3b55-4763-baaa-456efed64acf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\5%29 Operator Overloading\Classes\Header Files">
+      <UniqueIdentifier>{63fc778d-eb6a-4a2b-86d9-5fe307a332bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\5%29 Operator Overloading\Classes\Source Files">
+      <UniqueIdentifier>{12b17d06-7652-4566-82a8-e287f235fd52}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -107,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="Number.cpp">
       <Filter>Lessons\4%29 L_R_Values.h\Classes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OperatorOverloading.cpp">
+      <Filter>Lessons\5%29 Operator Overloading\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +181,12 @@
     </ClInclude>
     <ClInclude Include="Number.h">
       <Filter>Lessons\4%29 L_R_Values.h\Classes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OperatorOverloading_Headers.h">
+      <Filter>Lessons\5%29 Operator Overloading\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LessonHeaders.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

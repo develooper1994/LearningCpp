@@ -70,6 +70,62 @@ void Integer::SetValue(int value)
 	*int_ptr = value;
 }
 
+Integer Integer::operator+(const Integer& obj) const
+{
+	Integer temp;
+	*temp.int_ptr = *int_ptr + *obj.int_ptr;
+	return temp;
+}
+
+Integer Integer::operator-(const Integer& obj) const
+{
+	Integer temp;
+	*temp.int_ptr = *int_ptr - *obj.int_ptr;
+	return temp;
+}
+
+// pre-increment more efficient than post-increment
+// post increment operator creates temporary objects.
+Integer& Integer::operator++()
+{
+	// pre-increment // increment then return
+	++(*int_ptr);
+	return *this; // returns by reference(l-value)
+}
+
+Integer Integer::operator++(int)
+{
+	// post-increment // return then increment
+	Integer temp(*this);
+	++(*int_ptr);
+	return temp;
+}
+
+bool Integer::operator==(const Integer& obj) const
+{
+	return *int_ptr == *obj.int_ptr;
+}
+
+bool Integer::operator<(const Integer& obj) const
+{
+	return *int_ptr < *obj.int_ptr;
+}
+
+bool Integer::operator<=(const Integer& obj) const
+{
+	return *int_ptr <= *obj.int_ptr;
+}
+
+bool Integer::operator>(const Integer& obj) const
+{
+	return *int_ptr > *obj.int_ptr;
+}
+
+bool Integer::operator>=(const Integer& obj) const
+{
+	return *int_ptr >= *obj.int_ptr;
+}
+
 
 
 // Dummy functions

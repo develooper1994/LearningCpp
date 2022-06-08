@@ -152,6 +152,7 @@
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="Number.cpp" />
+    <ClCompile Include="OperatorOverloading.cpp" />
     <ClCompile Include="UtilityHeader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +163,7 @@
     <ClInclude Include="DrawLine.h" />
     <ClInclude Include="Integer.h" />
     <ClInclude Include="IntegerCpp11.h" />
+    <ClInclude Include="LessonHeaders.h" />
     <ClInclude Include="L_R_Values.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="AllMacrosInOnePlace.h" />
@@ -171,6 +173,7 @@
     <ClInclude Include="Memory.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="Number.h" />
+    <ClInclude Include="OperatorOverloading_Headers.h" />
     <ClInclude Include="UtilityHeader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
