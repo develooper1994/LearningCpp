@@ -105,6 +105,9 @@
     <ClCompile Include="L_R_Values.cpp">
       <Filter>Lessons\4%29 L_R_Values.h\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Number.cpp">
+      <Filter>Lessons\4%29 L_R_Values.h\Classes\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -154,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="L_R_Values.h">
       <Filter>Lessons\4%29 L_R_Values.h\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Number.h">
+      <Filter>Lessons\4%29 L_R_Values.h\Classes\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

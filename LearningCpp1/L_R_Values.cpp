@@ -6,6 +6,7 @@ lvalue references always bind to lvalue || rvalue references always bind to rval
 
 #include <iostream>
 #include "Integer.h"
+#include "Number.h"
 
 namespace LvsRvalue {
 	int Add(int x, int y) {
@@ -53,22 +54,53 @@ namespace LvsRvalue {
 		temp.SetValue(a.GetValue() + b.GetValue());
 		return temp;
 	}
+	Number CreateNumber(int num) {
+		Number n{ num };
+		return n;
+	}
 	void move1() {
+		std::cout << "\nmove1\n";
 		Integer a(1), b(2);
 		a.SetValue(Add(a, b).GetValue());
 	}
 	void move2() {
+		// Try it in debug and release modes
+		std::cout << "\nmove2\n";
+		Number n1{ 1 };
+		auto n2{ n1 };
+		n2 = n1;
+
+		auto n3{ CreateNumber(5) };
+		n3 = CreateNumber(7);
+	}
+	void MoveStandart() {
+		/* !!!RAII principle basics  !!!Why we need smart pointers ?
+		std::move usages
+		* I don't want to utilize those resources after the function.
+		* Pass non-copyable variables to function.
+		* ! usage of primitive type redundant !
+		*/
+		Integer a(1);
+		// auto b{ static_cast<Integer&&>(a) }; // Calls move constructor, doesn't readable
+		auto b{ std::move(a) }; // Same meaning as "auto b{ static_cast<Integer&&>(a) };"
+		// Try it with removing Integer class copy-constructor. It will not compile!
+		print(a); // pass-by-value. Underlying resource of a doesn't removed exit of print function
+		// I don't want to utilize those resources after the function. 
+		print(std::move(a)); // pass-by-reference. Underlying resource of a removed exit of print function.
+		std::cout << "After the std::move(a) resources moved into the function. Program will crash\n"; // You are trying to read from nullptr(inside of the Integer class)
+
 
 	}
 	void Move_main()
 	{
-		move1();
-		move2();
+		//move1();
+		//move2();
+		MoveStandart();
 	}
 }
 
 void L_R_Values_Main()
 {
-	LvsRvalue::LvsR();
+	//LvsRvalue::LvsR();
 	LvsRvalue::Move_main();
 }

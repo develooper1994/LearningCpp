@@ -151,6 +151,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="MyMath.cpp" />
+    <ClCompile Include="Number.cpp" />
     <ClCompile Include="UtilityHeader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +170,7 @@
     <ClInclude Include="LanguageBasicsHeaders.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="MyMath.h" />
+    <ClInclude Include="Number.h" />
     <ClInclude Include="UtilityHeader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -62,6 +62,11 @@ int Integer::GetValue() const
 
 void Integer::SetValue(int value)
 {
+	if (int_ptr == nullptr)
+	{
+		// object moved somewhere else and move constructor called. "std::move" is one of reason.
+		int_ptr = new int{};
+	}
 	*int_ptr = value;
 }
 
