@@ -18,15 +18,14 @@ Integer::Integer(const Integer& obj)
 	int_ptr = new int(*obj.int_ptr);
 }
 
-Integer Integer::operator=(const Integer& obj)
+Integer& Integer::operator=(const Integer& obj)
 {
 	std::cout << "operator=(const Integer& obj)\n";
-	if (int_ptr == obj.int_ptr)
+	if (int_ptr != obj.int_ptr)	// What if assign to itself.
 	{
-		*this;
+		delete int_ptr;
+		int_ptr = new int(*obj.int_ptr);
 	}
-	delete int_ptr;
-	int_ptr = new int(*obj.int_ptr);
 	return *this;
 }
 
@@ -37,15 +36,14 @@ Integer::Integer(Integer&& obj)
 	obj.int_ptr = nullptr;
 }
 
-Integer Integer::operator=(Integer&& obj)
+Integer& Integer::operator=(Integer&& obj)
 {
 	std::cout << "operator=(Integer&& obj)\n";
-	if (int_ptr == obj.int_ptr)
+	if (int_ptr != obj.int_ptr)
 	{
-		return *this;
+		int_ptr = obj.int_ptr;
+		obj.int_ptr = nullptr;
 	}
-	int_ptr = obj.int_ptr;
-	obj.int_ptr = nullptr;
 	return *this;
 }
 
@@ -70,6 +68,8 @@ void Integer::SetValue(int value)
 	*int_ptr = value;
 }
 
+// -*-*-* Operators Overloading *-*-*-
+// Math
 Integer Integer::operator+(const Integer& obj) const
 {
 	Integer temp;
@@ -85,7 +85,7 @@ Integer Integer::operator-(const Integer& obj) const
 }
 
 // pre-increment more efficient than post-increment
-// post increment operator creates temporary objects.
+// post-increment operator creates temporary objects.
 Integer& Integer::operator++()
 {
 	// pre-increment // increment then return
@@ -93,12 +93,30 @@ Integer& Integer::operator++()
 	return *this; // returns by reference(l-value)
 }
 
+// pre-decrement
+Integer& Integer::operator--()
+{
+	// pre-increment // increment then return
+	--(*int_ptr);
+	return *this; // returns by reference(l-value)
+}
+
+// post-increment
 Integer Integer::operator++(int)
 {
 	// post-increment // return then increment
 	Integer temp(*this);
 	++(*int_ptr);
-	return temp;
+	return temp; // returns by reference(l-value)
+}
+
+// post-decrement
+Integer Integer::operator--(int)
+{
+	// post-increment // return then increment
+	Integer temp(*this);
+	--(*int_ptr);
+	return temp; // returns by reference(l-value)
 }
 
 bool Integer::operator==(const Integer& obj) const

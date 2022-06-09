@@ -28,24 +28,26 @@ public:
 	//copy-constructor
 	Integer(const Integer& obj); // It eliminates program crashes.
 	//copy-assignment operator
-	Integer operator=(const Integer& obj);
+	Integer& operator=(const Integer& obj);
 	//move-constructor
 	Integer(Integer&& obj);
 	//move-assignment operator
-	Integer operator=(Integer&& obj);
+	Integer& operator=(Integer&& obj);
 	//Destructor
 	~Integer();
 	int GetValue() const;
 	void SetValue(int value);
 
-	// Operators Overloading
+	// -*-*-* Operators Overloading *-*-*-
 	// Math
 	Integer operator+(const Integer& obj) const; // doesn't modify the state of the object, so qualify it with const.
 	Integer operator-(const Integer& obj) const; // doesn't modify the state of the object, so qualify it with const.
 
-	// Increment
+	// Increment - Decrement
 	Integer& operator++(); // pre-increment // increment then return
+	Integer& operator--(); // pre-increment // increment then return
 	Integer operator++(int); // post-increment // return then increment
+	Integer operator--(int); // post-increment // return then increment
 
 	// Comparisation
 	bool operator==(const Integer& obj) const;
