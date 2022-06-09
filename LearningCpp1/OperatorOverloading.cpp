@@ -16,12 +16,12 @@ namespace OperatorOverloading_utility_functions {
 namespace OperatorOverloading_functions {
 	void OperatorOverloading1() {
 		Integer a(1), b(2);
-		{
-			// a.SetValue(OperatorOverloading_utility_functions::Add(a, b).GetValue()); // Old and unreadable
+
+		// a.SetValue(OperatorOverloading_utility_functions::Add(a, b).GetValue()); // Old and unreadable
 		// Operator overloading is just syntactic sugar. Look to disassembly!
-			Integer result = a + b; //Operator Already overloaded
-			std::cout << result.GetValue() << '\n';
-		}
+		Integer result = a + b; //Operator Already overloaded
+		std::cout << result.GetValue() << '\n';
+
 
 		// Increment 
 		// pre-increment more efficient than post-increment

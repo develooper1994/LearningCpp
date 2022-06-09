@@ -241,16 +241,22 @@ void switchCase() {
 	{
 	case 'M':
 		std::cout << "Chiose is M";
+		break;
 	case 'u':
 		std::cout << "Chiose is u";
+		break;
 	case 's':
 		std::cout << "Chiose is s";
+		break;
 	case 't':
 		std::cout << "Chiose is t";
+		break;
 	case 'a':
 		std::cout << "Chiose is a";
+		break;
 	case 'f':
 		std::cout << "Chiose is f";
+		break;
 		/* // duplication Error
 		case 'a':
 			std::cout << "Chiose is a";
@@ -284,7 +290,7 @@ void Initializations() {
 	char d1[2]; //Uninitialization
 	char d2[5] = { '\0' }; //Copy intializaiton
 	char d3[4] = { 'a', 'b', 'c', 'd' }; //Aggregate(also copy) initialization
-	char d4[5] = { "abcd" }; //Copy intializaiton. There is an invisible char '\0'
+	char d4[5] = { "abcd" }; //Copy initialization. There is an invisible char '\0'
 
 	// Default value for all the primitive types are zero.
 	int b1{}; //Value initialization

@@ -9,10 +9,10 @@ int main()
 	// lesson main functions.
 
 	//LanguageBasics_Main();
-	//Memory_Main();
+	Memory_Main();
 	//ClassesObjects_Main();
 	//L_R_Values_Main();
-	OperatorOverloading_Main();
+	//OperatorOverloading_Main();
 
 
 	return 0;
