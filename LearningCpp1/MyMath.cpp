@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 /*
 <h1> Function Overloading < / h1>
 1.Confusion resolved in ***compile-time*** with "Name Mangling"
@@ -60,40 +61,49 @@ int factorial(uint32_t x)
 
 std::vector<int> fibonacci_series(uint32_t n)
 {
+	// 0, 1, 2, 3, 4, 5, 6,  7,  8,  9, 10, 11,  12, ……..
 	// 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ……..
-	int temp1 = 0, temp2 = 1, next = 0;
-	std::vector<int> vec;
+	auto temp1 = 0; // first index= 0
+	auto temp2 = 1; // second index= 1
+	auto next = 0; // 
+	std::vector<int> vec{ 0, 1 };
+	auto& result = vec; // store the result and quit whenever i want.
+	if (n < 0)
+	{
+		n = abs((int)n);
+	}
 	if (n == 0)
-	{
-		vec.push_back(temp1);
-		return vec;
-	}
+		vec.pop_back();
+	result = vec; // don't quit now.
 
-	for (size_t i = 1; i < n - 1; ++i)
-	{
-		if (i == 1)
+	auto fibonacci_generator = [&n, &temp1, &temp2, &next, &vec]() {
+		for (size_t i = 2; i < n; ++i)
 		{
-			vec.push_back(temp1);
-			std::cout << temp1 << ", ";
+			next = temp1 + temp2;
+			temp1 = temp2;
+			temp2 = next;
+			vec.push_back(next);
 		}
-		if (i == 2)
+	};
+	fibonacci_generator();
+
+	auto fibonacci_print = [&n, &vec](const int& line_max = 15) {
+		if ((n >= 0)) std::cout << 0 << ", ";
+		if ((n >= 1)) std::cout << 1 << ", ";
+		for (size_t i = 2; i < n; ++i)
 		{
-			std::cout << temp2 << ", ";
+			if ((i % line_max + 1) == line_max)
+			{
+				// enter the new line
+				std::cout << '\n';
+			}
+			std::cout << vec.at(i) << ", ";
 		}
 
-		next = temp1 + temp2;
-		temp1 = temp2;
-		temp2 = next;
-		vec.push_back(next);
+	};
+	fibonacci_print(15);
 
-		if (i % 16 == 15)
-		{
-			// enter the new line
-			std::cout << "\n";
-		}
-		std::cout << next << ", ";
-	}
-	return vec;
+	return result; // quit end of the function.
 }
 
 

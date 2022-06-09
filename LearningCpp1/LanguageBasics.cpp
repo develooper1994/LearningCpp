@@ -215,8 +215,10 @@ void loopWhile() {
 }
 void fibonacciExercise()
 {
+	// 0, 1, 2, 3, 4, 5, 6,  7,  8,  9, 10, 11,  12, ……..
+	// 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ……..
 	// call function from another file
-	int n = 10;
+	int n = 10; // 10 unit
 	fibonacci_series(n);
 	fib_power(n);
 }
@@ -471,7 +473,7 @@ void constants() {
 		cout << "Please enter the radious= \n";
 		cin >> rad;
 		float area = PI * pow(rad, 2);
-		const float circumference = PI * 2 * rad; // I can assign value of caonst after calculations.
+		const float circumference = PI * 2 * rad; // I can assign value of const after calculations.
 		cout << "Rad= " << rad << " area= " << area << " circumference= " << circumference << '\n';
 	}
 
@@ -565,6 +567,23 @@ void FunctionPointer() {
 	// OR
 	pfn(5, '*');
 	cout << "End of FunctionPointer\n";
+
+}
+
+// Function Reference
+void FunctionReference() {
+	// It is an old c language function. Location of it doesn't matter. It will be executed at the exit. It is guarantied.
+	// atexit has function pointer inside.
+	atexit(EndMessage);
+	using namespace std;
+	cout << "function it self\n";
+	Print(5, '#');
+	void(&prn)(int, char) = Print;
+	cout << "function pointer\n";
+	(prn)(5, '\'');
+	// OR
+	prn(5, '*');
+	cout << "End of FunctionPointer\n";
 }
 
 // a namespace definition must appear either at file scope or immediately within another namespace definition
@@ -621,6 +640,36 @@ void NamespaceCpp()
 	Internal();
 }
 
+namespace VexginParse {
+	// reference: https://www.youtube.com/watch?v=ByKf_foSlXY
+	struct Type {
+		int data = 42;
+	};
+	// Function pointer: Type (*) () // returns "Type" and takes zero parameters.
+	// Function reference: Type (); // returns "Type" and takes zero parameters.
+	void VexginParse_main() {
+		// Most vexing parse happens here
+		{
+			Type val(); // it is actually function declaration
+			// auto result = val.data; // !!! Compiler ERROR !!!
+			//auto result = val().data; // !!! ERROR !!! calls unknown function and gets unknown data.
+			//std::cout << "data: " << result << '\n';
+		}
+
+		// Most reasonable approach is without parenthesis "()"
+		{
+			Type val;
+			auto result = val.data; // !!! ERROR !!! calls unknown function and gets unknown data.
+			std::cout << "data: " << result << '\n';
+		}
+	}
+
+	// Ok! I am defining the function
+	Type val() {
+		// just return the think that you should be returning in here.
+		return {}; // return the default object. default object has "data=42"
+	}
+}
 
 void LanguageBasics_Main() {
 	// helloWorld();
@@ -633,7 +682,7 @@ void LanguageBasics_Main() {
 	// LoopFor();
 	// loopRangeBased();
 	// loopWhile();
-	// fibonacciExercise();
+	fibonacciExercise();
 
 	//Memory
 	// Initializations();
@@ -646,4 +695,6 @@ void LanguageBasics_Main() {
 	// Operators();
 	// switchCase()
 	// FunctionPointer();
+
+	//VexginParse::VexginParse_main();
 }
