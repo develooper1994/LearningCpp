@@ -700,4 +700,7 @@ void LanguageBasics_Main() {
 	// FunctionPointer();
 
 	//VexginParse::VexginParse_main();
+
+	// homeworks
+	HomeWorks::homework1_test();
 }

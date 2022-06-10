@@ -1,6 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+
+#include <algorithm>
+#include <random>
+
 /*
 <h1> Function Overloading < / h1>
 1.Confusion resolved in ***compile-time*** with "Name Mangling"
@@ -154,4 +158,84 @@ int fib_power(int n)
 	power(f, n);
 	std::cout << "\nFibonacci(" << n << ")= " << f[0][0] << "\n";
 	return f[0][0];
+}
+
+
+namespace HomeWork1 {
+	int LinearSearch(const std::vector<int>& vec, int item) {
+		// find item return first index
+		int size = vec.size();
+		for (int i = 0; i < size; i++)
+		{
+			if (vec.at(i) == item)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	std::vector<float> MovingAverage(const std::vector<int>& vec, int block_size) {
+		// y[n] = (1/N) * sum(x[n-i]); i=0->N-1
+		// extremely simple implementation. There is severely implementations.
+		// normally i need a ring-buffer. I will make other Moving Average filters later.
+		int size = vec.size();
+		float avg{ 0 };
+		std::vector<float> avg_vec{};
+		for (int i = 0; i < size - block_size; ++i)
+		{
+			float temp{ 0 };
+			for (size_t j = i; j < block_size + i; ++j)
+			{
+				temp += vec.at(i);
+			}
+			avg = temp / block_size;
+			avg_vec.push_back(avg);
+		}
+		return avg_vec;
+	}
+
+	int custom_abs(const int& x) {
+		return x >= 0 ? x : x * -1;
+	}
+
+	void homework1_test() {
+		// std::srand(std::time(nullptr)); // old time based random seed. Not recommended due to security reasons(like timing attacks). 
+		// Modern way recommends random_device
+		// std::random_device rnd_dev;										// random device
+		//std::mt19937 engine{ rnd_dev() };									// select engine
+		std::default_random_engine engine;									// or just use STL engine
+		std::uniform_int_distribution<int> distribution(1, 10);				// determine the range
+		auto generator = [&distribution, &engine]()			// define the generator
+		{
+			return distribution(engine);
+		};
+
+		std::vector<int> vec(10);											// reserve 10 elements
+		std::generate(vec.begin(), vec.end(), generator);	// generate the randoms
+		//std::shuffle(begin(vec), end(vec), engine);						// rearrange the elements of a range in random order.
+
+
+		std::cout << "\n\Linear Search test\n";
+		auto index = LinearSearch(vec, 5);
+		std::cout << "index= " << index << '\n';
+
+
+		std::cout << "\n\Moving Average test\n";
+		int block_size = 3;
+		auto result = MovingAverage(vec, block_size);
+		for (auto&& ptr = result.begin(); ptr < result.end(); ++ptr)
+		{
+			std::cout << "i: " << *ptr << '\n';
+		}
+
+
+		std::cout << "\n\tcustom_abs test\n";
+		int x = 10;
+		std::cout << "x = " << x << " || " << "custom_abs(x) = " << custom_abs(x) << '\n';
+		x = 0;
+		std::cout << "x = " << x << " || " << "custom_abs(x) = " << custom_abs(x) << '\n';
+		x = -10;
+		std::cout << "x = " << x << " || " << "custom_abs(x) = " << custom_abs(x) << '\n';
+	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+
 //extern "C" int add(int, int);
 
 extern "C"
@@ -12,6 +13,23 @@ int factorial(uint32_t);
 std::vector<int> fibonacci_series(uint32_t n);
 int fib_power(int);
 
+// HomeWorks
+/*
+* "LinearSearch"	- correct
+* "Factorial"		- correct
+* "MovingAverage"	- correct
+* "ABS"				- correct
+*/
+
+namespace HomeWork1 {
+	int LinearSearch(const std::vector<int>& vec, int item);
+
+	std::vector<float> MovingAverage(const std::vector<int>& vec, int block_size);
+
+	int custom_abs(const int& x);
+
+	void homework1_test();
+}
 
 
 
