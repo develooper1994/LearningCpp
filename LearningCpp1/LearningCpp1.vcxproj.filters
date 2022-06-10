@@ -147,6 +147,9 @@
     <ClCompile Include="OperatorOverloading.cpp">
       <Filter>Lessons\5%29 Operator Overloading\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SmartPointers.cpp">
+      <Filter>Lessons\2-2%29 Memory - Smart Pointers\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -205,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="LessonHeaders.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SmartPointers.h">
+      <Filter>Lessons\2-2%29 Memory - Smart Pointers\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

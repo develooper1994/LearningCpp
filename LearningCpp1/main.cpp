@@ -12,7 +12,8 @@ auto main() -> int // modern c++ way
 	//Memory_Main();
 	//ClassesObjects_Main();
 	//L_R_Values_Main();
-	OperatorOverloading_Main();
+	//OperatorOverloading_Main();
+	SmartPointers_main();
 
 
 	return EXIT_SUCCESS;
