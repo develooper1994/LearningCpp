@@ -553,6 +553,9 @@ void autoKeyWord() {
 	auto list = { 1,2,3,4, };  // std::initializer_list<int>
 }
 
+//	Function Pointer					vs		Function Reference
+// void (*pfn) (int, char) = &Print;		void(&prn)(int, char) = Print;
+// 
 // Function Pointer
 void FunctionPointer() {
 	// It is an old c language function. Location of it doesn't matter. It will be executed at the exit. It is guarantied.

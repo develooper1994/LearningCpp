@@ -2,6 +2,8 @@
 #include <iostream>
 #include <iosfwd>
 
+#include <memory>
+
 /*
 Copy constructor automatically synthesizes but compiler generates wrong(swallow) copy constructor
 I have created custom(deep) copy constructor.
@@ -17,6 +19,14 @@ All should be defined if a user implements any of them. !Otherwise it can lead t
 	- (deep) Copy assignment Operator => performs (deep) Copy constructor
 	- Move constructor
 	- Move assignment Operator => performs Move constructor
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
+!!! IMPOTANT NOTE !!!
+All should be defined if a user implements any of them. !Otherwise it can lead to compiler errors!
+	- Conversion operators
+	- Math and other(like comparison) operators(operator+(const <class>&), operator+(<type>, const <tpye>&), operator-(const <class>&), operator-(<type>, const <tpye>&), ...)
+
 */
 class Integer
 {
@@ -26,6 +36,7 @@ private:
 public:
 	//Constructors
 	Integer();
+	// parameterized constructor
 	Integer(int lvalue);
 	//copy-constructor
 	Integer(const Integer& obj); // It eliminates program crashes.
@@ -38,13 +49,16 @@ public:
 	//Destructor
 	~Integer();
 	int GetValue() const;
+	int* GetPointer() const;
 	void SetValue(int value);
 
 	// -*-*-* Operators Overloading *-*-*-
 	// Math
 	// Integer sum = a + 5;
 	Integer operator+(const Integer& obj) const; // doesn't modify the state of the object, so qualify it with const.
+	Integer operator+(const int& obj) const; // I have to define if I define "operator int()"
 	Integer operator-(const Integer& obj) const; // doesn't modify the state of the object, so qualify it with const.
+	Integer operator-(const int& obj) const; // I have to define if I define "operator int()"
 
 	// Increment - Decrement
 	Integer& operator++(); // pre-increment // increment then return
@@ -52,12 +66,17 @@ public:
 	Integer operator++(int); // post-increment // return then increment
 	Integer operator--(int); // post-increment // return then increment
 
-	// Comparisation
+	// Comparison
 	bool operator==(const Integer& obj) const;
+	bool operator==(const int& i) const;
 	bool operator<(const Integer& obj) const;
+	bool operator<(const int& i) const;
 	bool operator<=(const Integer& obj) const;
+	bool operator<=(const int& i) const;
 	bool operator>(const Integer& obj) const;
+	bool operator>(const int& i) const;
 	bool operator>=(const Integer& obj) const;
+	bool operator>=(const int& i) const;
 
 	/*
 			Function call operator. operator()
@@ -69,6 +88,20 @@ public:
 		a();
 	*/
 	void operator()();
+
+	// Conversion operator
+	// I define any of them, i have to define math operator.
+	// int conversion -> const int& math and other operation(like comparison).
+	explicit operator int(); // ! In most cases uses it is a Recommended keyword to eliminate bugs !
+	operator long();
+	operator long long();
+	operator float();
+	operator double();
+
+	// I can access underlying pointer
+	int* operator->();
+	//I can call like a regular pointer
+	int operator*();
 
 	// !!! If function parameters don't start with class name(Integer) must be global or friend !!!
 	// !!! so that these operators must be global or friend. !!!
@@ -94,6 +127,36 @@ class foo {
 };
 
 
+// 
+class IntPtr
+{
+	Integer* ptr;
+public:
+	IntPtr(Integer* p) : ptr{ p } {
+		std::cout << "IntPtr(Integer* p)\n";
+	}
+	~IntPtr() {
+		/*
+		* Creation and destruction order.
+		Integer()
+		IntPtr(Integer* p)
+		~IntPtr
+		~Integer()
+		*/
+		std::cout << "~IntPtr\n";
+		delete ptr; // destructor calls Integer destructor so that there is no memory leak.
+	}
+
+	// I can access underlying pointer
+	Integer* operator->() {
+		return ptr; // return underlying pointer to access internal members and functions of Integer class
+	}
+
+	//I can call like a regular pointer
+	Integer& operator*() {
+		return *ptr;
+	}
+};
 
 
 
@@ -106,5 +169,7 @@ class foo {
 
 // Dummy functions
 void print(Integer);
+void print(std::unique_ptr<Integer>);
+void print(std::shared_ptr<Integer>);
 Integer add(int, int);
 

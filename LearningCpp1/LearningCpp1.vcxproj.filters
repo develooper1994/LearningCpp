@@ -25,15 +25,6 @@
     <Filter Include="Lessons\1%29 Basics of C++ Language\Source Files">
       <UniqueIdentifier>{86f2a56d-50db-4045-ac57-cf67c89bf00f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lessons\2%29 Memory">
-      <UniqueIdentifier>{e3c05441-0bf3-4df2-9819-29f6a9f7d192}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lessons\2%29 Memory\Header Files">
-      <UniqueIdentifier>{9b266e2c-9f1f-44d1-ac2b-bc82e30ddc74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lessons\2%29 Memory\Source Files">
-      <UniqueIdentifier>{6b7d1799-65c8-407a-8d43-9f6f9142755f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Lessons\3%29 Classes and Objects">
       <UniqueIdentifier>{06a6afb0-c79f-49c9-8f20-d7ba1b0651d4}</UniqueIdentifier>
     </Filter>
@@ -88,6 +79,33 @@
     <Filter Include="Lessons\5%29 Operator Overloading\Classes\Source Files">
       <UniqueIdentifier>{12b17d06-7652-4566-82a8-e287f235fd52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lessons\2-1%29 Memory - Basics">
+      <UniqueIdentifier>{e3c05441-0bf3-4df2-9819-29f6a9f7d192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\2-1%29 Memory - Basics\Header Files">
+      <UniqueIdentifier>{9b266e2c-9f1f-44d1-ac2b-bc82e30ddc74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\2-1%29 Memory - Basics\Source Files">
+      <UniqueIdentifier>{6b7d1799-65c8-407a-8d43-9f6f9142755f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\2-2%29 Memory - Smart Pointers">
+      <UniqueIdentifier>{a2d6babe-b06d-4514-819c-2d587aed9ccf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\2-2%29 Memory - Smart Pointers\Header Files">
+      <UniqueIdentifier>{cb842cd2-549b-420d-b0eb-2f49a84d10ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\2-2%29 Memory - Smart Pointers\Source Files">
+      <UniqueIdentifier>{0fb4c125-591d-4286-8696-e8c82649578b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\2-2%29 Memory - Smart Pointers\Classes">
+      <UniqueIdentifier>{9ccab3b7-1f52-4643-9078-d451fd84d086}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\2-2%29 Memory - Smart Pointers\Classes\Header Files">
+      <UniqueIdentifier>{9a60b680-d41b-41e4-bd3f-5960ea01fb2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\2-2%29 Memory - Smart Pointers\Classes\Source Files">
+      <UniqueIdentifier>{620caa8d-3479-4e45-bd4f-a72d343187ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -97,7 +115,7 @@
       <Filter>Lessons\1%29 Basics of C++ Language\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Memory.cpp">
-      <Filter>Lessons\2%29 Memory\Source Files</Filter>
+      <Filter>Lessons\2-1%29 Memory - Basics\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LanguageBasics.cpp">
       <Filter>Lessons\1%29 Basics of C++ Language\Source Files</Filter>
@@ -150,7 +168,7 @@
       <Filter>Lessons\1%29 Basics of C++ Language\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Memory.h">
-      <Filter>Lessons\2%29 Memory\Header Files</Filter>
+      <Filter>Lessons\2-1%29 Memory - Basics\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AllStandartHeaders.h">
       <Filter>Header Files</Filter>

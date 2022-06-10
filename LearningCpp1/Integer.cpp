@@ -6,8 +6,10 @@ Integer::Integer()
 	int_ptr = new int(0);
 }
 
+// parameterized constructor
 Integer::Integer(int lvalue)
 {
+	// Compiler automatically uses parameterized constructor to convert primitive type into user defined type.
 	std::cout << "Integer(int lvalue)\n";
 	int_ptr = new int(lvalue);
 }
@@ -30,8 +32,8 @@ Integer& Integer::operator=(const Integer& obj)
 }
 
 inline void Integer::Move(Integer& obj) {
-	int_ptr = obj.int_ptr;
-	obj.int_ptr = nullptr; // potential memory leak!
+	int_ptr = obj.int_ptr; // shallow copy
+	obj.int_ptr = nullptr; // place holder // potential memory leak!
 }
 
 Integer::Integer(Integer&& obj)
@@ -61,6 +63,11 @@ int Integer::GetValue() const
 	return *int_ptr;
 }
 
+int* Integer::GetPointer() const
+{
+	return int_ptr;
+}
+
 void Integer::SetValue(int value)
 {
 	if (int_ptr == nullptr)
@@ -87,6 +94,22 @@ Integer Integer::operator+(const Integer& obj) const
 
 	Integer temp;
 	*temp.int_ptr = *int_ptr + *obj.int_ptr;
+	return temp;
+}
+
+Integer Integer::operator+(const int& i) const
+{
+	/*
+	* It is OK
+	Integer a(1)
+	Integer sum = a + 5;
+
+	* It is not OK
+	Integer sum = 5 + a; // needs additional integer parameter
+	*/
+
+	Integer temp;
+	*temp.int_ptr = *int_ptr + i;
 	return temp;
 }
 
@@ -137,9 +160,19 @@ bool Integer::operator==(const Integer& obj) const
 	return *int_ptr == *obj.int_ptr;
 }
 
+bool Integer::operator==(const int& i) const
+{
+	return *int_ptr == i;
+}
+
 bool Integer::operator<(const Integer& obj) const
 {
 	return *int_ptr < *obj.int_ptr;
+}
+
+bool Integer::operator<(const int& i) const
+{
+	return *int_ptr < i;
 }
 
 bool Integer::operator<=(const Integer& obj) const
@@ -147,14 +180,29 @@ bool Integer::operator<=(const Integer& obj) const
 	return *int_ptr <= *obj.int_ptr;
 }
 
+bool Integer::operator<=(const int& i) const
+{
+	return *int_ptr <= i;
+}
+
 bool Integer::operator>(const Integer& obj) const
 {
 	return *int_ptr > *obj.int_ptr;
 }
 
+bool Integer::operator>(const int& i) const
+{
+	return *int_ptr > i;
+}
+
 bool Integer::operator>=(const Integer& obj) const
 {
 	return *int_ptr >= *obj.int_ptr;
+}
+
+bool Integer::operator>=(const int& i) const
+{
+	return *int_ptr >= i;
 }
 
 /*
@@ -167,8 +215,40 @@ You can call like ...
 	a();
 */
 void Integer::operator()() {
-	std::cout << "Function call operator\n" << this->GetValue();
-};
+	std::cout << "Function call operator\n" << this->GetValue() << '\n';
+}
+// Conversion operator
+Integer::operator int()
+{
+	return *int_ptr;
+}
+Integer::operator long()
+{
+	return static_cast<long>(*int_ptr);
+}
+Integer::operator long long()
+{
+	return static_cast<long long>(*int_ptr);
+}
+Integer::operator float()
+{
+	return static_cast<float>(*int_ptr);
+}
+Integer::operator double()
+{
+	return static_cast<double>(*int_ptr);
+}
+
+// I can access underlying pointer
+int* Integer::operator->() {
+	// I can access underlying pointer
+	return this->GetPointer();
+}
+//I can call like a regular pointer
+int Integer::operator*() {
+	//I can call like a regular pointer
+	return this->GetValue();
+}
 
 
 
@@ -221,6 +301,20 @@ void print(Integer i)
 	// copy constructor at input
 	std::cout << i.GetValue() << '\n';
 }
+
+void print(std::unique_ptr<Integer> ptr)
+{
+	// copy constructor at input
+	std::cout << ptr->GetValue() << '\n';
+}
+
+void print(std::shared_ptr<Integer> ptr)
+{
+	// copy constructor at input
+	std::cout << ptr->GetValue() << '\n';
+}
+
+
 Integer add(int x, int y) {
 	// copy constructor at output
 	return Integer(x + y);
