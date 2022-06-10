@@ -29,11 +29,15 @@ Integer& Integer::operator=(const Integer& obj)
 	return *this;
 }
 
+inline void Integer::Move(Integer& obj) {
+	int_ptr = obj.int_ptr;
+	obj.int_ptr = nullptr; // potential memory leak!
+}
+
 Integer::Integer(Integer&& obj)
 {
 	std::cout << "Integer(Integer&& obj)\n";
-	int_ptr = obj.int_ptr;
-	obj.int_ptr = nullptr;
+	Move(obj);
 }
 
 Integer& Integer::operator=(Integer&& obj)
@@ -41,8 +45,7 @@ Integer& Integer::operator=(Integer&& obj)
 	std::cout << "operator=(Integer&& obj)\n";
 	if (int_ptr != obj.int_ptr)
 	{
-		int_ptr = obj.int_ptr;
-		obj.int_ptr = nullptr;
+		this->Move(obj);
 	}
 	return *this;
 }
@@ -70,8 +73,18 @@ void Integer::SetValue(int value)
 
 // -*-*-* Operators Overloading *-*-*-
 // Math
+// Integer sum = a + 5;
 Integer Integer::operator+(const Integer& obj) const
 {
+	/*
+	* It is OK
+	Integer a(1)
+	Integer sum = a + 5;
+
+	* It is not OK
+	Integer sum = 5 + a; // needs additional integer parameter
+	*/
+
 	Integer temp;
 	*temp.int_ptr = *int_ptr + *obj.int_ptr;
 	return temp;
@@ -143,6 +156,62 @@ bool Integer::operator>=(const Integer& obj) const
 {
 	return *int_ptr >= *obj.int_ptr;
 }
+
+/*
+		Function call operator. operator()
+* be carreful it may cause "vexing parse problem"
+It can takes as many as you want.
+
+You can call like ...
+	Integer a;
+	a();
+*/
+void Integer::operator()() {
+	std::cout << "Function call operator\n" << this->GetValue();
+};
+
+
+
+
+// !!! If function parameters don't start with class name(Integer) must be global or friend !!!
+// !!! so that these operators must be global or friend. !!!
+// Integer sum = 5 + a;
+Integer operator+(int i, const Integer& obj)
+{
+	Integer temp;
+	temp.SetValue(i + obj.GetValue());
+	return temp;
+}
+
+Integer operator-(int i, const Integer& obj)
+{
+	Integer temp;
+	temp.SetValue(i - obj.GetValue());
+	return temp;
+}
+
+// operator for streaming string
+// You need to #include<iosfwd>
+std::ostream& operator<<(std::ostream& out, const Integer& obj) {
+	// out << obj.GetValue() << '\n';
+	out << *obj.int_ptr << '\n'; // only for friend functions.
+	return out;
+}
+
+std::istream& operator>>(std::istream& in, Integer& obj) {
+	int temp;
+	in >> temp;
+	// obj.SetValue(temp);
+	*obj.int_ptr = temp; // only for friend functions.
+	return in;
+}
+
+
+
+
+
+
+
 
 
 

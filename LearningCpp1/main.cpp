@@ -15,7 +15,7 @@ int main()
 	OperatorOverloading_Main();
 
 
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 

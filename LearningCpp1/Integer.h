@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <iosfwd>
 
 /*
 Copy constructor automatically synthesizes but compiler generates wrong(swallow) copy constructor
@@ -21,6 +22,7 @@ class Integer
 {
 private:
 	int* int_ptr;
+	void Move(Integer& obj);
 public:
 	//Constructors
 	Integer();
@@ -40,6 +42,7 @@ public:
 
 	// -*-*-* Operators Overloading *-*-*-
 	// Math
+	// Integer sum = a + 5;
 	Integer operator+(const Integer& obj) const; // doesn't modify the state of the object, so qualify it with const.
 	Integer operator-(const Integer& obj) const; // doesn't modify the state of the object, so qualify it with const.
 
@@ -56,8 +59,52 @@ public:
 	bool operator>(const Integer& obj) const;
 	bool operator>=(const Integer& obj) const;
 
+	/*
+			Function call operator. operator()
+	* be carreful it may cause "vexing parse problem"
+	It can takes as many as you want.
+
+	You can call like ...
+		Integer a;
+		a();
+	*/
+	void operator()();
+
+	// !!! If function parameters don't start with class name(Integer) must be global or friend !!!
+	// !!! so that these operators must be global or friend. !!!
+
+	// Friend allows us to access the internal private data of the class directly.
+	// so that it can source of bugs. 
+	// That is why friend functions and classes should be used only as a [last resort](son çare) to solve your problem.
+
+	// Integer sum = 5 + a;
+	friend Integer operator+(int i, const Integer& obj);
+	friend Integer operator-(int i, const Integer& obj);
+
+	// operator for streaming string
+	// You need to #include<iosfwd>
+	friend std::ostream& operator<<(std::ostream& out, const Integer& obj);
+
+	friend std::istream& operator>>(std::istream& in, Integer& obj);
+	friend class foo; // friend class
 };
 
+class foo {
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+// Dummy functions
 void print(Integer);
 Integer add(int, int);
 
