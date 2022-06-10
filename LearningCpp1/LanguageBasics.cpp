@@ -1,5 +1,7 @@
 #pragma once
-#include "AllStandartHeaders.h"	// Bad Practice
+#include <iostream>
+#include <vector>
+#include <array>
 #include "AllMacrosInOnePlace.h"
 #include "MyMath.h"
 // My Utility headers
@@ -685,7 +687,7 @@ void LanguageBasics_Main() {
 	// LoopFor();
 	// loopRangeBased();
 	// loopWhile();
-	fibonacciExercise();
+	// fibonacciExercise();
 
 	//Memory
 	// Initializations();
@@ -702,5 +704,5 @@ void LanguageBasics_Main() {
 	//VexginParse::VexginParse_main();
 
 	// homeworks
-	HomeWorks::homework1_test();
+	HomeWork1::homework1_test();
 }

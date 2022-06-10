@@ -180,11 +180,12 @@ namespace HomeWork1 {
 		// extremely simple implementation. There is severely implementations.
 		// normally i need a ring-buffer. I will make other Moving Average filters later.
 		int size = vec.size();
+		float temp{ 0 };
 		float avg{ 0 };
 		std::vector<float> avg_vec{};
-		for (int i = 0; i < size - block_size; ++i)
+		for (auto&& i = 0; i < size - block_size; ++i)
 		{
-			float temp{ 0 };
+			temp = 0;
 			for (size_t j = i; j < block_size + i; ++j)
 			{
 				temp += vec.at(i);
