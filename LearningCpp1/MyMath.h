@@ -13,7 +13,7 @@ int factorial(uint32_t);
 std::vector<int> fibonacci_series(uint32_t n);
 int fib_power(int);
 
-// HomeWorks
+// HomeWork 1
 /*
 * "LinearSearch"	- correct
 * "Factorial"		- correct
