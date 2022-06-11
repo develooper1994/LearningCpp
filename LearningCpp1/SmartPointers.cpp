@@ -55,6 +55,7 @@ namespace {
 	}
 
 	void unique(int value) {
+		// !!! only one owner !!!
 		// unique_ptr deletes object end of the scope. I don't have to deal with memory management at all.
 		// unique_ptr has explicit constructors. So that we have to use direct initialization.
 		std::unique_ptr<Integer> p{ GetPointer(value) };
@@ -83,6 +84,7 @@ namespace {
 
 	void shared(int value) {
 		// not yet implemented
+		// !!! more than one owner !!!
 
 	}
 
@@ -90,7 +92,7 @@ namespace {
 		auto value = 5;
 		notRecommended(value);
 		unique(value);
-		shared(int value);
+		shared(value);
 	}
 }
 
