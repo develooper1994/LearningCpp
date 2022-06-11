@@ -727,7 +727,7 @@ void LanguageBasics_Main() {
 
 	// !!! Important Problems !!!
 	//VexginParse::VexginParse_main();
-	Weirdness::test();
+	//Weirdness::test();
 	// !!! zero width space character(U+200B) !!! => invisible unicode character that causes compiler syntax errors you can't see. It is a nightmare :@
 
 	// homeworks
