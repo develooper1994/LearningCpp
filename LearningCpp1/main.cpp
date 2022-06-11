@@ -8,12 +8,12 @@ auto main() -> int // modern c++ way
 
 	// lesson main functions.
 
-	LanguageBasics_Main();
+	//LanguageBasics_Main();
 	//Memory_Main();
 	//ClassesObjects_Main();
 	//L_R_Values_Main();
 	//OperatorOverloading_Main();
-	//SmartPointers_main();
+	SmartPointers_main();
 
 
 	return EXIT_SUCCESS;
