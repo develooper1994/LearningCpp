@@ -645,6 +645,7 @@ void NamespaceCpp()
 	Internal();
 }
 
+// !!! Important Problems !!!
 namespace VexginParse {
 	// reference: https://www.youtube.com/watch?v=ByKf_foSlXY
 	struct Type {
@@ -676,6 +677,29 @@ namespace VexginParse {
 	}
 }
 
+namespace Weirdness {
+	struct ST {
+		int x = 15;
+		int y = 20;
+	};
+
+	void test() {
+		int a[]{ 1,2,3,4,5 };
+		std::cout << "\nWeird array access\n";
+		// all of them gives the same result.
+		std::cout << "a[3]= " << a[3] << '\n';
+		std::cout << "*(a + 3)= " << *(a + 3) << '\n';
+		std::cout << "*(3 + a)= " << *(3 + a) << '\n';
+		std::cout << "3[a] = " << 3[a] << '\n'; // It is also valid for some reason.
+
+		std::cout << "\nWeird struct access\n";
+		ST data;
+		std::cout << "data.x= " << data.x << '\n';
+		// "data.y" and "*(&(data.x) + 1)" gives the same result.
+		std::cout << "data.y=" << "*(&(data.x) + 1)= " << *(&(data.x) + 1) << '\n'; // take the address "&(data.x)" forward 1 and access the data from the address.
+	}
+}
+
 void LanguageBasics_Main() {
 	// helloWorld();
 	// comments();
@@ -701,7 +725,10 @@ void LanguageBasics_Main() {
 	// switchCase()
 	// FunctionPointer();
 
+	// !!! Important Problems !!!
 	//VexginParse::VexginParse_main();
+	Weirdness::test();
+	// !!! zero width space character(U+200B) !!! => invisible unicode character that causes compiler syntax errors you can't see. It is a nightmare :@
 
 	// homeworks
 	HomeWork1::homework1_test();
