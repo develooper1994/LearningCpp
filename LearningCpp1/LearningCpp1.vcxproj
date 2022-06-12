@@ -145,6 +145,7 @@
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="ClassesObjects.cpp" />
     <ClCompile Include="DrawLine.cpp" />
+    <ClCompile Include="Employee.cpp" />
     <ClCompile Include="Integer.cpp" />
     <ClCompile Include="LanguageBasics.cpp" />
     <ClCompile Include="L_R_Values.cpp" />
@@ -153,6 +154,9 @@
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="OperatorOverloading.cpp" />
+    <ClCompile Include="Printer.cpp" />
+    <ClCompile Include="Project.cpp" />
+    <ClCompile Include="Project2.cpp" />
     <ClCompile Include="SmartPointers.cpp" />
     <ClCompile Include="UtilityHeader.cpp" />
   </ItemGroup>
@@ -162,6 +166,7 @@
     <ClInclude Include="Car.h" />
     <ClInclude Include="ClassesObjects.h" />
     <ClInclude Include="DrawLine.h" />
+    <ClInclude Include="Employee.h" />
     <ClInclude Include="Integer.h" />
     <ClInclude Include="IntegerCpp11.h" />
     <ClInclude Include="LessonHeaders.h" />
@@ -175,6 +180,9 @@
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="OperatorOverloading_Headers.h" />
+    <ClInclude Include="Printer.h" />
+    <ClInclude Include="Project.h" />
+    <ClInclude Include="Project2.h" />
     <ClInclude Include="SmartPointers.h" />
     <ClInclude Include="UtilityHeader.h" />
   </ItemGroup>

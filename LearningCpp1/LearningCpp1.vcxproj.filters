@@ -106,6 +106,9 @@
     <Filter Include="Lessons\2-2%29 Memory - Smart Pointers\Classes\Source Files">
       <UniqueIdentifier>{620caa8d-3479-4e45-bd4f-a72d343187ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lessons\6%29 MoreCpp">
+      <UniqueIdentifier>{7c3cbaed-decb-44e9-a33f-f0c6fffe06ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -149,6 +152,18 @@
     </ClCompile>
     <ClCompile Include="SmartPointers.cpp">
       <Filter>Lessons\2-2%29 Memory - Smart Pointers\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Project.cpp">
+      <Filter>Lessons\2-2%29 Memory - Smart Pointers\Classes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Employee.cpp">
+      <Filter>Lessons\2-2%29 Memory - Smart Pointers\Classes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Printer.cpp">
+      <Filter>Lessons\2-2%29 Memory - Smart Pointers\Classes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Project2.cpp">
+      <Filter>Lessons\2-2%29 Memory - Smart Pointers\Classes\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +226,18 @@
     </ClInclude>
     <ClInclude Include="SmartPointers.h">
       <Filter>Lessons\2-2%29 Memory - Smart Pointers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Project.h">
+      <Filter>Lessons\2-2%29 Memory - Smart Pointers\Classes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Employee.h">
+      <Filter>Lessons\2-2%29 Memory - Smart Pointers\Classes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Printer.h">
+      <Filter>Lessons\2-2%29 Memory - Smart Pointers\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Project2.h">
+      <Filter>Lessons\2-2%29 Memory - Smart Pointers\Classes\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
