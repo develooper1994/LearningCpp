@@ -109,6 +109,21 @@
     <Filter Include="Lessons\6%29 MoreCpp">
       <UniqueIdentifier>{7c3cbaed-decb-44e9-a33f-f0c6fffe06ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lessons\6%29 MoreCpp\Header Files">
+      <UniqueIdentifier>{906179e5-2990-4d0d-a04f-f8073b033a59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\6%29 MoreCpp\Source Files">
+      <UniqueIdentifier>{4d35faf3-71a3-4305-bbdc-3cc101494f93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\6%29 MoreCpp\Classes">
+      <UniqueIdentifier>{a28025ac-664f-4ebb-ab1b-91457fc3a50d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\6%29 MoreCpp\Classes\Header Files">
+      <UniqueIdentifier>{489f442c-69e1-455b-a64c-bcc55b8eeb6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\6%29 MoreCpp\Classes\Source Files">
+      <UniqueIdentifier>{07fd866b-ea83-458b-b462-17d974d50ee0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -164,6 +179,9 @@
     </ClCompile>
     <ClCompile Include="Project2.cpp">
       <Filter>Lessons\2-2%29 Memory - Smart Pointers\Classes\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MoreCpp.cpp">
+      <Filter>Lessons\6%29 MoreCpp\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="Project2.h">
       <Filter>Lessons\2-2%29 Memory - Smart Pointers\Classes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MoreCpp.h">
+      <Filter>Lessons\6%29 MoreCpp\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

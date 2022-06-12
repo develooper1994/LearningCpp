@@ -352,7 +352,7 @@ namespace Others {
 			std::unique_ptr<int> b{ new int[] {1,2,3,4,5} };
 			//b[3] = 55; // !!! ERROR !!!
 			b.get()[3] = 55; // Valid
-			std::cout << "sizeof(b)= " << sizeof(b) << '\n'; // gives the wrong answer
+			std::cout << "sizeof(b)= " << sizeof(b) << '\n'; // gives the wrong answer. Because smart pointer holds extra data inside
 
 		}
 		std::cout << "\nunique_ptr<int[]>\n";
@@ -361,7 +361,7 @@ namespace Others {
 			std::unique_ptr<int[]> b{ new int[] {10,20,30,40,50} };
 			b[3] = 55; // Valid
 			b.get()[0] = 111; // Valid
-			std::cout << "sizeof(b)= " << sizeof(b) << '\n'; // gives the wrong answer
+			std::cout << "sizeof(b)= " << sizeof(b) << '\n'; // gives the wrong answer. Because smart pointer holds extra data inside
 		}
 		std::cout << '\n';
 	}
@@ -414,7 +414,7 @@ namespace Others {
 
 			// shared_ptr to a vector<int>[4], where each vector has contents {5, 6};
 			// std::vector<int> sp9 = new std::vector<int>[4]{5, 6}; // has contents {5, 6};
-			auto sp9 = std::make_shared<std::vector<int>[]>(4, { 5, 6 }); 
+			auto sp9 = std::make_shared<std::vector<int>[]>(4, { 5, 6 });
 			// shared_ptr to a vector<int>[4], where each vector has contents {5, 6};
 			// std::vector<int> sp9[4]; // each std::vector<int> has contents {5, 6};
 			auto spC = std::make_shared<std::vector<int>[4]>({ 5, 6 });

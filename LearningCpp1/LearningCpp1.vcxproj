@@ -151,6 +151,7 @@
     <ClCompile Include="L_R_Values.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="MoreCpp.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="OperatorOverloading.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="LanguageBasics.h" />
     <ClInclude Include="LanguageBasicsHeaders.h" />
     <ClInclude Include="Memory.h" />
+    <ClInclude Include="MoreCpp.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="OperatorOverloading_Headers.h" />
