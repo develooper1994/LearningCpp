@@ -169,9 +169,11 @@ namespace HomeWork1 {
 		{
 			if (vec.at(i) == item)
 			{
+				std::cout << "buldu";
 				return i;
 			}
 		}
+		std::cout << "bulamadý";
 		return -1;
 	}
 
