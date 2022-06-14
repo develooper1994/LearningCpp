@@ -199,13 +199,11 @@ namespace Strings {
 		std::stringstream ss;
 		ss.str(encodded);
 		// writes last element twice
-		//while (!ss.fail())
-		//{
+		//while (!ss.fail()){
 		//	ss >> a2;
 		//	std::cout << a2 << '\n';
 		//}
-		while (ss >> a2)
-		{
+		while (ss >> a2) {
 			std::cout << a2 << '\n';
 		}
 
@@ -213,11 +211,6 @@ namespace Strings {
 		std::cout << std::stof("54") << '\n';  // string to float
 		std::cout << std::stod("54") << '\n';  // string to double
 		std::cout << std::stoull("54") << '\n';  // string to unsigned long long
-
-
-
-
-
 	}
 
 	void subroutine1() {
