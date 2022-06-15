@@ -125,7 +125,7 @@ namespace Strings {
 		char ch = s[0];
 
 		std::cout << s << '\n';
-		// std::cin >> s; // Throws exception
+		std::cin >> s; // old c++ way
 
 		std::getline(std::cin, s);	// #include <string>
 		// Size
@@ -144,15 +144,19 @@ namespace Strings {
 		}
 
 		// Removal
-		s.erase(); // s.clear();
-		s.erase(2); // erase 2.index
+		s.erase(2); // erase until 2.index
 		s.clear(); // erases all string
+		s.erase(); // s.clear();
 
 		// Search
 		auto pos = s.find("Sugar", 0);
 		if (pos != std::string::npos) // std::string::npos is -1
 		{
 			std::cout << "\nfound\n";
+		}
+		else
+		{
+			std::cout << "\nnot found\n";
 		}
 
 
@@ -170,8 +174,6 @@ namespace Strings {
 		using namespace std::string_literals;
 		auto a = "asf";  // const char *
 		auto b = "asf"s; // std::string
-
-
 	}
 
 	void stringStream() {
@@ -208,27 +210,37 @@ namespace Strings {
 		}
 
 		std::cout << std::stoi("54") << '\n';  // string to int
-		std::cout << std::stof("54") << '\n';  // string to float
-		std::cout << std::stod("54") << '\n';  // string to double
-		std::cout << std::stoull("54") << '\n';  // string to unsigned long long
+		std::cout << std::stof("55") << '\n';  // string to float
+		std::cout << std::stod("56") << '\n';  // string to double
+		std::cout << std::stoull("57") << '\n';  // string to unsigned long long
 	}
 
 	void subroutine1() {
-		//oldStyle();
+		oldStyle();
 		newStyle();
-		//stringStream();
+		stringStream();
 	}
 }
 
 namespace Assignments {
-	constexpr auto fark = ('a' - 'A');
+	const auto BigMin = 'A';
+	const auto BigMax = 'Z';
+	const auto smallMin = 'a';
+	const auto smallMax = 'z';
+	const auto fark = (smallMin - BigMin); // 97 - 65 = 
 	std::string ToUpper(const std::string& str) {
 		auto lenght = str.length();
 		std::string temp("");
 		for (size_t i = 0; i < lenght; ++i)
 		{
-			temp = str.at(i);
-			temp = temp.c_str() + fark;
+			const auto& cc = str.at(i);
+			const auto& c = static_cast<int>(cc);
+			char offset{};
+			if (!(c >= BigMin || c <= BigMax))
+			{
+				offset = static_cast<char>(c - fark);
+			}
+			temp += offset;
 		}
 		return std::string(temp);
 	}
@@ -237,22 +249,29 @@ namespace Assignments {
 		std::string temp("");
 		for (size_t i = 0; i < lenght; ++i)
 		{
-			temp = str.at(i);
-			temp = temp.c_str() - fark;
+			const auto& cc = str.at(i);
+			const auto& c = static_cast<int>(cc);
+			char offset{};
+			if (!(c >= smallMin || c <= smallMax))
+			{
+				offset = static_cast<char>(c + fark);
+			}
+			temp += offset;
 		}
 		return std::string(temp);
 	}
 	void Assignments_test() {
 
-		std::string UP("UP");
-		std::string down("down");
-		ToUpper(down);
-		ToLower(UP);
+		std::string UP("AbCde");
+		std::string down("AbCde");
+		std::cout << "UP: " << UP << " || ToUpper(down): " << ToUpper(down) << '\n';
+		std::cout << "down: " << down << " || ToLower(UP): " << ToLower(UP) << '\n';
 
 	}
 }
 
 void MoreCpp_Main() {
 	//Enums::subroutine1();
-	Strings::subroutine1();
+	//Strings::subroutine1();
+	Assignments::Assignments_test();
 }
