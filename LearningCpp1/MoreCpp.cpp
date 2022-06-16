@@ -262,6 +262,12 @@ namespace literals {
 	}
 }
 
+namespace constexpr_const {
+	void subroutine1() {
+
+	}
+}
+
 namespace Assignments {
 	void IsTestSuccessed(const int& test_cases_size, const int& test_count) {
 		if (test_cases_size == test_count)
@@ -398,4 +404,5 @@ void MoreCpp_Main() {
 	//Strings::subroutine1();
 	Assignments::Assignments_test();
 	literals::subroutine1();
+	constexpr_const::subroutine1();
 }
