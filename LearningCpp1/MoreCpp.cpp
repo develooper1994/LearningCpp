@@ -3,6 +3,12 @@
 #include <sstream>
 
 
+#include <vector>
+#include <array>
+
+#include <ranges>
+#include <algorithm>
+
 namespace Enums {
 	// Enum elements are accessible in the scope
 	// https://www.programiz.com/cpp-programming/enumeration
@@ -223,24 +229,36 @@ namespace Strings {
 }
 
 namespace Assignments {
+	void IsTestSuccessed(const int& test_cases_size, const int& test_count) {
+		if (test_cases_size == test_count)
+		{
+			std::cout << "TEST SUCCESSED :D\n";
+		}
+		else
+		{
+			std::cout << "TEST FAILED :((\n";
+		}
+	}
 	const auto BigMin = 'A';
 	const auto BigMax = 'Z';
 	const auto smallMin = 'a';
 	const auto smallMax = 'z';
-	const auto fark = (smallMin - BigMin); // 97 - 65 = 
+	const auto fark = (smallMin - BigMin); // 97 - 65 = 32
+	const auto IsBigChar = [](const char& c) { return c >= BigMin && c <= BigMax; };
+	const auto IsSmallChar = [](const char& c) { return c >= smallMin && c <= smallMax; };
+	const auto IsAlphabet = [](const char& c) {return IsBigChar(c) || IsSmallChar(c); };
 	std::string ToUpper(const std::string& str) {
 		auto lenght = str.length();
 		std::string temp("");
 		for (size_t i = 0; i < lenght; ++i)
 		{
 			const auto& cc = str.at(i);
-			const auto& c = static_cast<int>(cc);
-			char offset{};
-			if (!(c >= BigMin || c <= BigMax))
-			{
-				offset = static_cast<char>(c - fark);
+			auto&& c = static_cast<int>(cc); // must be lvalue
+			//char& offset{ cc };
+			if (IsAlphabet(c) && !IsBigChar(c)) {
+				c = static_cast<char>(c - fark);
 			}
-			temp += offset;
+			temp += c;
 		}
 		return std::string(temp);
 	}
@@ -250,22 +268,93 @@ namespace Assignments {
 		for (size_t i = 0; i < lenght; ++i)
 		{
 			const auto& cc = str.at(i);
-			const auto& c = static_cast<int>(cc);
-			char offset{};
-			if (!(c >= smallMin || c <= smallMax))
-			{
-				offset = static_cast<char>(c + fark);
+			auto&& c = static_cast<int>(cc); // must be lvalue
+			//char& offset{ cc };
+			if (IsAlphabet(c) && !IsSmallChar(c)) {
+				c = static_cast<char>(c + fark);
 			}
-			temp += offset;
+			temp += c;
 		}
 		return std::string(temp);
 	}
-	void Assignments_test() {
 
-		std::string UP("AbCde");
-		std::string down("AbCde");
-		std::cout << "UP: " << UP << " || ToUpper(down): " << ToUpper(down) << '\n';
-		std::cout << "down: " << down << " || ToLower(UP): " << ToLower(UP) << '\n';
+	void Assignment1_test() {
+		std::cout << std::string("-*-*-*-*") << " Assignment1_test() " << std::string("*-*-*-*-") << '\n';
+
+		std::vector<std::string> test_cases{ "AAA", "aaa", "AbCde", "1AbC1d2e3", "!1'A^b+C%1&d/2(e)3=?-_" };
+		auto test_count = 0;
+		for (auto&& test : test_cases) {
+			++test_count;
+			std::cout << test_count << ") " <<
+				"test: " << test << " || " <<
+				"ToUpper: " << ToUpper(test) << '\n' <<
+				"ToLower: " << ToLower(test) << '\n';
+		}
+
+
+		IsTestSuccessed(test_cases.size(), test_count);
+	}
+
+	enum class Case { SENSITIVE, INSENSITIVE };
+	size_t Find(
+		const std::string& source,         //Source string to be searched
+		const std::string& search_string,  //The string to search for
+		Case searchCase = Case::INSENSITIVE,//Choose case sensitive/insensitive search
+		size_t offset = 0) {                //Start the search from this offset
+		//Implementation
+
+		/*
+		return position of the first character
+		of the substring, else std::string::npos
+		*/
+
+		const auto& source_temp = ToLower(source);
+		const auto& search_string_temp = ToLower(search_string);
+
+		size_t index = source_temp.find(search_string_temp, offset);
+
+		return index; // ISFound ? index : std::string::npos;
+	}
+
+
+	void Assignment2_test() {
+		std::cout << std::string("-*-*-*-*") << " Assignment2_test() " << std::string("*-*-*-*-") << '\n';
+
+		std::vector<std::string> test_cases{ "AAA", "aaa", "AbCde", "1AbC1d2e3", "!1'A^b+C%1&d/2(e)3=?-_" };
+		std::vector<std::string> test_search_string_cases{
+			"A", "AA",
+			"a", "aa",
+			"Ab", "aB",
+			"Cd", "de",
+			"1", "1A", "C1", "d2e3", "d2e33", "d2ee", "d2e3e",
+			"A^b+C%1&d/2(e)", "\"A^b+C%1&d/2(e)"
+		};
+
+		auto test_count = 0;
+		std::string found = "not found";
+		for (auto&& test : test_cases) {
+			for (auto&& test_search : test_search_string_cases)
+			{
+				++test_count;
+				const auto& pos = Find(test, test_search);
+				found = pos != std::string::npos ? "found" : "not found";
+				std::cout << test_count << ") " <<
+					"test: " << test << " || " <<
+					"test_search: " << test_search << " || " <<
+					"Find: " << found <<
+					"Position: " << pos <<
+					" \n";
+			}
+		}
+
+
+		auto allTestCount = test_cases.size() * test_search_string_cases.size();
+		IsTestSuccessed(allTestCount, test_count);
+	}
+
+	void Assignments_test() {
+		Assignment1_test();
+		Assignment2_test();
 
 	}
 }
