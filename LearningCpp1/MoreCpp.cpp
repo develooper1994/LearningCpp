@@ -228,6 +228,40 @@ namespace Strings {
 	}
 }
 
+namespace literals {
+	/*
+	<type> operator"" _<literal-name>(){}
+	- user defines literals must be specified with '_'. Others reserved by compilers.
+	- only following types can be suffixed to make a user-defined literal: unsigned long long, long double, const char*, char
+	- cannot overload build-in literals.
+	- Literal operator functions cannot be member functions.
+	*/
+	class Distance
+	{
+	private:
+		long double mem_km;
+	public:
+		Distance(long double km) : mem_km{ km } {}
+		long double SetKm() const {
+			return mem_km;
+		}
+		~Distance() = default;
+	};
+	Distance operator"" _mi(long double val) {
+		return Distance{ val * 1.6 };
+	}
+	Distance operator"" _metre(long double val) {
+		return Distance{ val / 1000 };
+	}
+
+	void subroutine1() {
+		Distance dist1{ 32.0 };
+		Distance dist2{ 32.0_mi };
+		Distance dist3{ 32.0_metre };
+
+	}
+}
+
 namespace Assignments {
 	void IsTestSuccessed(const int& test_cases_size, const int& test_count) {
 		if (test_cases_size == test_count)
@@ -363,4 +397,5 @@ void MoreCpp_Main() {
 	//Enums::subroutine1();
 	//Strings::subroutine1();
 	Assignments::Assignments_test();
+	literals::subroutine1();
 }
