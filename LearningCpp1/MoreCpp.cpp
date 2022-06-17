@@ -386,9 +386,6 @@ namespace initializer_list_space {
 }
 
 namespace vector {
-
-
-
 	void subroutine1() {
 		std::vector<int> data{ 1,2,3 };
 		for (size_t i = 0; i < 5; i++)
@@ -435,6 +432,137 @@ namespace vector {
 			std::cout << x << ' ';
 		}
 		std::cout << '\n';
+
+	}
+}
+
+namespace Unions {
+	/*
+	Struct holds data in separate
+	Union holds data in same memory. Size of union will be equal to size of its largest member, and that could be used for storage.
+
+	- Saves space(embedded applications)
+	- no way to know which type it holds
+	- Nested types with non-default constructor deletes the default constructor of the union
+	- cannot assign objects of user defined types directly to a union member
+	- user defined types are not destroyed implicitly
+	- cannot have a base class
+	- cannot derive from a union
+	- cannot contain virtual funtions.
+	NOTE: If you have to use union you have really know what you are doing. Unions have many restrictions.
+	NOTE: C++ 17 introduces variants as type safe union.
+	*/
+	// To show which method calling, use "__FUNCSIG__"
+	union Test
+	{
+		int x; // size of union is 4.
+		char ch;
+		double d; // size of union is 8 now.
+		Test() : ch{ 'c' } //x{ 0 }, ch{ 's' }	  // you can initialize only one member
+		{
+			std::cout << __FUNCSIG__ << "\n";
+		}
+		~Test() {
+			std::cout << __FUNCSIG__ << "\n";
+		}
+	};
+
+	// A and B structs are dummy. Don't care about them :)
+	// except that I have implemented all the functions from rules of classes
+	struct A {
+		// default
+		A() {
+			std::cout << __FUNCSIG__ << '\n';
+		}
+		~A() {
+			std::cout << __FUNCSIG__ << '\n';
+		}
+		// copy
+		A(const A& obj)
+		{
+			std::cout << __FUNCSIG__ << '\n';
+		}
+		A& operator=(const A& obj)
+		{
+			std::cout << __FUNCSIG__ << '\n';
+			return this == &obj ? *this : *this;
+		}
+		// move
+		A(A&& obj)
+		{
+			std::cout << __FUNCSIG__ << '\n';
+		}
+		A& operator=(A&& obj)
+		{
+			std::cout << __FUNCSIG__ << '\n';
+			return this == &obj ? *this : *this;
+		}
+	};
+	struct B {
+		// default
+		B() {
+			std::cout << __FUNCSIG__ << '\n';
+		}
+		~B() {
+			std::cout << __FUNCSIG__ << '\n';
+		}
+		// copy
+		B(const B& obj)
+		{
+			std::cout << __FUNCSIG__ << '\n';
+		}
+		B& operator=(const B& obj)
+		{
+			std::cout << __FUNCSIG__ << '\n';
+			return this == &obj ? *this : *this;
+		}
+		// move
+		B(B&& obj)
+		{
+			std::cout << __FUNCSIG__ << '\n';
+		}
+		B& operator=(B&& obj)
+		{
+			std::cout << __FUNCSIG__ << '\n';
+			return this == &obj ? *this : *this;
+		}
+	};
+	union Union_Data_Types {
+		A a; // defined but not created
+		B b; // defined but not created
+		std::string str; // defined but not created // largest member ;)
+		// A and B have user defined default constructors. The default constructor and destructor of union becomes deleted.
+		Union_Data_Types() {
+			std::cout << __FUNCSIG__ << '\n';
+		}
+		~Union_Data_Types() {
+			std::cout << __FUNCSIG__ << '\n';
+		}
+	};
+	void subroutine1() {
+		Test t;
+		std::cout << sizeof(t) << '\n';
+
+		std::cout << t.ch << '\n';
+		t.x = 1000;
+		std::cout << t.ch << '\n';
+
+		Union_Data_Types U;
+		//U.a = A{}; // !!! ERROR !!! You can use the assignment operator only when the instances have been created.
+		using namespace std::string_literals;
+		//U.str = "dsahfgjmk"s; // !!! CRASH !!! // doesn't allocate memory ;)
+
+		// -*-*-*-* rigth way with unions *-*-*-*-
+		// new(<address of the member>) <type>{"data"};
+		// doesn't call user defined types of destructor automatically. You have delete manually
+		new(&U.str) std::string{ "asdfasdf" }; // You have to allocate memory 
+		new(&U.a) A{};
+		new(&U.b) B{};
+
+		U.a.~A();
+		U.b.~B();
+
+
 
 	}
 }
@@ -655,12 +783,14 @@ namespace Assignments {
 }
 
 void MoreCpp_Main() {
-	//Enums::subroutine1();
-	//Strings::subroutine1();
-	//literals::subroutine1();
-	//constexpr_const::subroutine1();
-	//initializer_list_space::subroutine1();
-	//vector::subroutine1();
+	Enums::subroutine1();
+	Strings::subroutine1();
+	literals::subroutine1();
+	constexpr_const::subroutine1();
+	initializer_list_space::subroutine1();
+	vector::subroutine1();
+	Unions::subroutine1();
+
 
 	Assignments::Assignments_test();
 }
