@@ -154,6 +154,7 @@
     <ClCompile Include="MoreCpp.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="Number.cpp" />
+    <ClCompile Include="OOPS.cpp" />
     <ClCompile Include="OperatorOverloading.cpp" />
     <ClCompile Include="Printer.cpp" />
     <ClCompile Include="Project.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="MoreCpp.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="Number.h" />
+    <ClInclude Include="OOPS.h" />
     <ClInclude Include="OperatorOverloading_Headers.h" />
     <ClInclude Include="Printer.h" />
     <ClInclude Include="Project.h" />

@@ -124,6 +124,24 @@
     <Filter Include="Lessons\6%29 MoreCpp\Classes\Source Files">
       <UniqueIdentifier>{07fd866b-ea83-458b-b462-17d974d50ee0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lessons\7%29 OOPS">
+      <UniqueIdentifier>{4ae24344-5dbe-46f8-b2a2-7e5d8ef959a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\7%29 OOPS\Header Files">
+      <UniqueIdentifier>{bf28ad48-9e66-45ef-9651-3576cf55e0b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\7%29 OOPS\Source Files">
+      <UniqueIdentifier>{a001011f-86a7-4108-97a5-d73a3d1580b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\7%29 OOPS\Classes">
+      <UniqueIdentifier>{5346a14d-5fd3-4a90-bf03-8279c3fe2c00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\7%29 OOPS\Classes\Header Files">
+      <UniqueIdentifier>{6f1a2c49-2d28-4746-9eae-39cf8f5e7707}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\7%29 OOPS\Classes\Source Files">
+      <UniqueIdentifier>{29acdbcb-44b7-4ff5-9a07-d1e04d9c45d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -182,6 +200,9 @@
     </ClCompile>
     <ClCompile Include="MoreCpp.cpp">
       <Filter>Lessons\6%29 MoreCpp\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OOPS.cpp">
+      <Filter>Lessons\7%29 OOPS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="MoreCpp.h">
       <Filter>Lessons\6%29 MoreCpp\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OOPS.h">
+      <Filter>Lessons\7%29 OOPS\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
