@@ -56,7 +56,7 @@ int factorial(uint32_t x)
 		return -1;
 	}
 	int temp = 1;
-	for (size_t i = 1; i < x; ++i)
+	for (size_t i = 1; i <= x; ++i)
 	{
 		temp *= i;
 	}

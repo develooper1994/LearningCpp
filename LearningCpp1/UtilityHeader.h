@@ -13,3 +13,6 @@ void settings();
 void Print(int, char);
 
 void EndMessage();
+
+
+std::string repeat(int n);

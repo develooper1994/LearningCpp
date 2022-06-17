@@ -1,8 +1,9 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <cassert>
 
-
+#include <initializer_list>
 #include <vector>
 #include <array>
 
@@ -263,8 +264,123 @@ namespace literals {
 }
 
 namespace constexpr_const {
-	void subroutine1() {
+	// It is a extended const keyword.
+	// Compiler tried to calculate at compile time.
+	// Can be applied to variable declarations or functions
+	// May increase performance
+	/*
+	- I can apply constexpr to only literal types and function that only uses literal types.
+	- Should accept and return literal types only(void, scalar types(void,float,char,...) references, etc...)
+	- constexpr functions implicitly inline functions so that they should be defined inside "header"
+	*/
 
+	// int Get() { return 42; } // computed at run-time
+	// constexpr int Get() { return 42; } // computed at compile-time
+	//They are the same but some const expressions evaluated at compile time.
+
+	constexpr int i = 10;
+	int arr[i];
+
+	const int j = 10;
+	int arr2[j];
+
+	constexpr int Max(int x, int y) {
+		return x > y;
+	}
+
+	constexpr int factorial(uint32_t x) {
+		if (x < 0) {
+			std::cerr << "Error! Factorial of a negative number doesn't exist.";
+			return -1;
+		}
+		int temp = 1;
+		for (size_t i = 1; i <= x; ++i) {
+			temp *= i;
+		}
+		return temp;
+	}
+
+	void subroutine1() {
+		constexpr int fact = factorial(5);
+		std::cout << "constexpr Max: " << Max(10, 15) << '\n';
+		std::cout << "constexpr factorial: " << fact << '\n';
+	}
+}
+
+namespace initializer_list_space {
+	/*
+	- Lightweight proxy object that represents an array of objects
+	- Constructed automatically from a braced list of elements: auto, range based for loop, constructor, function.
+
+	*/
+	class Bag
+	{
+	private:
+		int arr[10];
+		int size{};
+	public:
+		Bag() = default;
+		Bag(std::initializer_list<int> values) {
+			std::cout << "Bag(std::initializer_list<int> values)\n";
+			assert(values.size() < 10);
+			auto iter = values.begin();
+			while (iter != values.end())
+			{
+				Add(*iter);
+				++iter;
+			}
+		}
+		void Add(int value) {
+			assert(size < 10);
+			arr[size++] = value;
+		}
+		void Remove() {
+			--size;
+		}
+		int operator[](int index) {
+			return arr[index];
+		}
+		int GetSize()const {
+			return size;
+		}
+	};
+	void Display(std::initializer_list<int> values) {
+		auto iter = values.begin();
+		//while (iter != values.end())
+		//{
+		//	std::cout << *iter << ' ';
+		//}
+		for (auto x : values)
+		{
+			std::cout << x << ' ';
+		}
+	}
+	void subroutine1() {
+		int x{ 0 };
+		int y{}; // 0
+		float z{ 3.14f };
+		int arr[5]{ 3,1,4,1,0 };
+		std::string s{ "Gümüþhane" };
+		std::initializer_list<int> data{ 1,2,3,4 };
+		auto values = { 1,2,3,4, };
+		// auto values{ 1,2,3,4, }; // !!! ERROR !!!
+
+		Bag bag; // Bag()
+		bag.Add(3);
+		bag.Add(1);
+		bag.Add(4);
+		for (size_t i = 0; i < bag.GetSize(); i++)
+		{
+			std::cout << "bag[" << i << "]" << bag[i] << '\n';
+		}
+
+		Bag bag2{ 3,1,4 }; // Bag(std::initializer_list<int> values)
+		for (size_t i = 0; i < bag2.GetSize(); i++)
+		{
+			std::cout << "bag2[" << i << "]" << bag2[i] << '\n';
+		}
+
+		Display({ 1,2,3,4,5 });
 	}
 }
 
@@ -402,7 +518,8 @@ namespace Assignments {
 void MoreCpp_Main() {
 	//Enums::subroutine1();
 	//Strings::subroutine1();
-	Assignments::Assignments_test();
-	literals::subroutine1();
+	//Assignments::Assignments_test();
+	//literals::subroutine1();
 	constexpr_const::subroutine1();
+	initializer_list_space::subroutine1();
 }

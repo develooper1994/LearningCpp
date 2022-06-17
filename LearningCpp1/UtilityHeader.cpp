@@ -26,3 +26,13 @@ void EndMessage()
 {
 	std::cout << "End of program \n";
 }
+
+
+#include <sstream>
+
+std::string repeat(int n) {
+	std::ostringstream os;
+	for (int i = 0; i < n; i++)
+		os << "repeat";
+	return os.str();
+}
