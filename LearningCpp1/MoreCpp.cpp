@@ -365,6 +365,7 @@ namespace initializer_list_space {
 		auto values = { 1,2,3,4, };
 		// auto values{ 1,2,3,4, }; // !!! ERROR !!!
 
+		// without initializer_list
 		Bag bag; // Bag()
 		bag.Add(3);
 		bag.Add(1);
@@ -373,7 +374,7 @@ namespace initializer_list_space {
 		{
 			std::cout << "bag[" << i << "]" << bag[i] << '\n';
 		}
-
+		// with initializer_list
 		Bag bag2{ 3,1,4 }; // Bag(std::initializer_list<int> values)
 		for (size_t i = 0; i < bag2.GetSize(); i++)
 		{
@@ -381,6 +382,60 @@ namespace initializer_list_space {
 		}
 
 		Display({ 1,2,3,4,5 });
+	}
+}
+
+namespace vector {
+
+
+
+	void subroutine1() {
+		std::vector<int> data{ 1,2,3 };
+		for (size_t i = 0; i < 5; i++)
+		{
+			data.push_back(i * 10);
+		}
+		//Access
+		data[0] = 111;
+		for (size_t i = 0; i < data.size(); i++)
+		{
+			std::cout << data[i];
+		}
+		std::cout << '\n';
+
+		data.at(1) = 10;
+		for (auto v : data)
+		{
+			std::cout << v;
+		}
+		std::cout << '\n';
+
+		auto begin = data.begin();
+		auto begin_3 = *(begin + 3);
+		std::cout << begin_3 << '\n'; // 3. index
+		auto end = data.end();
+		for (auto v = begin; v < end; ++v)
+		{
+			std::cout << *v;
+		}
+		std::cout << '\n';
+
+		//Delete
+		auto iter = data.begin();
+		data.erase(iter);
+		for (auto x : data) {
+			std::cout << x << ' ';
+		}
+		std::cout << '\n';
+
+		//Insert
+		iter = data.begin() + 4;
+		data.insert(iter, 555);
+		for (auto x : data) {
+			std::cout << x << ' ';
+		}
+		std::cout << '\n';
+
 	}
 }
 
@@ -433,8 +488,7 @@ namespace Assignments {
 		}
 		return std::string(temp);
 	}
-
-	void Assignment1_test() {
+	void AssignmentToUpperToLower_test() {
 		std::cout << std::string("-*-*-*-*") << " Assignment1_test() " << std::string("*-*-*-*-") << '\n';
 
 		std::vector<std::string> test_cases{ "AAA", "aaa", "AbCde", "1AbC1d2e3", "!1'A^b+C%1&d/2(e)3=?-_" };
@@ -464,17 +518,20 @@ namespace Assignments {
 		of the substring, else std::string::npos
 		*/
 
-		const auto& source_temp = ToLower(source);
-		const auto& search_string_temp = ToLower(search_string);
-
+		auto source_temp{ source };
+		auto search_string_temp{ search_string };
+		if (searchCase == Case::INSENSITIVE) {
+			source_temp = ToLower(source);
+			search_string_temp = ToLower(search_string);
+		}
+		// <body>
 		size_t index = source_temp.find(search_string_temp, offset);
+		// </body>
 
 		return index; // ISFound ? index : std::string::npos;
 	}
-
-
-	void Assignment2_test() {
-		std::cout << std::string("-*-*-*-*") << " Assignment2_test() " << std::string("*-*-*-*-") << '\n';
+	void AssignmentFind_test() {
+		std::cout << '\n' << std::string("-*-*-*-*") << " AssignmentFind_test() " << std::string("*-*-*-*-") << '\n';
 
 		std::vector<std::string> test_cases{ "AAA", "aaa", "AbCde", "1AbC1d2e3", "!1'A^b+C%1&d/2(e)3=?-_" };
 		std::vector<std::string> test_search_string_cases{
@@ -492,7 +549,7 @@ namespace Assignments {
 			for (auto&& test_search : test_search_string_cases)
 			{
 				++test_count;
-				const auto& pos = Find(test, test_search);
+				const auto& pos = Find(test, test_search, Case::INSENSITIVE);
 				found = pos != std::string::npos ? "found" : "not found";
 				std::cout << test_count << ") " <<
 					"test: " << test << " || " <<
@@ -508,9 +565,91 @@ namespace Assignments {
 		IsTestSuccessed(allTestCount, test_count);
 	}
 
+	std::vector<int>
+		FindAll(
+			const std::string& source,              //Target string to be searched
+			const std::string& search_string,       //The string to search for
+			Case searchCase = Case::INSENSITIVE,    //Choose case sensitive/insensitive search
+			size_t offset = 0) {                    //Start the search from this offset
+		//Implementation
+
+	   /*
+	   Return indices of found strings,
+	   else an empty vector
+	   */
+
+		auto source_temp{ source };
+		auto search_string_temp{ search_string };
+		if (searchCase == Case::INSENSITIVE) {
+			source_temp = ToLower(source);
+			search_string_temp = ToLower(search_string);
+		}
+
+		// <body>
+		size_t index = 0;
+		std::vector<int> allIndexes;
+		while (
+			index = Find(source, search_string, searchCase, offset + index),
+			index != std::string::npos
+			)
+		{
+			allIndexes.push_back(index);
+			++index;
+		}
+		/*for (size_t index = 0; index != std::string::npos; index++)
+		{
+			index = Find(source, search_string, Case::INSENSITIVE, offset + index);
+			if (index == std::string::npos) {
+				return allIndexes;
+			}
+			allIndexes.push_back(index);
+		}*/
+		// </body>
+
+
+		return allIndexes;
+	}
+
+	void AssignmentFindAll_test() {
+		std::cout << '\n' << std::string("-*-*-*-*") << " AssignmentFindAll_test() " << std::string("*-*-*-*-") << '\n';
+
+		std::vector<std::string> test_cases{ "AAA", "aaa", "AbCde", "1AbC1d2e3", "!1'A^b+C%1&d/2(e)3=?-_" };
+		std::vector<std::string> test_search_string_cases{
+			"A", "AA",
+			"a", "aa",
+			"Ab", "aB",
+			"Cd", "de",
+			"1", "1A", "C1", "d2e3", "d2e33", "d2ee", "d2e3e",
+			"A^b+C%1&d/2(e)", "\"A^b+C%1&d/2(e)"
+		};
+
+		auto test_count = 0;
+		std::string found = "not found";
+		for (auto&& test : test_cases) {
+			for (auto&& test_search : test_search_string_cases)
+			{
+				++test_count;
+				const auto& pos = FindAll(test, test_search, Case::INSENSITIVE);
+				found = !pos.empty() ? "found" : "not found";
+				std::cout << test_count << ") " <<
+					"test: " << test << " || " <<
+					"test_search: " << test_search << " || " <<
+					"Find: " << found <<
+					" \n";
+			}
+		}
+
+
+		auto allTestCount = test_cases.size() * test_search_string_cases.size();
+		IsTestSuccessed(allTestCount, test_count);
+	}
+
+
+
 	void Assignments_test() {
-		Assignment1_test();
-		Assignment2_test();
+		AssignmentToUpperToLower_test();
+		AssignmentFind_test();
+		AssignmentFindAll_test();
 
 	}
 }
@@ -518,8 +657,10 @@ namespace Assignments {
 void MoreCpp_Main() {
 	//Enums::subroutine1();
 	//Strings::subroutine1();
-	//Assignments::Assignments_test();
 	//literals::subroutine1();
-	constexpr_const::subroutine1();
-	initializer_list_space::subroutine1();
+	//constexpr_const::subroutine1();
+	//initializer_list_space::subroutine1();
+	//vector::subroutine1();
+
+	Assignments::Assignments_test();
 }
