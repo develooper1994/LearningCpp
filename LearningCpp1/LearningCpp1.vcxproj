@@ -141,8 +141,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Account.cpp" />
     <ClCompile Include="Buss.cpp" />
     <ClCompile Include="Car.cpp" />
+    <ClCompile Include="Checking.cpp" />
     <ClCompile Include="ClassesObjects.cpp" />
     <ClCompile Include="DrawLine.cpp" />
     <ClCompile Include="Employee.cpp" />
@@ -159,14 +161,19 @@
     <ClCompile Include="Printer.cpp" />
     <ClCompile Include="Project.cpp" />
     <ClCompile Include="Project2.cpp" />
+    <ClCompile Include="Savings.cpp" />
     <ClCompile Include="SmartPointers.cpp" />
     <ClCompile Include="UtilityHeader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Account.h" />
     <ClInclude Include="AllClassHeaders.h" />
+    <ClInclude Include="Banking.h" />
     <ClInclude Include="Buss.h" />
     <ClInclude Include="Car.h" />
+    <ClInclude Include="Checking.h" />
     <ClInclude Include="ClassesObjects.h" />
+    <ClInclude Include="ClassesOOPS.h" />
     <ClInclude Include="DrawLine.h" />
     <ClInclude Include="Employee.h" />
     <ClInclude Include="Integer.h" />
@@ -187,6 +194,7 @@
     <ClInclude Include="Printer.h" />
     <ClInclude Include="Project.h" />
     <ClInclude Include="Project2.h" />
+    <ClInclude Include="Savings.h" />
     <ClInclude Include="SmartPointers.h" />
     <ClInclude Include="UtilityHeader.h" />
   </ItemGroup>

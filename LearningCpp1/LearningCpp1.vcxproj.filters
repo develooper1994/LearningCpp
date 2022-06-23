@@ -136,10 +136,13 @@
     <Filter Include="Lessons\7%29 OOPS\Classes">
       <UniqueIdentifier>{5346a14d-5fd3-4a90-bf03-8279c3fe2c00}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lessons\7%29 OOPS\Classes\Header Files">
+    <Filter Include="Lessons\7%29 OOPS\Classes\Banking">
+      <UniqueIdentifier>{d4de0fbf-3fa4-4b52-ae03-cdfbd5562ab3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\7%29 OOPS\Classes\Banking\Header Files">
       <UniqueIdentifier>{6f1a2c49-2d28-4746-9eae-39cf8f5e7707}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lessons\7%29 OOPS\Classes\Source Files">
+    <Filter Include="Lessons\7%29 OOPS\Classes\Banking\Source Files">
       <UniqueIdentifier>{29acdbcb-44b7-4ff5-9a07-d1e04d9c45d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -203,6 +206,15 @@
     </ClCompile>
     <ClCompile Include="OOPS.cpp">
       <Filter>Lessons\7%29 OOPS</Filter>
+    </ClCompile>
+    <ClCompile Include="Account.cpp">
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Savings.cpp">
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Checking.cpp">
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -283,6 +295,21 @@
     </ClInclude>
     <ClInclude Include="OOPS.h">
       <Filter>Lessons\7%29 OOPS\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassesOOPS.h">
+      <Filter>Lessons\7%29 OOPS\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Account.h">
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Banking.h">
+      <Filter>Lessons\7%29 OOPS\Classes\Banking</Filter>
+    </ClInclude>
+    <ClInclude Include="Savings.h">
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Checking.h">
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
