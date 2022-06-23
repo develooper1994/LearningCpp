@@ -45,12 +45,11 @@ namespace Banking
 			std::cout << "Initial balance: " << acc1.GetBalance() << '\n';
 			acc1.Deposit(200); // +200
 			acc1.WithDraw(300); // -300
-			std::cout << "Balance: " << acc1.GetBalance() << '\n';
+			std::cout << "Balance: " << acc1.GetBalance() << '\n'; // 900
 		}
 		void Account_TEST_main()
 		{
 			Account_TEST1();
-
 		}
 	};
 

@@ -14,5 +14,5 @@ void Print(int, char);
 
 void EndMessage();
 
-
+#include <string>
 std::string repeat(int n);

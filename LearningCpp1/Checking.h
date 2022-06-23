@@ -26,7 +26,7 @@ namespace Banking
 			std::cout << "Initial balance: " << checking.GetBalance() << '\n';
 			checking.Deposit(200); // +200
 			checking.WithDraw(300); // -300
-			std::cout << "Balance: " << checking.GetBalance() << '\n';
+			std::cout << "Balance: " << checking.GetBalance() << '\n'; // 900
 		}
 		void Checking_TEST_main() {
 			Checking_TEST1();

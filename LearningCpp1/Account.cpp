@@ -61,7 +61,7 @@ namespace Banking
 
 	}
 	void Account::WithDraw(float amount) {
-		if (this->accBalance < amount)
+		if (this->accBalance > amount)
 		{
 			this->accBalance -= amount;
 		}

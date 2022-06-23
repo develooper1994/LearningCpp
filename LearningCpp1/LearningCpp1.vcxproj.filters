@@ -216,6 +216,9 @@
     <ClCompile Include="Checking.cpp">
       <Filter>Lessons\7%29 OOPS\Classes\Banking\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Banking.cpp">
+      <Filter>Lessons\7%29 OOPS\Classes\Banking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

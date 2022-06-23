@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
+    <ClCompile Include="Banking.cpp" />
     <ClCompile Include="Buss.cpp" />
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="Checking.cpp" />

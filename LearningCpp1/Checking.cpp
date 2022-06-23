@@ -1,6 +1,5 @@
 #include "Checking.h"
 
-
 using namespace Banking;
 
 Checking::Checking(const std::string& name, float balance)
