@@ -21,16 +21,16 @@ namespace Banking
 		~Account();
 
 		// Getters
-		const std::string GetName()const;
-		float GetBalance()const;
-		int GetAccountNo()const;
+		const std::string GetName() const;
+		float GetBalance() const;
+		int GetAccountNo() const;
 
 		//Setters
 		void SetName(const std::string& str);
 		void SetBalance(const float& accBalance);
 		void SetAccountNo(const int& accNo);
 
-		//Member functoins
+		//Member functions
 		void AccumulateInterest();
 		void WithDraw(float amount);
 		void Deposit(float amount);
