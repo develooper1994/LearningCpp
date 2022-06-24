@@ -157,6 +157,24 @@
     <Filter Include="Lessons\7%29 OOPS\Classes\Serialization">
       <UniqueIdentifier>{62e5c84c-57c7-435d-86a6-0e99312f052d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lessons\8%29 Exception Handling">
+      <UniqueIdentifier>{c134fb4f-c5f6-4a2c-a1ef-330d920164de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\8%29 Exception Handling\Classes">
+      <UniqueIdentifier>{ed74b7be-2b01-4c4c-849d-c6b0f1171605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\8%29 Exception Handling\Classes\Header Files">
+      <UniqueIdentifier>{926b6d7e-bfa7-4611-879c-2412627b2110}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\8%29 Exception Handling\Classes\Source Files">
+      <UniqueIdentifier>{b013cfbb-5b4d-4344-ac9a-db68ae924228}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\8%29 Exception Handling\Header Files">
+      <UniqueIdentifier>{30f01588-de8c-4a33-9a4f-d728809f9c7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\8%29 Exception Handling\Source Files">
+      <UniqueIdentifier>{c4af92e4-d452-469a-a14d-cd2c21ef3f6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -236,6 +254,9 @@
     </ClCompile>
     <ClCompile Include="Serialization.cpp">
       <Filter>Lessons\7%29 OOPS\Classes\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="ExceptionHandling.cpp">
+      <Filter>Lessons\8%29 Exception Handling\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -337,6 +358,12 @@
     </ClInclude>
     <ClInclude Include="Serialization.h">
       <Filter>Lessons\7%29 OOPS\Classes\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassesException.h">
+      <Filter>Lessons\8%29 Exception Handling\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ExceptionHandling.h">
+      <Filter>Lessons\8%29 Exception Handling\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

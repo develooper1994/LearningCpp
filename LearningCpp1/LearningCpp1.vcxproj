@@ -160,6 +160,7 @@
     <ClCompile Include="ClassesObjects.cpp" />
     <ClCompile Include="DrawLine.cpp" />
     <ClCompile Include="Employee.cpp" />
+    <ClCompile Include="ExceptionHandling.cpp" />
     <ClCompile Include="Integer.cpp" />
     <ClCompile Include="LanguageBasics.cpp" />
     <ClCompile Include="L_R_Values.cpp" />
@@ -186,10 +187,12 @@
     <ClInclude Include="Buss.h" />
     <ClInclude Include="Car.h" />
     <ClInclude Include="Checking.h" />
+    <ClInclude Include="ClassesException.h" />
     <ClInclude Include="ClassesObjects.h" />
     <ClInclude Include="ClassesOOPS.h" />
     <ClInclude Include="DrawLine.h" />
     <ClInclude Include="Employee.h" />
+    <ClInclude Include="ExceptionHandling.h" />
     <ClInclude Include="Integer.h" />
     <ClInclude Include="IntegerCpp11.h" />
     <ClInclude Include="LessonHeaders.h" />
