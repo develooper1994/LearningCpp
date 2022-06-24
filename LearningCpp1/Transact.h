@@ -86,7 +86,7 @@ namespace Banking
 			Banking::Account::~Account(void)
 			*/
 			Account* acc = new Savings("Mustafa_Account_Savings", 100, 0.8f);
-			//Transact(acc);
+			Transact(acc);
 			delete acc;
 		}
 		void Transact_TEST_main() {
