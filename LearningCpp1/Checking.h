@@ -11,6 +11,7 @@ namespace Banking
 	class Checking : public Account
 	{
 	private:
+		float minimumBalance;
 		// doesn't have any variables ;)
 		// values hold inside of Account class ;)
 		// 
@@ -36,12 +37,14 @@ namespace Banking
 			__cdecl Banking::Checking::Checking(const class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &,float)
 		*/
 		//Checking(const std::string& name, float accBalance);
+		Checking(const std::string& name, float accBalance, float minBalance);
 		//destructor
 		~Checking();
 
 		//member functions
 		void WithDraw(float amount, float max = 50.0f);
 
+		float GetMinimumBalance() const;
 	};
 
 	struct Checking_TEST

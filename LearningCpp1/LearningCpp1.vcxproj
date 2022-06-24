@@ -207,6 +207,7 @@
     <ClInclude Include="Project.h" />
     <ClInclude Include="Project2.h" />
     <ClInclude Include="Savings.h" />
+    <ClInclude Include="Serialization.h" />
     <ClInclude Include="SmartPointers.h" />
     <ClInclude Include="Transact.h" />
     <ClInclude Include="UtilityHeader.h" />

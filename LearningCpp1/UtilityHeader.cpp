@@ -1,4 +1,5 @@
-#include <iostream>
+#include "UtilityHeader.h"
+
 void settings() {
 	std::srand(std::time(nullptr));
 }
@@ -28,11 +29,22 @@ void EndMessage()
 }
 
 
-#include <sstream>
+
 
 std::string repeat(int n) {
 	std::ostringstream os;
 	for (int i = 0; i < n; i++)
 		os << "repeat";
 	return os.str();
+}
+
+
+void log_function_detail() // = std::source_location::current()
+{
+	const std::source_location location = std::source_location::current();
+	std::cout << "file: "
+		<< location.file_name() << "("
+		<< location.line() << ":"
+		<< location.column() << ") `"
+		<< location.function_name() << "`: " << '\n';
 }

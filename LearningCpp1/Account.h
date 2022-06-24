@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-#define _BANKING_DEBUG // gives much more verbose output
+//#define _BANKING_DEBUG // gives much more verbose output
 
 //#ifndef _ACCOUNT
 //#define _ACCOUNT

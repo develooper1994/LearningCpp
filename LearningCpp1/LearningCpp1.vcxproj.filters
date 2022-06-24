@@ -154,6 +154,9 @@
     <Filter Include="Lessons\7%29 OOPS\Classes\Banking\Source Files">
       <UniqueIdentifier>{11efc2d2-d58f-4183-af2d-021d5b1fd2bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lessons\7%29 OOPS\Classes\Serialization">
+      <UniqueIdentifier>{62e5c84c-57c7-435d-86a6-0e99312f052d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -328,6 +331,9 @@
     </ClInclude>
     <ClInclude Include="Transact.h">
       <Filter>Lessons\7%29 OOPS\Classes\Banking\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialization.h">
+      <Filter>Lessons\7%29 OOPS\Classes\Serialization</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

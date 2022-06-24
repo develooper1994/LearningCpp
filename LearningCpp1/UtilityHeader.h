@@ -1,4 +1,8 @@
 #pragma once
+#include <iostream>
+#include <sstream>
+#include <source_location>
+
 void settings();
 
 // DON'T RESTRÝCT THE SCOPE IF YOU ARE GOÝNG TO USE ÝT GLOBALLY
@@ -16,3 +20,5 @@ void EndMessage();
 
 #include <string>
 std::string repeat(int n);
+
+void log_function_detail();
