@@ -74,15 +74,66 @@ public:
 	}
 };
 
-//class RichText : public Text
-//{
+class RichText : public Text
+{
+public:
+	void Serialize1(float version) override // Not a virtual function
+	{
+		std::cout << "RichText::Serialize\n";
+	}
+	void Serialize2(float version) override // Not a virtual function
+	{
+		std::cout << "RichText::Serialize\n";
+	}
+	/*
+	void Serialize3(float version) override // Not a virtual function
+	{
+		std::cout << "RichText::Serialize\n";
+	}
+	*/
+
+};
+
+//class XML : public Document {
 //public:
-//	void Serialize3(float version) override // Not a virtual function
-//	{
-//		std::cout << "RichText::Serialize\n";
+//	void Serialize1(float version) override {
+//		std::cout << __FUNCSIG__ << '\n';
+//		std::cout << "Document::Serialize\n";
 //	}
 //};
 
+/*
+* // Pure-virtual function. It is equal to interface of java and c#
+* At least one pure virtual function
+* Can contain other members (data, non-vertual functions,...)
+* Can not be instantiated, but used through a pointer or reference
+* Establishes a contract with clients
+* Used for creating interface
+
+* marked with =0
+* Does not have an implementation (optional)
+* Can not be invoked (except by derived classes if defined)
+* No entry in the "VTABLE"
+* Must be overridden by the derived classes
+*/
+class IDocument
+{
+public:
+	virtual void Serialize1(float version) = 0;
+};
+
+class XML : public IDocument {
+public:
+	void Serialize1(float version) override {
+		std::cout << __FUNCSIG__ << '\n';
+		std::cout << "XML::Serialize\n";
+	}
+};
+
+inline void serialize(IDocument* p) {
+	// doesn't call serialize XML without abstract call
+	p->Serialize1(0.8f);
+}
 
 inline void Override_Final_Main()
 {
@@ -92,5 +143,11 @@ inline void Override_Final_Main()
 	doc.Serialize1(1.2f);
 	doc.Serialize2(1.2f);
 	doc.Serialize3(1.2f);
+}
+
+inline void Abstraction_Main()
+{
+	XML xml;
+	serialize(&xml);
 
 }

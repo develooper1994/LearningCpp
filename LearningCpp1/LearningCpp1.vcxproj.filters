@@ -234,6 +234,9 @@
     <ClCompile Include="Transact.cpp">
       <Filter>Lessons\7%29 OOPS\Classes\Banking\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Serialization.cpp">
+      <Filter>Lessons\7%29 OOPS\Classes\Serialization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

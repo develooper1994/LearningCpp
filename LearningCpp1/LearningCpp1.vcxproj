@@ -173,6 +173,7 @@
     <ClCompile Include="Project.cpp" />
     <ClCompile Include="Project2.cpp" />
     <ClCompile Include="Savings.cpp" />
+    <ClCompile Include="Serialization.cpp" />
     <ClCompile Include="SmartPointers.cpp" />
     <ClCompile Include="Transact.cpp" />
     <ClCompile Include="UtilityHeader.cpp" />

@@ -66,8 +66,9 @@ void TypeId() {
 }
 
 void OOPS_Main() {
-	Banking::Banking_Main_Test();
-	//Override_Final_Main();
-	//Object_Slicing();
-	//TypeId();
+	/*Banking::Banking_Main_Test();
+	Override_Final_Main();
+	Object_Slicing();
+	TypeId();*/
+	Abstraction_Main();
 }
