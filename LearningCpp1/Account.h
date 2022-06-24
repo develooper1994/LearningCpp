@@ -3,16 +3,18 @@
 //#ifndef _ACCOUNT
 //#define _ACCOUNT
 
+#define DEBUG
 
 namespace Banking
 {
 	class Account
 	{
-	protected:
+	private:
 		std::string accName;
-		float accBalance;
 		int accNo;
 		static int AccGenerator; // auto generated.
+	protected:
+		float accBalance;
 	public:
 		// constructors
 		//Account();
@@ -40,7 +42,7 @@ namespace Banking
 
 	struct Account_TEST
 	{
-		void Account_TEST1() {
+		inline void Account_TEST1() {
 			Account acc1("Bob", 1000);
 			std::cout << "Initial balance: " << acc1.GetBalance() << '\n';
 			acc1.Deposit(200); // +200
