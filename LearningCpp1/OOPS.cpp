@@ -70,5 +70,6 @@ void OOPS_Main() {
 	Override_Final_Main();
 	Object_Slicing();
 	TypeId();*/
-	Abstraction_Main();
+	//Abstraction_Main();
+	Multiple_Inheritance_Main();
 }
