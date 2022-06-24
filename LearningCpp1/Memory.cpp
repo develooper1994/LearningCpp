@@ -93,7 +93,7 @@ void OldCppDynamicMemory()
 		p = nullptr; // You don't have put it end of parenthesis. It is end of life the pointer. It will be deleted automatically.
 	}
 
-	cout << "\character arrays or old c style string element allocation\n";
+	cout << "character arrays or old c style string element allocation\n";
 	{
 		char* p = new char[] {"Cpp"}; // Also Valid
 		//char* p = new char[4] {"Cpp"}; // Don't forget to count '\0'(NULL terminating character). chararacter count+1

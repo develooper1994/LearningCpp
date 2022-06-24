@@ -10,7 +10,7 @@ Car::Car()
 	fuel = 0;
 	speed = 0;
 	passengers = 0;
-	std::cout << "\Car() constructor" << ClassCreationCount << '.' << "object\n";;
+	std::cout << "Car() constructor" << ClassCreationCount << '.' << "object\n";;
 	// SetDefaults(); // I initialized values during declaration.
 }
 Car::Car(float amount)
@@ -19,7 +19,7 @@ Car::Car(float amount)
 	fuel = amount;
 	speed = 0;
 	passengers = 0;
-	std::cout << "\Car(float amount) constructor" << ClassCreationCount << '.' << "object\n";;
+	std::cout << "Car(float amount) constructor" << ClassCreationCount << '.' << "object\n";;
 }
 
 // Destructors
@@ -36,7 +36,7 @@ void Car::SetDefaults()
 	fuel = 0;
 	speed = 0;
 	passengers = 0;
-	for (size_t i = 0; i < sizeof(seats_unoccupied); i++)
+	for (size_t i = 0; i < sizeof(seats_unoccupied); ++i)
 	{
 		seats_unoccupied.at(i) = i;
 	}

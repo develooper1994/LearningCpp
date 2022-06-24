@@ -11,14 +11,14 @@ Also you can define "SetDefault function"
 //Constructors
 Buss::Buss() : Buss(0) // Calls "Buss(float amount)"  -----------------------------------------------------
 {	//																									   |
-	std::cout << "\Buss() constructor" << ClassCreationCount << '.' << "object\n";//					   |
+	std::cout << "Buss() constructor" << ClassCreationCount << '.' << "object\n";//						   |
 }	//																									   |
 //																								-----------|
 //  																							|jumps to other constructor
 //  																							v		   
 Buss::Buss(float amount) : Buss(amount, 0) // Cals "Buss(float fuel_amount, int passengers_amount)"--------|
 {	//																									   |
-	std::cout << "\Buss(float amount) constructor" << ClassCreationCount << '.' << "object\n";//		   |
+	std::cout << "Buss(float amount) constructor" << ClassCreationCount << '.' << "object\n";//		       |
 }	//																									   |
 //												-----------------------------------------------------------|
 //  											|jumps to other constructor														   
@@ -29,7 +29,7 @@ Buss::Buss(float fuel_amount, int passengers_amount)
 	fuel = fuel_amount;
 	speed = 0;
 	passengers = passengers_amount;
-	std::cout << "\Buss(float fuel_amount, int passengers_amount) constructor" << ClassCreationCount << '.' << "object\n";;
+	std::cout << "Buss(float fuel_amount, int passengers_amount) constructor" << ClassCreationCount << '.' << "object\n";;
 }
 
 // Destructors

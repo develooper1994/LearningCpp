@@ -151,13 +151,13 @@ void loopRangeBased() {
 }
 void loopWhile() {
 	std::array<std::array<int, 6>, 6> myarray;
-	for (size_t i = 0; i < myarray.size(); i++)
+	for (auto i = 0; i < myarray.size(); ++i)
 	{
 		myarray[i].fill(i);
 	}
 
-	int myArray_outter_size = myarray.size();
-	int myArray_inner_size = myarray[0].size();
+	size_t myArray_outter_size = myarray.size();
+	size_t myArray_inner_size = myarray[0].size();
 
 	uint8_t x = 0, y = 0;
 	int	trace = 0;
@@ -287,11 +287,11 @@ void Initializations() {
 	int a1; //Uninitialized
 	int a2 = 0; //Copy initialization
 	int a3(5); //Direct initialization
-	std::string	s1; //Auto-initialized. There is something to assasing default value inside of class.
+	std::string	s1; //Auto-initialized. There is something to assigning default value inside of class.
 	std::string s2("Cpp"); //Direct initialization
 
-	char d1[2]; //Uninitialization
-	char d2[5] = { '\0' }; //Copy intializaiton
+	char d1[2]; //Uninitialized
+	char d2[5] = { '\0' }; //Copy initialization
 	char d3[4] = { 'a', 'b', 'c', 'd' }; //Aggregate(also copy) initialization
 	char d4[5] = { "abcd" }; //Copy initialization. There is an invisible char '\0'
 
@@ -311,7 +311,7 @@ void Initializations() {
 	char* p3 = new char[6] {"Hello"};
 
 
-	// Narrowing convertions
+	// Narrowing Conversation
 	//float f{};
 	//int i{ f }; // !!! ERROR !!!
 
@@ -321,7 +321,7 @@ void Initializations() {
 /*
 			REFERENCE																		POINTERS
 	.Always needs an initializer									.Initializer is optional
-	.Initializer should be l-value									.Initializer need not be lvalue
+	.Initializer should be l-value									.Initializer need not be l-value
 	.Cannot be nullptr												.Can be nullptr
 	.Bound to its referent											.Can point to other variables
 	.No storage required, so has same address as that of referent	. Has its own storage, so will have a different address
@@ -473,7 +473,7 @@ void constants() {
 		float rad = 0;
 		cout << "Please enter the radious= \n";
 		cin >> rad;
-		float area = PI * pow(rad, 2);
+		auto area = PI * pow(rad, 2);
 		const float circumference = PI * 2 * rad; // I can assign value of const after calculations.
 		cout << "Rad= " << rad << " area= " << area << " circumference= " << circumference << '\n';
 	}
@@ -621,8 +621,8 @@ namespace {
 void NamespaceCpp()
 {
 	auto x = 3.141f, y = 2.828f;
-	int res1 = Astronomy::Calculation(x, y);
-	int res2 = Chemistry::Calculation(x, y);
+	auto res1 = Astronomy::Calculation(x, y);
+	auto res2 = Chemistry::Calculation(x, y);
 	std::cout << "Astronomy::Calculation(x, y): " << res1 << '\n';
 	std::cout << "Chemistry::Calculation(x, y): " << res2 << '\n';
 	using Astronomy::Calculation;

@@ -179,7 +179,7 @@ namespace TypeConversions {
 		std::cout << "\n -*-*-* C style casts are discouraged(dýþlandý)  *-*-*-\n";
 		// It doesn't check is it valid.
 		{
-			float f = a / b; // implict not always gives the correct result.
+			float f = a / b; // implicit not always gives the correct result.
 			std::cout << "a/b: " << a / b << '\n'; // result is 1
 			std::cout << "float(a) / float(b): " << float(a) / float(b) << '\n'; // result is 1.5
 			std::cout << "float(a) / b: " << float(a) / b << '\n'; // result is 1.5
@@ -296,7 +296,7 @@ namespace TypeConversions {
 				Integer b(5);
 				std::cout << b << '\n';
 			}
-			std::cout << "\n\t\Assignment\n";
+			std::cout << "\n\tAssignment\n";
 			Integer b;
 			// Assignment
 			/*

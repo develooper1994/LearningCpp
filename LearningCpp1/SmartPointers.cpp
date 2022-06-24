@@ -273,7 +273,7 @@ namespace WEAK {
 			delete employee;
 			delete prj;
 		}
-		std::cout << "\shared pointer\n";
+		std::cout << "shared pointer\n";
 		{
 			/*
 			EmployeeSmart()
@@ -288,7 +288,7 @@ namespace WEAK {
 			//refc decreases by 1 end of the scope. both of refc is 1 end of the scope. !They are never delete!
 		}
 
-		std::cout << "\weak pointer\n";
+		std::cout << "weak pointer\n";
 		{
 			std::shared_ptr<EmployeeSmart> employee{ new EmployeeSmart{} }; // employee-refc = 1 owner
 			std::shared_ptr<ProjectSmart> prj{ new ProjectSmart{} }; // prj-refc = 1 owner

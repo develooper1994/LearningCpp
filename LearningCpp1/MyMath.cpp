@@ -48,14 +48,14 @@ float add(float x, int y)
 	return float(x + y);
 }
 
-int factorial(uint32_t x)
+size_t factorial(uint32_t x)
 {
 	if (x < 0)
 	{
 		std::cerr << "Error! Factorial of a negative number doesn't exist.";
 		return -1;
 	}
-	int temp = 1;
+	size_t temp = 1;
 	for (size_t i = 1; i <= x; ++i)
 	{
 		temp *= i;
@@ -162,10 +162,10 @@ int fib_power(int n)
 
 
 namespace HomeWork1 {
-	int LinearSearch(const std::vector<int>& vec, int item) {
+	size_t LinearSearch(const std::vector<int>& vec, int item) {
 		// find item return first index
-		int size = vec.size();
-		for (int i = 0; i < size; i++)
+		size_t size = vec.size();
+		for (size_t i = 0; i < size; i++)
 		{
 			if (vec.at(i) == item)
 			{
@@ -181,7 +181,7 @@ namespace HomeWork1 {
 		// y[n] = (1/N) * sum(x[n-i]); i=0->N-1
 		// extremely simple implementation. There is severely implementations.
 		// normally i need a ring-buffer. I will make other Moving Average filters later.
-		int size = vec.size();
+		size_t size = vec.size();
 		float temp{ 0 };
 		float avg{ 0 };
 		std::vector<float> avg_vec{};
@@ -219,12 +219,12 @@ namespace HomeWork1 {
 		//std::shuffle(begin(vec), end(vec), engine);						// rearrange the elements of a range in random order.
 
 
-		std::cout << "\n\Linear Search test\n";
+		std::cout << "\nLinear Search test\n";
 		auto index = LinearSearch(vec, 5);
 		std::cout << "index= " << index << '\n';
 
 
-		std::cout << "\n\Moving Average test\n";
+		std::cout << "\nMoving Average test\n";
 		int block_size = 3;
 		auto result = MovingAverage(vec, block_size);
 		for (auto&& ptr = result.begin(); ptr < result.end(); ++ptr)

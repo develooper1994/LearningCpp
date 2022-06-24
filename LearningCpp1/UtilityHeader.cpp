@@ -1,7 +1,7 @@
 #include "UtilityHeader.h"
 
 void settings() {
-	std::srand(std::time(nullptr));
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 }
 
 // DON'T RESTRÝCT THE SCOPE IF YOU ARE GOÝNG TO USE ÝT GLOBALLY

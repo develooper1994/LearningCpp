@@ -101,7 +101,7 @@ namespace Enums {
 
 namespace Strings {
 	const char* oldCombine(const char* s1, const char* s2) {
-		int n = strlen(s1) + strlen(s2) + 1;
+		size_t n = strlen(s1) + strlen(s2) + 1;
 		char* temp = new char[n];
 		strncpy_s(temp, n, s1, n);
 		strncat_s(temp, n, s2, n);
@@ -136,7 +136,7 @@ namespace Strings {
 
 		std::getline(std::cin, s);	// #include <string>
 		// Size
-		s.length();
+		auto size_s = s.length();
 
 		// Insert &concatenate
 		std::string s1("Sugar"), s2{ "Zugar" };
@@ -288,12 +288,12 @@ namespace constexpr_const {
 		return x > y;
 	}
 
-	constexpr int factorial(uint32_t x) {
+	constexpr size_t factorial(uint32_t x) {
 		if (x < 0) {
 			std::cerr << "Error! Factorial of a negative number doesn't exist.";
 			return -1;
 		}
-		int temp = 1;
+		size_t temp = 1;
 		for (size_t i = 1; i <= x; ++i) {
 			temp *= i;
 		}
@@ -301,7 +301,7 @@ namespace constexpr_const {
 	}
 
 	void subroutine1() {
-		constexpr int fact = factorial(5);
+		constexpr size_t fact = factorial(5);
 		std::cout << "constexpr Max: " << Max(10, 15) << '\n';
 		std::cout << "constexpr factorial: " << fact << '\n';
 	}
@@ -316,7 +316,7 @@ namespace initializer_list_space {
 	class Bag
 	{
 	private:
-		int arr[10];
+		std::array<int, 10> arr[10];
 		int size{};
 	public:
 		Bag() = default;
@@ -332,13 +332,13 @@ namespace initializer_list_space {
 		}
 		void Add(int value) {
 			assert(size < 10);
-			arr[size++] = value;
+			arr->at(size++) = value;
 		}
 		void Remove() {
 			--size;
 		}
 		int operator[](int index) {
-			return arr[index];
+			return arr->at(index);
 		}
 		int GetSize()const {
 			return size;
@@ -370,13 +370,13 @@ namespace initializer_list_space {
 		bag.Add(3);
 		bag.Add(1);
 		bag.Add(4);
-		for (size_t i = 0; i < bag.GetSize(); i++)
+		for (auto i = 0; i < bag.GetSize(); ++i)
 		{
 			std::cout << "bag[" << i << "]" << bag[i] << '\n';
 		}
 		// with initializer_list
 		Bag bag2{ 3,1,4 }; // Bag(std::initializer_list<int> values)
-		for (size_t i = 0; i < bag2.GetSize(); i++)
+		for (auto i = 0; i < bag2.GetSize(); ++i)
 		{
 			std::cout << "bag2[" << i << "]" << bag2[i] << '\n';
 		}
@@ -388,13 +388,13 @@ namespace initializer_list_space {
 namespace vector {
 	void subroutine1() {
 		std::vector<int> data{ 1,2,3 };
-		for (size_t i = 0; i < 5; i++)
+		for (auto i = 0; i < 5; ++i)
 		{
 			data.push_back(i * 10);
 		}
 		//Access
 		data[0] = 111;
-		for (size_t i = 0; i < data.size(); i++)
+		for (auto i = 0; i < data.size(); ++i)
 		{
 			std::cout << data[i];
 		}
@@ -568,7 +568,7 @@ namespace Unions {
 }
 
 namespace Assignments {
-	void IsTestSuccessed(const int& test_cases_size, const int& test_count) {
+	void IsTestSuccessed(const size_t& test_cases_size, const size_t& test_count) {
 		if (test_cases_size == test_count)
 		{
 			std::cout << "TEST SUCCESSED :D\n";
@@ -620,7 +620,7 @@ namespace Assignments {
 		std::cout << std::string("-*-*-*-*") << " Assignment1_test() " << std::string("*-*-*-*-") << '\n';
 
 		std::vector<std::string> test_cases{ "AAA", "aaa", "AbCde", "1AbC1d2e3", "!1'A^b+C%1&d/2(e)3=?-_" };
-		auto test_count = 0;
+		size_t test_count = 0;
 		for (auto&& test : test_cases) {
 			++test_count;
 			std::cout << test_count << ") " <<
@@ -671,7 +671,7 @@ namespace Assignments {
 			"A^b+C%1&d/2(e)", "\"A^b+C%1&d/2(e)"
 		};
 
-		auto test_count = 0;
+		size_t test_count = 0;
 		std::string found = "not found";
 		for (auto&& test : test_cases) {
 			for (auto&& test_search : test_search_string_cases)
@@ -689,11 +689,11 @@ namespace Assignments {
 		}
 
 
-		auto allTestCount = test_cases.size() * test_search_string_cases.size();
+		size_t allTestCount = test_cases.size() * test_search_string_cases.size();
 		IsTestSuccessed(allTestCount, test_count);
 	}
 
-	std::vector<int>
+	std::vector<size_t>
 		FindAll(
 			const std::string& source,              //Target string to be searched
 			const std::string& search_string,       //The string to search for
@@ -715,7 +715,7 @@ namespace Assignments {
 
 		// <body>
 		size_t index = 0;
-		std::vector<int> allIndexes;
+		std::vector<size_t> allIndexes;
 		while (
 			index = Find(source, search_string, searchCase, offset + index),
 			index != std::string::npos
@@ -751,7 +751,7 @@ namespace Assignments {
 			"A^b+C%1&d/2(e)", "\"A^b+C%1&d/2(e)"
 		};
 
-		auto test_count = 0;
+		size_t test_count = 0;
 		std::string found = "not found";
 		for (auto&& test : test_cases) {
 			for (auto&& test_search : test_search_string_cases)
@@ -768,7 +768,7 @@ namespace Assignments {
 		}
 
 
-		auto allTestCount = test_cases.size() * test_search_string_cases.size();
+		size_t allTestCount = test_cases.size() * test_search_string_cases.size();
 		IsTestSuccessed(allTestCount, test_count);
 	}
 

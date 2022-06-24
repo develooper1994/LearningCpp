@@ -43,7 +43,7 @@ private:
 	float fuel{ 0 };
 	float speed{ 0 };
 	int passengers{ 0 };
-	std::array<int, 5> seats_unoccupied{ 0,1,2,3,4 };
+	std::array<size_t, 5> seats_unoccupied{ 0,1,2,3,4 };
 	char* plate{}; // default value is NULL
 	// auto i = 5; // !!! Error !!!
 	static int ClassCreationCount; // static members have to initialized outside of the class.
