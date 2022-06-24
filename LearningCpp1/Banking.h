@@ -1,6 +1,6 @@
 #pragma once
 
-#define _BANKING_DEBUG
+#define _BANKING_DEBUG // gives simple output
 
 #include "Account.h"
 #include "Savings.h"

@@ -10,15 +10,16 @@ namespace Banking
 		std::cout << "Transaction started\n";
 		std::cout << "Initial balance:" << account->GetBalance() << '\n';
 
-		account->Deposit(100); // +100
+		// magic happens here!
 		/*
-		// Without virtual function "account" only calls base class member function.
-		// Compiler generates for non virtual functions
+		* Without virtual function "account" only calls base class member function.
+		* Compiler generates for non virtual functions
 		- "Banking::Account::Deposit"
 		- "Banking::Account::AccumulateInterest"
 		- "Banking::Account::WithDraw"
 		//
 		*/
+		account->Deposit(100); // +100
 		account->AccumulateInterest();
 		account->WithDraw(170); // -170
 

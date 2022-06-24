@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-//#define _BANKING_DEBUG
+#define _BANKING_DEBUG // gives much more verbose output
 
 //#ifndef _ACCOUNT
 //#define _ACCOUNT
@@ -27,7 +27,7 @@ namespace Banking
 		//Account();
 		Account(const std::string& name, float accBalance);
 		// destructors
-		~Account();
+		virtual ~Account();
 
 		// Getters
 		const std::string GetName() const;
