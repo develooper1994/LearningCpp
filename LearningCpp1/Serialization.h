@@ -222,6 +222,7 @@ public:
 class IOStream : public InputStream, public OutputStream
 {
 	/*
+	* Before "virtual public Stream" up here.
 	* "Stream::Stream" called twice
 	__cdecl Stream::Stream(const class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &)
 	__cdecl InputStream::InputStream(class std::basic_istream<char,struct std::char_traits<char> > &,const class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &)
@@ -233,7 +234,21 @@ class IOStream : public InputStream, public OutputStream
 	__cdecl Stream::~Stream(void)
 	__cdecl InputStream::~InputStream(void)
 	__cdecl Stream::~Stream(void)
-		*/
+	*/
+
+	/*
+	* After "virtual public Stream" up here.
+	__cdecl Stream::Stream(const class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &)
+	__cdecl InputStream::InputStream(class std::basic_istream<char,struct std::char_traits<char> > &,const class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &)
+	__cdecl OutputStream::OutputStream(class std::basic_ostream<char,struct std::char_traits<char> > &,const class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &)
+	__cdecl IOStream::IOStream(const class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &)
+	Mustafa
+	Mustafaapp.log
+	__cdecl IOStream::~IOStream(void)
+	__cdecl OutputStream::~OutputStream(void)
+	__cdecl InputStream::~InputStream(void)
+	__cdecl Stream::~Stream(void)
+	*/
 public:
 	IOStream(const std::string& filename)
 		: InputStream(std::cin, filename), OutputStream(std::cout, filename), Stream(filename) // "Stream(filename)" is mandotory to eliminate memory bugs.
