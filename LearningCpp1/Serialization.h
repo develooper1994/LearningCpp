@@ -258,7 +258,3 @@ inline void Multiple_Inheritance_Main() {
 	stream << stream.GetFileName() << '\n';
 
 }
-
-
-
-
