@@ -1,9 +1,16 @@
 #pragma once
 #include <iostream>
+
+//#define _BANKING_DEBUG
+
 //#ifndef _ACCOUNT
 //#define _ACCOUNT
 
-#define DEBUG
+/*
+Virtual keyword help to compiler to generate correct function call
+polymorphic function, that means when these functions are invoked, they will be invoked
+on the correct that Account pointer is pointing at.
+*/
 
 namespace Banking
 {
@@ -33,10 +40,11 @@ namespace Banking
 		void SetAccountNo(const int& accNo);
 
 		//Member functions
-		void AccumulateInterest();
-		void WithDraw(float amount);
-		void Deposit(float amount);
-		float GetInterestRate() const;
+		// generates new function bodies for each child classes
+		virtual void Deposit(float amount);
+		virtual void WithDraw(float amount);
+		virtual void AccumulateInterest();
+		virtual float GetInterestRate() const;
 
 	};
 

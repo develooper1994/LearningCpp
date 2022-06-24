@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 
 #include "Account.h"
@@ -16,8 +17,8 @@ namespace Banking
 		~Savings();
 
 		//Member functions
+		void AccumulateInterest();
 		float GetInterestRate() const;
-		float  AccumulateInterest();
 	};
 
 	struct Savings_TEST
@@ -27,7 +28,8 @@ namespace Banking
 			auto rate = savings1.GetInterestRate();
 			std::cout << rate << '\n';
 
-			auto newBalance = savings1.AccumulateInterest();
+			savings1.AccumulateInterest();
+			auto newBalance = savings1.GetInterestRate();
 			std::cout << newBalance << '\n';
 
 		}

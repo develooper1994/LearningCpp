@@ -10,9 +10,9 @@ namespace Banking
 	Account::Account(const std::string& name, float accBalance)
 		: accName{ name }, accBalance{ accBalance }
 	{
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 
 		std::default_random_engine engine;
 		std::uniform_int_distribution<int> distribution(1, 10);
@@ -26,66 +26,66 @@ namespace Banking
 	// destructors
 	Account::~Account()
 	{
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 	}
 
 	//Getters
 	const std::string Account::GetName() const
 	{
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 		return this->accName;
 	}
 
 	float Account::GetBalance() const
 	{
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 		return this->accBalance;
 	}
 
 	int Account::GetAccountNo() const
 	{
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 		return this->accNo;
 	}
 
 	//Setters
 	void Account::SetName(const std::string& str)
 	{
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 		this->accName = str;
 	}
 
 	void Account::SetBalance(const float& accBalance)
 	{
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 		this->accBalance = accBalance;
 	}
 
 	void Account::SetAccountNo(const int& accNo)
 	{
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 		this->accNo = accNo;
 	}
 
 	//Member functions
 	void Account::AccumulateInterest() {
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 	}
 	void Account::WithDraw(float amount) {
 		if (this->accBalance > amount)
@@ -99,15 +99,15 @@ namespace Banking
 		}
 	}
 	void Account::Deposit(float amount) {
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 		this->accBalance += amount;
 	}
 	float Account::GetInterestRate() const {
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 		return 0.0f; // will be implemented at child class
 	}
 

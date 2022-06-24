@@ -139,11 +139,20 @@
     <Filter Include="Lessons\7%29 OOPS\Classes\Banking">
       <UniqueIdentifier>{d4de0fbf-3fa4-4b52-ae03-cdfbd5562ab3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lessons\7%29 OOPS\Classes\Banking\Header Files">
+    <Filter Include="Lessons\7%29 OOPS\Classes\Banking\Classes">
+      <UniqueIdentifier>{86891f1a-4fc1-4acc-a6a9-872e0803fd93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\7%29 OOPS\Classes\Banking\Classes\Header Files">
       <UniqueIdentifier>{6f1a2c49-2d28-4746-9eae-39cf8f5e7707}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lessons\7%29 OOPS\Classes\Banking\Source Files">
+    <Filter Include="Lessons\7%29 OOPS\Classes\Banking\Classes\Source Files">
       <UniqueIdentifier>{29acdbcb-44b7-4ff5-9a07-d1e04d9c45d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\7%29 OOPS\Classes\Banking\Header Files">
+      <UniqueIdentifier>{dd2ac6f0-61aa-4ece-8f89-c176dfa4c266}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\7%29 OOPS\Classes\Banking\Source Files">
+      <UniqueIdentifier>{11efc2d2-d58f-4183-af2d-021d5b1fd2bb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -208,16 +217,19 @@
       <Filter>Lessons\7%29 OOPS</Filter>
     </ClCompile>
     <ClCompile Include="Account.cpp">
-      <Filter>Lessons\7%29 OOPS\Classes\Banking\Source Files</Filter>
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Classes\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Savings.cpp">
-      <Filter>Lessons\7%29 OOPS\Classes\Banking\Source Files</Filter>
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Classes\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Checking.cpp">
-      <Filter>Lessons\7%29 OOPS\Classes\Banking\Source Files</Filter>
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Classes\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Banking.cpp">
-      <Filter>Lessons\7%29 OOPS\Classes\Banking</Filter>
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Transact.cpp">
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -303,15 +315,18 @@
       <Filter>Lessons\7%29 OOPS\Classes</Filter>
     </ClInclude>
     <ClInclude Include="Account.h">
-      <Filter>Lessons\7%29 OOPS\Classes\Banking\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Banking.h">
-      <Filter>Lessons\7%29 OOPS\Classes\Banking</Filter>
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Classes\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Savings.h">
-      <Filter>Lessons\7%29 OOPS\Classes\Banking\Header Files</Filter>
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Classes\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Checking.h">
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Classes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Banking.h">
+      <Filter>Lessons\7%29 OOPS\Classes\Banking\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Transact.h">
       <Filter>Lessons\7%29 OOPS\Classes\Banking\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

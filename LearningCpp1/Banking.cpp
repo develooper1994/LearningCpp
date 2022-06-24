@@ -15,7 +15,8 @@ namespace Banking
 		Checking_TEST checkingTest;
 		checkingTest.Checking_TEST_main();
 
-		std::cout << "\n-*-*-*-*-* " << "xxxxxxxxxx" << " *-*-*-*-*-\n\n";
-
+		std::cout << "\n-*-*-*-*-* " << "Transact_TEST" << " *-*-*-*-*-\n\n";
+		Transact_TEST transactTEST;
+		transactTEST.Transact_TEST_main();
 	}
 }

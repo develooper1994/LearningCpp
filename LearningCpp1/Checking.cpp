@@ -4,9 +4,9 @@ using namespace Banking;
 
 //Checking::Checking(const std::string& name, float accBalance)
 //	: Account(name, accBalance) {
-//#ifdef DEBUG
+//#ifdef _BANKING_DEBUG
 //	std::clog << __FUNCSIG__ << '\n';
-//#endif // DEBUG
+//#endif // _BANKING_DEBUG
 //	// exist only to invoke the base class constructor.
 //	// It doesn't do nay initialization of its own in C++ ;)
 //	/*
@@ -17,15 +17,15 @@ using namespace Banking;
 //}
 
 Checking::~Checking() {
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 	std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 }
 
 void Checking::WithDraw(float amount, float max) {
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 	std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 	if (std::floor(accBalance - amount) > max) {
 		Account::WithDraw(amount); // Valid!
 		// WithDraw(amount); // Invalid! It may call recurve

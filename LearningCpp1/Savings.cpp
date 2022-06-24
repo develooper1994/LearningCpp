@@ -5,28 +5,29 @@ namespace Banking
 	Savings::Savings(const std::string& name, float balance, float Rate)
 		: Account(name, balance), Rate(Rate)
 	{
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 	}
 
 	Savings::~Savings() {
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 	}
 
 	float Savings::GetInterestRate() const {
-#ifdef DEBUG
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
+#endif // _BANKING_DEBUG
 		return Rate;
 	}
-	float Savings::AccumulateInterest() {
-#ifdef DEBUG
+	void Savings::AccumulateInterest() {
+#ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
-#endif // DEBUG
-		accBalance += (accBalance * Rate);
-		return accBalance;
+#endif // _BANKING_DEBUG
+		//accBalance += (accBalance * Rate);
+		//accBalance = accBalance * (Rate + 1);
+		accBalance *= (Rate + 1); // some math operations happend
 	}
 }

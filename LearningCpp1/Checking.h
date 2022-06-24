@@ -1,3 +1,4 @@
+#pragma once
 #include "Account.h"
 /*
 Not inherited member functions
