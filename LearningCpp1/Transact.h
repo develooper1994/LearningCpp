@@ -77,10 +77,11 @@ namespace Banking
 
 			/*
 			 * Without virtual destructor
-			...
+			...bla bla bla
+			<missing ~Savings>
 			Banking::Account::~Account(void)
 			 * With virtual destructor
-			...
+			...bla bla bla
 			Banking::Savings::~Savings(void)
 			Banking::Account::~Account(void)
 			*/
