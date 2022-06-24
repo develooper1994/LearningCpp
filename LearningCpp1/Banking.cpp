@@ -22,6 +22,5 @@ namespace Banking
 		std::cout << "\n-*-*-*-*-* " << "Transact_TEST_pointer" << " *-*-*-*-*-\n\n";
 		Transact_TEST transactTEST2;
 		transactTEST2.Transact_TEST_reference_main();
-
 	}
 }
