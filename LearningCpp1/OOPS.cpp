@@ -66,10 +66,10 @@ void TypeId() {
 }
 
 void OOPS_Main() {
-	/*Banking::Banking_Main_Test();
+	Banking::Banking_Main_Test();
 	Override_Final_Main();
 	Object_Slicing();
-	TypeId();*/
-	//Abstraction_Main();
+	TypeId();
+	Abstraction_Main();
 	Multiple_Inheritance_Main();
 }
