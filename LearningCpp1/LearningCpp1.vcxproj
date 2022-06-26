@@ -161,6 +161,7 @@
     <ClCompile Include="DrawLine.cpp" />
     <ClCompile Include="Employee.cpp" />
     <ClCompile Include="ExceptionHandling.cpp" />
+    <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="Integer.cpp" />
     <ClCompile Include="LanguageBasics.cpp" />
     <ClCompile Include="L_R_Values.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="DrawLine.h" />
     <ClInclude Include="Employee.h" />
     <ClInclude Include="ExceptionHandling.h" />
+    <ClInclude Include="FileIO.h" />
     <ClInclude Include="Integer.h" />
     <ClInclude Include="IntegerCpp11.h" />
     <ClInclude Include="LessonHeaders.h" />
