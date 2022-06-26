@@ -198,11 +198,13 @@ namespace BasicFileIO {
 		char name[10]{};
 		void WriteRecord(Record* record) {
 			std::ofstream output_binary{ "records.bin", std::ios::binary | std::ios::out };
+			output_binary.seekp(0);
 			output_binary.write((const char*)(record), sizeof(record));
 			output_binary.close();
 		}
 		Record ReadRecord() {
 			std::ifstream input_binary{ "records.bin", std::ios::binary | std::ios::in };
+			input_binary.seekg(0);
 			Record record;
 			input_binary.read((char*)(&record), sizeof(record));
 			input_binary.close();
@@ -211,8 +213,8 @@ namespace BasicFileIO {
 		inline void RecordTest() {
 			Record r;
 			r.id = 900;
-			std::string record_name = "record1";
-			strcpy_s(r.name, 10, record_name.c_str());
+			const char* record_name = "record1";
+			strcpy_s(r.name, sizeof(record_name), record_name);
 			WriteRecord(&r);
 			Record r2;
 			r2 = ReadRecord();
