@@ -177,7 +177,7 @@ namespace HomeWork1 {
 		return -1;
 	}
 
-	std::vector<float> MovingAverage(const std::vector<int>& vec, int block_size) {
+	std::vector<float> MovingAverage(const std::vector<int>& vec, size_t block_size) {
 		// y[n] = (1/N) * sum(x[n-i]); i=0->N-1
 		// extremely simple implementation. There is severely implementations.
 		// normally i need a ring-buffer. I will make other Moving Average filters later.

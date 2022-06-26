@@ -19,7 +19,7 @@ namespace ExceptionHandling1 {
 	/*
 	catch single exception
 	*/
-	int ProcessLoggingBAD(int count)
+	int ProcessLoggingBAD(size_t count)
 	{
 		// malloc returns nullptr when failed to allocate memory!
 		int* arr = (int*)malloc(count * sizeof(int));
@@ -45,7 +45,7 @@ namespace ExceptionHandling1 {
 		ProcessLoggingBAD(std::numeric_limits<size_t>::max()); // allocate extremely large number
 	}
 
-	void ProcessLoggingGOOD(int count)
+	void ProcessLoggingGOOD(size_t count)
 	{
 		// malloc returns nullptr when failed to allocate memory!
 		int* arr = (int*)malloc(count * sizeof(int));
@@ -99,7 +99,7 @@ namespace ExceptionHandling2 {
 		~Test() { std::cout << __FUNCSIG__ << ": Release resources\n"; }
 	};
 
-	void ProcessLoggingBetter(int count)
+	void ProcessLoggingBetter(size_t count)
 	{
 		if (count < 10) {
 			throw std::out_of_range("Count is should be greater then 10");
@@ -165,7 +165,7 @@ namespace ExceptionHandling3 {
 		~Test() { std::cout << __FUNCSIG__ << ": Release resources\n"; }
 	};
 
-	void ProcessLogging_stack_vs_heap_vs_RAII(int count) {
+	void ProcessLogging_stack_vs_heap_vs_RAII(size_t count) {
 		//Test t_stack1; // stack; Test() and ~Test() will run before exception. Stack objects properly destroyed.
 		//Test* t_heap1 = new Test; // heap; Test() will run before exception, however ~Test() could not call due to exception. !!! MEMORY LEAK !!!
 		std::unique_ptr<Test> t_smart_pointer(new Test); // the object t_smart_pointer destructor will be invoked. !Always use smart pointers!. !!! RAII saved us !!!
@@ -238,7 +238,7 @@ namespace ExceptionHandling4 {
 		~Test() { std::cout << __FUNCSIG__ << ": Release resources\n"; }
 	};
 
-	void ProcessLogging_Nested(int count) {
+	void ProcessLogging_Nested(size_t count) {
 		std::unique_ptr<Test> t_smart_pointer(new Test);
 		if (count < 10) { throw std::out_of_range("Count is should be greater then 10"); }
 
@@ -255,7 +255,7 @@ namespace ExceptionHandling4 {
 		};
 
 		static size_t error_counter{};
-		for (int i = 0; i < count; ++i)
+		for (size_t i = 0; i < count; ++i)
 		{
 			try {
 				std::cout << "ProcessLogging # : " << i << ' ';
@@ -280,9 +280,6 @@ namespace ExceptionHandling4 {
 		}
 
 		std::cout << "Total error counter: " << error_counter << '\n';
-
-
-
 	}
 
 	inline void ExceptionHandling_Nested() {
@@ -480,10 +477,10 @@ namespace noexpt_keyword {
 
 void ExceptionHandling_Main()
 {
-	//ExceptionHandling1::ExceptionHandling1();
-	//ExceptionHandling2::ExceptionHandling2();
-	//ExceptionHandling3::ExceptionHandling3();
-	//ExceptionHandling4::ExceptionHandling4();
+	ExceptionHandling1::ExceptionHandling1();
+	ExceptionHandling2::ExceptionHandling2();
+	ExceptionHandling3::ExceptionHandling3();
+	ExceptionHandling4::ExceptionHandling4();
 	Constructor_Destructors::Constructor_Destructors_Main();
-	noexpt_keyword::noexpt_keyword_Main();
+	//noexpt_keyword::noexpt_keyword_Main(); // throws some bad exceptions
 }

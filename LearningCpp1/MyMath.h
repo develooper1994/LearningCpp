@@ -24,7 +24,7 @@ int fib_power(int);
 namespace HomeWork1 {
 	int LinearSearch(const std::vector<int>& vec, int item);
 
-	std::vector<float> MovingAverage(const std::vector<int>& vec, int block_size);
+	std::vector<float> MovingAverage(const std::vector<int>& vec, size_t block_size);
 
 	int custom_abs(const int& x);
 
