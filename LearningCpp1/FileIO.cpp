@@ -482,8 +482,7 @@ namespace CopyUtility {
 					// TODO: Control errors.
 				}
 			}
-			else
-			{
+			else {
 				// * Split the file into chunks
 				auto chunks = static_cast<uint32_t>(floor(file_size / BufferSize));
 				auto remaining = static_cast<uint32_t>(file_size % BufferSize);
