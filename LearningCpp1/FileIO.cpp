@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <fstream>
 #include <filesystem> // C++17 and no more experimental
 
@@ -117,8 +118,7 @@ namespace BasicFileIO {
 	constexpr auto TextFilename2 = "temperature.txt";
 	void Write_char_by_char() {
 		std::ofstream output(TextFilename2); // if doesn't exist tries to creates the file.
-		if (!output)
-		{
+		if (!output) {
 			std::cerr << "Could not open file for writing\n";
 			return;
 		}
@@ -126,8 +126,7 @@ namespace BasicFileIO {
 		std::string message("Program the programming\nYou are living inside simulation and you don't even don't know it\nSuccess is 0 not 1\n");
 		// * put also known as ofstream "file location pointer"
 		std::clog << "Current put position is: " << output.tellp() << '\n'; // "tell the where is the put?" // on failure returns -1
-		for (const char& ch : message)
-		{
+		for (const char& ch : message) {
 			output.put(ch);
 		}
 
@@ -138,8 +137,7 @@ namespace BasicFileIO {
 	}
 	void Read_char_by_char() {
 		std::ifstream input(TextFilename2);
-		if (!input)
-		{
+		if (!input) {
 			std::cerr << "Source file is not found\n";
 			return;
 		}
@@ -160,8 +158,7 @@ namespace BasicFileIO {
 		input.seekg(0);
 		char ch{};
 		// * get also known as ifstream "file location pointer"
-		while (input.get(ch)) // as long as "!eof" bit is set // as long as there are enough characters to read, the loop will continue
-		{
+		while (input.get(ch)) { // as long as "!eof" bit is set // as long as there are enough characters to read, the loop will continue
 			std::cout << ch;
 		}
 
@@ -212,7 +209,7 @@ namespace BasicFileIO {
 		// -*-*-* input *-*-*-
 		num = 0; // reset
 		std::ifstream input{ "binary.bin", std::ios::binary | std::ios::in };
-		input.read((char*)&num, sizeof(num));
+		input.read(reinterpret_cast<char*>(&num), sizeof(num));
 		input.close();
 	}
 
@@ -275,38 +272,79 @@ namespace CopyUtility {
 		// Copy (only text) source file into new location.
 
 		// -*-*-* source *-*-*-
+		std::string source_filename("FileIO.cpp");
 		path source(current_path());
 		std::cout << "current_path: " << source << '\n';
-		source /= "FileIO.cpp"; // current_path() + "FileIO.cpp" string operation
+		source /= source_filename; // current_path() + "FileIO.cpp" string operation
 
 		std::ifstream input{ source };
-		if (!input) // is_open()
-		{
+		if (!input) { // is_open()
 			std::cout << "source file not found\n";
 			return -1;
 		}
 
 		// -*-*-* destination *-*-*-
+		std::string destination_filename("FileIO_Copy.cpp");
 		path destination(current_path());
-		destination /= "FileIO_Copy.cpp"; // current_path() + "FileIO_Copy.cpp" string operation
+		destination /= destination_filename; // current_path() + "FileIO_Copy.cpp" string operation
 
 		std::ofstream output{ destination };
-		if (!output) // is_open()
-		{
+		if (!output) { // is_open()
 			std::cout << "source file not found\n";
 			return -1;
 		}
 
 		// -*-*-* copy *-*-*-
 		std::string line;
-		while (!std::getline(input, line).eof()) // if it is not end of file ...
-		{
+		while (!std::getline(input, line).eof()) { // if it is not end of file ...
 			output << line << '\n';
 		}
 		input.close();
 		output.close();
 		return 0;
+	}
+	int CopyBinaryUtility_Main() {
 
+		// -*-*-* source *-*-*-
+		std::string source_filename("FileIO.cpp"); // created by records struct.
+		path source(current_path());
+		std::cout << "current_path: " << source << '\n';
+		source /= source_filename; // current_path() + "FileIO.cpp" string operation
+
+		std::ifstream input{ source, std::ios::binary | std::ios::in };
+		if (!input) { // is_open()
+			throw std::runtime_error("Could not open the file");
+			return -1;
+		}
+
+		// -*-*-* destination *-*-*-
+		std::string destination_filename("FileIO_Copy.cpp");
+		path destination(current_path());
+		destination /= destination_filename; // current_path() + "FileIO_Copy.cpp" string operation
+
+		std::ofstream output{ destination, std::ios::binary | std::ios::out };
+		if (!output) { // is_open()
+			throw std::runtime_error("Could not open the file");
+			return -1;
+		}
+
+		// -*-*-* get the file lenght *-*-*-
+		input.seekg(0, std::ios::beg);
+		auto file_lenght = input.tellg();
+		input.seekg(0, std::ios::end);
+		auto file_lenght2 = input.tellg();
+		auto file_size = fs::file_size();
+		input.seekg(0, std::ios::beg); // reset the "location cursor"
+
+		// -*-*-* copy *-*-*-
+		std::vector<int> input_vec;
+		input_vec.reserve(file_size);
+		//input.read();
+
+
+		std::cout << " Done!" << std::endl;
+		input.close();
+		output.close();
 	}
 }
 
@@ -360,7 +398,8 @@ namespace Assignments
 void File_InputOutput_Main() {
 	//str_literals::raw_string_literals();
 	//standard_filesystem::standard_filesystem_Main();
-	BasicFileIO::FileIO_Main();
+	//BasicFileIO::FileIO_Main();
 	//CopyUtility::CopyTextUtility_Main();
-	Assignments::Assignment_Tests();
+	CopyUtility::CopyBinaryUtility_Main();
+	//Assignments::Assignment_Tests();
 }
