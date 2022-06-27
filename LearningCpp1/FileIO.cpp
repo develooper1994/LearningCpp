@@ -189,39 +189,7 @@ namespace BasicFileIO {
 		std::string line;
 		std::getline(stream, line);
 		std::cout << "lyrics: " << line << '\n';
-
-
 	}
-
-	struct Record {
-		int id{};
-		char name[10]{};
-		void WriteRecord(Record* record) {
-			std::ofstream output_binary{ "records.bin", std::ios::binary | std::ios::out };
-			output_binary.seekp(0);
-			output_binary.write((const char*)(record), sizeof(record));
-			output_binary.close();
-		}
-		Record ReadRecord() {
-			std::ifstream input_binary{ "records.bin", std::ios::binary | std::ios::in };
-			input_binary.seekg(0);
-			Record record;
-			input_binary.read((char*)(&record), sizeof(record));
-			input_binary.close();
-			return record;
-		}
-		inline void RecordTest() {
-			Record r;
-			r.id = 900;
-			const char* record_name = "record1";
-			strcpy_s(r.name, sizeof(record_name), record_name);
-			WriteRecord(&r);
-			Record r2;
-			r2 = ReadRecord();
-			std::cout << "id: " << r2.id << " : name: " << name << '\n';
-
-		}
-	};
 	void Binary() {
 		// -*-*-* textStream *-*-*-
 		std::ofstream textStream{ "data.txt" };
@@ -248,6 +216,41 @@ namespace BasicFileIO {
 		input.close();
 	}
 
+	namespace Record {
+		struct Record {
+			int id{};
+			char name[10]{};
+			void WriteRecord(Record* record) {
+				std::ofstream output_binary{ "records.bin", std::ios::binary | std::ios::out };
+				output_binary.seekp(0);
+
+				//std::cout << "sizeof(Record): " << sizeof(Record) << " |vs| " << "sizeof(record): " << sizeof(record) << '\n';
+
+				output_binary.write(reinterpret_cast<const char*>(record), sizeof(Record)); // I need a fixed size
+				output_binary.close();
+			}
+			Record ReadRecord() {
+				std::ifstream input_binary{ "records.bin", std::ios::binary | std::ios::in };
+				input_binary.seekg(0);
+				Record record{};
+				input_binary.read(reinterpret_cast<char*>(&record), sizeof(Record));
+				input_binary.close();
+				return record;
+			}
+			void RecordTest() {
+				Record r{};
+				r.id = 900;
+				std::string record_name = "record1"; // 7 chars + '\n' => record_name.size() + 1
+				strcpy_s(r.name, record_name.size() + 1, record_name.c_str());
+				WriteRecord(&r);
+				Record r2;
+				r2 = ReadRecord();
+				std::cout << "id: " << r2.id << " : name: " << r2.name << '\n';
+			}
+		};
+
+	}
+
 	void FileIO_Main() {
 		// Only text!
 		WriteText();
@@ -260,7 +263,7 @@ namespace BasicFileIO {
 
 		// binary I/O
 		Binary();
-		Record r;
+		Record::Record r;
 		r.RecordTest();
 	}
 }
@@ -307,9 +310,57 @@ namespace CopyUtility {
 	}
 }
 
+namespace Assignments
+{
+	namespace Assignment1 {
+		/*
+		Modify the file copy utility to support copying of binary files. Here are some guidelines:
+
+		* Use read & write functions of the stream classes instead of getline, operator << or >>.
+		* Remember, binary files don't have EOF marker, so you'll have to read the file based on its size.
+		* Take help of the filesystem library to manage paths. (path class, current_path(), is_directory(), etc)
+		* Handle stream errors appropriately
+		* Prevent existing files from being overwritten during copy operations. Show a suitable message if a file will be overwritten.
+		Here is the link to the documentation of filesystem library: http://en.cppreference.com/w/cpp/header/experimental/filesystem
+		*/
+		void Assignment1_Main() {
+
+		}
+	}
+	namespace Assignment2 {
+		/*
+		Modify the file copy utility to support following:
+
+		* Accept file names through command line
+		* If the source is a directory, then copy the content of the entire directory. e.g. C:\copyutil c:\myfiles d:\oldfiles. All files in copyutil will be copied to myfiles directory. If the target directory does not exist, then create it.
+		* Show the progress of copy for each file as shown in the image below.
+
+		*/
+		void Assignment2_Main() {
+
+		}
+	}
+	namespace Assignment3 {
+		/*
+
+		*/
+		void Assignment3_Main() {
+
+		}
+	}
+
+	void Assignment_Tests()
+	{
+		Assignment1::Assignment1_Main();
+		//Assignment2::Assignment2_Main();
+		//Assignment3::Assignment3_Main();
+	}
+}
+
 void File_InputOutput_Main() {
 	//str_literals::raw_string_literals();
 	//standard_filesystem::standard_filesystem_Main();
 	BasicFileIO::FileIO_Main();
 	//CopyUtility::CopyTextUtility_Main();
+	Assignments::Assignment_Tests();
 }
