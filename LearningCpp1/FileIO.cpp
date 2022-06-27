@@ -313,7 +313,7 @@ namespace CopyUtility {
 
 		std::ifstream input{ source, std::ios::binary | std::ios::in };
 		if (!input) { // is_open()
-			throw std::runtime_error("Could not open the file");
+			throw std::runtime_error("Could not open source the file");
 			return -1;
 		}
 
@@ -324,7 +324,7 @@ namespace CopyUtility {
 
 		std::ofstream output{ destination, std::ios::binary | std::ios::out };
 		if (!output) { // is_open()
-			throw std::runtime_error("Could not open the file");
+			throw std::runtime_error("Could not open destination the file");
 			return -1;
 		}
 
@@ -333,10 +333,11 @@ namespace CopyUtility {
 		auto file_lenght = input.tellg();
 		input.seekg(0, std::ios::end);
 		auto file_lenght2 = input.tellg();
-		auto file_size = fs::file_size();
+		auto file_size = fs::file_size(source_filename);  // static_cast<uint32_t>(file_lenght2 - file_lenght);
 		input.seekg(0, std::ios::beg); // reset the "location cursor"
 
 		// -*-*-* copy *-*-*-
+		std::cout << "Copying\n";
 		std::vector<int> input_vec;
 		input_vec.reserve(file_size);
 		//input.read();
