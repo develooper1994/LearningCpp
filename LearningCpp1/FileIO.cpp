@@ -266,8 +266,48 @@ namespace BasicFileIO {
 }
 
 namespace CopyUtility {
+	typedef uint8_t BYTE;
+	typedef std::allocator<BYTE> BYTE_allocator;
+	typedef std::char_traits<BYTE> BYTE_char_traits;
+
+	//using string = std::basic_string<BYTE, BYTE_char_traits, BYTE_allocator >;
+	using ios = std::basic_ios<BYTE, BYTE_char_traits>;
+	//using streambuf = std::basic_streambuf<BYTE, BYTE_char_traits>;
+	//using istream = std::basic_istream<BYTE, BYTE_char_traits>;
+	//using ostream = std::basic_ostream<BYTE, BYTE_char_traits>;
+	//using iostream = std::basic_iostream<BYTE, BYTE_char_traits>;
+	//using stringbuf = std::basic_stringbuf<BYTE, BYTE_char_traits, std::allocator<BYTE>>;
+	//using istringstream = std::basic_istringstream<BYTE, BYTE_char_traits, BYTE_allocator>;
+	//using ostringstream = std::basic_ostringstream<BYTE, BYTE_char_traits, BYTE_allocator>;
+	//using stringstream = std::basic_stringstream<BYTE, BYTE_char_traits, BYTE_allocator>;
+	//using filebuf = std::basic_filebuf<BYTE, BYTE_char_traits>;
+	using ifstream = std::basic_ifstream<BYTE, BYTE_char_traits>;
+	using ofstream = std::basic_ofstream<BYTE, BYTE_char_traits>;
+	using fstream = std::basic_fstream<BYTE, BYTE_char_traits>;
+
 	namespace fs = std::filesystem;
 	using namespace fs; // changing the name of namespace not to confuse with other namespaces ;)
+	bool isFileAvailable(const ios& file) {
+		// not a bood idea :(
+		if (!file) {
+			throw std::runtime_error("Could not open the source file");
+			return false;
+		}
+		return true;
+	}
+	bool isFileAvailable(const std::ios& file) {
+		// not a bood idea :(
+		if (!file) {
+			throw std::runtime_error("Could not open the source file");
+			return false;
+		}
+		return true;
+	}
+	void resetLocationCursor(std::ifstream& input, ofstream& output)
+	{
+		input.seekg(0, std::ios::beg);
+		output.seekp(0, std::ios::beg);
+	}
 	int CopyTextUtility_Main() {
 		// Copy (only text) source file into new location.
 
@@ -303,49 +343,103 @@ namespace CopyUtility {
 		output.close();
 		return 0;
 	}
-	int CopyBinaryUtility_Main() {
-
-		// -*-*-* source *-*-*-
-		std::string source_filename("FileIO.cpp"); // created by records struct.
+	void source_subroutine(std::ifstream& input, const std::string& source_filename = "FileIO.cpp")
+	{
 		path source(current_path());
 		std::cout << "current_path: " << source << '\n';
 		source /= source_filename; // current_path() + "FileIO.cpp" string operation
 
-		std::ifstream input{ source, std::ios::binary | std::ios::in };
-		if (!input) { // is_open()
-			throw std::runtime_error("Could not open source the file");
-			return -1;
-		}
-
-		// -*-*-* destination *-*-*-
-		std::string destination_filename("FileIO_Copy.cpp");
+		input.setstate(std::ios::binary | std::ios::in);
+		isFileAvailable(input);
+		input.open(source);
+		// Stop eating new lines in binary mode!!!
+		input.unsetf(std::ios::skipws);
+	}
+	void destination_subroutine(ofstream& output, const std::string& destination_filename = "FileIO_Copy.cpp")
+	{
 		path destination(current_path());
 		destination /= destination_filename; // current_path() + "FileIO_Copy.cpp" string operation
 
-		std::ofstream output{ destination, std::ios::binary | std::ios::out };
-		if (!output) { // is_open()
-			throw std::runtime_error("Could not open destination the file");
-			return -1;
-		}
+		output.setstate(std::ios::binary | std::ios::in);
+		isFileAvailable(output);
+		output.open(destination);
+		// Stop eating new lines in binary mode!!!
+		output.unsetf(std::ios::skipws);
+	}
+	void all_in_one_time(uintmax_t file_size, std::ifstream& input, ofstream& output) {
+		// read-write all in one time. pre-allocationg is good :)
+		// you cannot do anything while copying and writing is bad :(
+
+		// reset the "location cursor"
+		resetLocationCursor(input, output);
+
+		std::vector<BYTE> input_vec;
+		input_vec.reserve(file_size);
+		// -*-*-* Read *-*-*-
+		auto Read = [&input, &input_vec]() {
+			std::copy(
+				std::istream_iterator<BYTE>(input),
+				std::istream_iterator<BYTE>(),
+				std::back_inserter(input_vec)
+			);
+		};
+		Read();
+		resetLocationCursor(input, output);
+
+		// -*-*-* Write *-*-*-
+		auto Write = [&output, &input_vec](const uintmax_t& file_size) {
+			if (!output.write(&input_vec.front(), file_size)) {
+				throw std::runtime_error("Error occured during write operation");
+			}
+		};
+		Write(file_size);
+		resetLocationCursor(input, output);
+	}
+	int CopyBinaryUtility_Main() {
+		// -*-*-* source *-*-*-
+		std::string source_filename = "FileIO.cpp";
+		std::ifstream input;
+		source_subroutine(input, source_filename);
+
+		// -*-*-* destination *-*-*-
+		std::string destination_filename("FileIO_Copy.cpp");
+		ofstream output;
+		destination_subroutine(output, destination_filename);
+
 
 		// -*-*-* get the file lenght *-*-*-
-		input.seekg(0, std::ios::beg);
-		auto file_lenght = input.tellg();
-		input.seekg(0, std::ios::end);
-		auto file_lenght2 = input.tellg();
-		auto file_size = fs::file_size(source_filename);  // static_cast<uint32_t>(file_lenght2 - file_lenght);
-		input.seekg(0, std::ios::beg); // reset the "location cursor"
-
-		// -*-*-* copy *-*-*-
+		//input.seekg(0, std::ios::beg);
+		//auto file_lenght = input.tellg();
+		//input.seekg(0, std::ios::end);
+		//auto file_lenght2 = input.tellg();
+		// auto file_size = static_cast<uint32_t>(file_lenght2 - file_lenght);
+		auto file_size = fs::file_size(source_filename);
+		// -*-*-* Copying *-*-*-
 		std::cout << "Copying\n";
-		std::vector<int> input_vec;
-		input_vec.reserve(file_size);
-		//input.read();
+		all_in_one_time(file_size, input, output);
 
+		{
+			const auto Buffer_size = 512;
+			BYTE input_vec[Buffer_size]{};
+			// chunk by chunk
+			/*
+			if (!input.read(input_vec, file_size)) {
+				throw std::runtime_error("Error occured during read operation");
+			}
+			/*for (auto&& ch : input_vec) {
+				output.put(ch);
+			}
+			if (!output.write((const BYTE*)input_vec, file_size)) {
+				throw std::runtime_error("Error occured during write operation");
+			}
+			*/
+		}
 
+		// -*-*-* Done *-*-*-
 		std::cout << " Done!" << std::endl;
 		input.close();
 		output.close();
+		return 0; // success
 	}
 }
 
