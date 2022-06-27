@@ -308,6 +308,11 @@ namespace CopyUtility {
 		input.seekg(0, std::ios::beg);
 		output.seekp(0, std::ios::beg);
 	}
+	void resetLocationCursor(ifstream& input, ofstream& output)
+	{
+		input.seekg(0, std::ios::beg);
+		output.seekp(0, std::ios::beg);
+	}
 	int CopyTextUtility_Main() {
 		// Copy (only text) source file into new location.
 
@@ -343,8 +348,18 @@ namespace CopyUtility {
 		output.close();
 		return 0;
 	}
-	void source_subroutine(std::ifstream& input, const std::string& source_filename = "FileIO.cpp")
-	{
+	void source_subroutine(std::ifstream& input, const std::string& source_filename = "FileIO.cpp") {
+		path source(current_path());
+		std::cout << "current_path: " << source << '\n';
+		source /= source_filename; // current_path() + "FileIO.cpp" string operation
+
+		input.setstate(std::ios::binary | std::ios::in);
+		isFileAvailable(input);
+		input.open(source);
+		// Stop eating new lines in binary mode!!!
+		input.unsetf(std::ios::skipws);
+	}
+	void source_subroutine(ifstream& input, const std::string& source_filename = "FileIO.cpp") {
 		path source(current_path());
 		std::cout << "current_path: " << source << '\n';
 		source /= source_filename; // current_path() + "FileIO.cpp" string operation
@@ -384,61 +399,110 @@ namespace CopyUtility {
 			);
 		};
 		Read();
+		input_vec.shrink_to_fit();
 		resetLocationCursor(input, output);
 
 		// -*-*-* Write *-*-*-
-		auto Write = [&output, &input_vec](const uintmax_t& file_size) {
-			if (!output.write(&input_vec.front(), file_size)) {
+		auto Write = [&output, &input_vec]() {
+			if (!output.write(&input_vec.front(), input_vec.size())) {
 				throw std::runtime_error("Error occured during write operation");
 			}
 		};
-		Write(file_size);
+		Write();
 		resetLocationCursor(input, output);
 	}
 	int CopyBinaryUtility_Main() {
-		// -*-*-* source *-*-*-
-		std::string source_filename = "FileIO.cpp";
-		std::ifstream input;
-		source_subroutine(input, source_filename);
-
-		// -*-*-* destination *-*-*-
-		std::string destination_filename("FileIO_Copy.cpp");
-		ofstream output;
-		destination_subroutine(output, destination_filename);
-
-
-		// -*-*-* get the file lenght *-*-*-
-		//input.seekg(0, std::ios::beg);
-		//auto file_lenght = input.tellg();
-		//input.seekg(0, std::ios::end);
-		//auto file_lenght2 = input.tellg();
-		// auto file_size = static_cast<uint32_t>(file_lenght2 - file_lenght);
-		auto file_size = fs::file_size(source_filename);
-		// -*-*-* Copying *-*-*-
-		std::cout << "Copying\n";
-		all_in_one_time(file_size, input, output);
-
+		// all in one
 		{
-			const auto Buffer_size = 512;
-			BYTE input_vec[Buffer_size]{};
-			// chunk by chunk
-			/*
-			if (!input.read(input_vec, file_size)) {
-				throw std::runtime_error("Error occured during read operation");
-			}
-			/*for (auto&& ch : input_vec) {
-				output.put(ch);
-			}
-			if (!output.write((const BYTE*)input_vec, file_size)) {
-				throw std::runtime_error("Error occured during write operation");
-			}
-			*/
+			// -*-*-* source *-*-*-
+			std::string source_filename = "FileIO.cpp";
+			std::ifstream input;
+			source_subroutine(input, source_filename);
+			auto file_size = fs::file_size(source_filename);
+
+			// -*-*-* destination *-*-*-
+			std::string destination_filename("FileIO_Copy.cpp");
+			ofstream output;
+			destination_subroutine(output, destination_filename);
+
+			// -*-*-* Copying *-*-*-
+			std::cout << "Copying\n";
+			all_in_one_time(file_size, input, output);
+			// -*-*-* Done *-*-*-
+			std::cout << " Done!" << std::endl;
+			input.close();
+			output.close();
 		}
 
-		// -*-*-* Done *-*-*-
-		std::cout << " Done!" << std::endl;
-		input.close();
-		output.close();
+		// chunk by chunk read and write
+		{
+			// -*-*-* source *-*-*-
+			std::string source_filename = "FileIO.cpp";
+			ifstream input;
+			source_subroutine(input, source_filename);
+			auto file_size = fs::file_size(source_filename);
+
+			// -*-*-* destination *-*-*-
+			std::string destination_filename("FileIO_Copy.cpp");
+			ofstream output;
+			destination_subroutine(output, destination_filename);
+
+			// -*-*-* Copying *-*-*-
+			std::cout << "Copying\n";
+			resetLocationCursor(input, output);
+			const uint16_t BufferSize = 512u; // number of bytes
+			//BYTE input_vec[Buffer_size]{};
+			std::vector<BYTE> input_vec;
+			input_vec.reserve(BufferSize); // pre-allocate but smaller chunks not all of them. May be there is not enough memory ;)
+			if (input_vec.size() < BufferSize) {
+				// * Source file is small, so read completely and write into target
+				////Read - _Count: fileSize
+				//if (!input.read(&input_vec.front(), file_size)) {
+				//	throw std::runtime_error("Error occurred during read operation");
+				//}
+				////Write - _Count: fileSize
+				//if (!output.write(input_vec.data(), file_size)) {
+				//	throw std::runtime_error("Error occurred during write operation");
+				//}
+
+				//Read - _Count: fileSize
+				unsigned char ch{};
+				size_t input_vec_counter = 0;
+				// * get also known as ifstream "file location pointer"
+				//auto state
+				while (input.get(ch) && input_vec_counter < input_vec.size()) { // as long as "!eof" bit is set // as long as there are enough characters to read, the loop will continue
+					//std::cout << ch;
+					input_vec[input_vec_counter++] = ch;
+					// TODO: Control errors. fail|bad|
+				}
+				input_vec.shrink_to_fit();
+				//Write - _Count: fileSize
+				for (auto&& ch : input_vec) {
+					output.put(ch);
+					// TODO: Control errors.
+				}
+			}
+			else
+			{
+				// * Split the file into chunks
+				auto chunks = static_cast<uint32_t>(floor(file_size / BufferSize));
+				auto remaining = static_cast<uint32_t>(file_size % BufferSize);
+				int process{}, oldprocess{};
+				for (size_t i = 0; i < chunks; ++i) {
+					// TODO: reallocate and continue to the process.
+					// Read - _Count: BUFFER_SIZE
+
+					//Write - _Count: BUFFER_SIZE
+
+					if (remaining > 0) {
+						// Read - _Count: remaining
+
+						//Write - _Count: remaining
+					}
+				}
+
+			}
+		}
 		return 0; // success
 	}
 }
