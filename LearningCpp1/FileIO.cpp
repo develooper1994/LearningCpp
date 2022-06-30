@@ -454,6 +454,8 @@ namespace CopyUtility {
 			//BYTE input_vec[Buffer_size]{};
 			std::vector<BYTE> input_vec;
 			input_vec.reserve(BufferSize); // pre-allocate but smaller chunks not all of them. May be there is not enough memory ;)
+			unsigned char ch{};
+			size_t input_vec_counter = 0;
 			if (input_vec.size() < BufferSize) {
 				// * Source file is small, so read completely and write into target
 				////Read - _Count: fileSize
@@ -466,8 +468,6 @@ namespace CopyUtility {
 				//}
 
 				//Read - _Count: fileSize
-				unsigned char ch{};
-				size_t input_vec_counter = 0;
 				// * get also known as ifstream "file location pointer"
 				//auto state
 				while (input.get(ch) && input_vec_counter < input_vec.size()) { // as long as "!eof" bit is set // as long as there are enough characters to read, the loop will continue
@@ -493,10 +493,21 @@ namespace CopyUtility {
 
 					//Write - _Count: BUFFER_SIZE
 
-					if (remaining > 0) {
-						// Read - _Count: remaining
-
-						//Write - _Count: remaining
+				}
+				if (remaining > 0) {
+					ch = 0;
+					input_vec_counter = 0;
+					// Read - _Count: remaining
+					while (input.get(ch) && input_vec_counter < input_vec.size()) { // as long as "!eof" bit is set // as long as there are enough characters to read, the loop will continue
+						//std::cout << ch;
+						input_vec[input_vec_counter++] = ch;
+						// TODO: Control errors. fail|bad|
+					}
+					input_vec.shrink_to_fit();
+					//Write - _Count: fileSize
+					for (auto&& ch : input_vec) {
+						output.put(ch);
+						// TODO: Control errors.
 					}
 				}
 
