@@ -298,7 +298,7 @@
       <Filter>Lessons\8%29 Exception Handling\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FileIO.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Lessons\9%29 Files Input &amp; Output\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

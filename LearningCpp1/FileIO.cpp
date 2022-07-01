@@ -1,3 +1,8 @@
+/*
+Created by Mustafa Selçuk Çaðlar
+Note:Use this code at your own risk.
+*/
+
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -288,7 +293,7 @@ namespace CopyUtility {
 	namespace fs = std::filesystem;
 	using namespace fs; // changing the name of namespace not to confuse with other namespaces ;)
 	bool isFileAvailable(const ios& file) {
-		// not a bood idea :(
+		// not a bood idea :|
 		if (!file) {
 			throw std::runtime_error("Could not open the source file");
 			return false;
@@ -391,25 +396,31 @@ namespace CopyUtility {
 		std::vector<BYTE> input_vec;
 		input_vec.reserve(file_size);
 		// -*-*-* Read *-*-*-
-		auto Read = [&input, &input_vec]() {
-			std::copy(
-				std::istream_iterator<BYTE>(input),
-				std::istream_iterator<BYTE>(),
-				std::back_inserter(input_vec)
-			);
-		};
-		Read();
-		input_vec.shrink_to_fit();
-		resetLocationCursor(input, output);
+		{
+			// increase locality
+			auto Read = [&input, &input_vec]() {
+				std::copy(
+					std::istream_iterator<BYTE>(input),
+					std::istream_iterator<BYTE>(),
+					std::back_inserter(input_vec)
+				);
+			};
+			Read();
+			input_vec.shrink_to_fit();
+			resetLocationCursor(input, output);
+		}
 
 		// -*-*-* Write *-*-*-
-		auto Write = [&output, &input_vec]() {
-			if (!output.write(&input_vec.front(), input_vec.size())) {
-				throw std::runtime_error("Error occured during write operation");
-			}
-		};
-		Write();
-		resetLocationCursor(input, output);
+		{
+			// increase locality
+			auto Write = [&output, &input_vec]() {
+				if (!output.write(&input_vec.front(), input_vec.size())) {
+					throw std::runtime_error("Error occured during write operation");
+				}
+			};
+			Write();
+			resetLocationCursor(input, output);
+		}
 	}
 	int CopyBinaryUtility_Main() {
 		// all in one
@@ -432,91 +443,226 @@ namespace CopyUtility {
 			std::cout << " Done!" << std::endl;
 			input.close();
 			output.close();
+			fs::remove(destination_filename);
 		}
 
 		// chunk by chunk read and write
 		{
 			// -*-*-* source *-*-*-
-			std::string source_filename = "FileIO.cpp";
+			std::string source_filename = "Integer.cpp";
 			ifstream input;
 			source_subroutine(input, source_filename);
 			auto file_size = fs::file_size(source_filename);
 
 			// -*-*-* destination *-*-*-
-			std::string destination_filename("FileIO_Copy.cpp");
+			std::string destination_filename("Integer_Copy.cpp");
 			ofstream output;
 			destination_subroutine(output, destination_filename);
 
 			// -*-*-* Copying *-*-*-
 			std::cout << "Copying\n";
 			resetLocationCursor(input, output);
-			const uint16_t BufferSize = 512u; // number of bytes
+			const size_t BufferSize(512); // number of bytes
 			//BYTE input_vec[Buffer_size]{};
 			std::vector<BYTE> input_vec;
 			input_vec.reserve(BufferSize); // pre-allocate but smaller chunks not all of them. May be there is not enough memory ;)
-			unsigned char ch{};
-			size_t input_vec_counter = 0;
-			if (input_vec.size() < BufferSize) {
-				// * Source file is small, so read completely and write into target
-				////Read - _Count: fileSize
-				//if (!input.read(&input_vec.front(), file_size)) {
-				//	throw std::runtime_error("Error occurred during read operation");
+			input_vec.resize(BufferSize, 0);
+			auto ch_start = input_vec.begin(); // I can tell where i crashed and continue to the process.
+			auto ch_end = input_vec.end();
+			auto input_vec_size = input_vec.size();
+
+			auto&& input_vec_data = input_vec.data(); // I don't want to copy inner data
+			bool readError{}, writeError{};
+			size_t process{}, oldprocess{}; // no way to negative
+			size_t interrupted_input_idx = 0, interrupted_output_idx = 0;  // I can tell where i crashed and continue to the process.
+			bool isRemaining = false;
+
+			auto input_vec_reset = [&input_vec, &ch_start, &ch_end](bool isRemaining = false) {
+				ch_start = input_vec.begin();
+				if (isRemaining)
+					ch_end = --input_vec.end();
+				else
+					ch_end = input_vec.end();
+			};
+			auto check_progress = [&input_vec]
+			(auto& file_stream, const auto& readError, const auto& ch_start, const auto& ch_end, std::string error_message = "Operation Error") {
+				auto inputState = file_stream.rdstate();
+				auto interrupted_idx = static_cast<size_t>(std::distance(input_vec.begin(), ch_start)); // last is good
+				//if (!(inputState & (std::ios_base::badbit | std::ios_base::failbit))) {
+				if (!readError && ch_start < ch_end) {
+					throw std::runtime_error(std::string(error_message));
+				}
+				return interrupted_idx; // it will not be executed but I have to report where the operation interrupted to continue after.
+			};
+			auto ReadSome = [&input, &input_vec, &readError, &check_progress](auto&& ch_start, auto&& ch_end) {
+				for (; !readError && ch_start < ch_end; ++ch_start) {
+					readError = !input.get(*ch_start);
+				}
+				//while (!readError) { // as long as "!eof" bit is set // as long as there are enough characters to read, the loop will continue
+				//	readError = !input.get(ch) && input_vec_counter < remaining;
+				//	input_vec[input_vec_counter++] = ch;
+				//	// TODO: Control errors. fail|bad|
 				//}
-				////Write - _Count: fileSize
-				//if (!output.write(input_vec.data(), file_size)) {
-				//	throw std::runtime_error("Error occurred during write operation");
+			};
+			auto Read = [&input, &input_vec, &readError, &ReadSome, &check_progress](auto&& ch_start, auto&& ch_end) {
+				/*readError = !input.read(input_vec_data, BufferSize);
+				if (readError) throw std::runtime_error("Read operation Error");*/
+				ReadSome(ch_start, ch_end);
+				auto interrupted_input_idx = check_progress(input, readError, ch_start, ch_end, "ReadSome Operation Error");
+				return interrupted_input_idx;
+			};
+			auto WriteSome = [&output, &input_vec, &writeError, &check_progress](auto& ch_start, auto& ch_end) {
+				//Write - _Count: fileSize
+				for (; !writeError && ch_start < ch_end; ++ch_start) {
+					writeError = !output.put(*ch_start);
+				}
+				//auto outputState = output.rdstate();
+				//auto interrupted_idx = static_cast<size_t>(std::distance(input_vec.begin(), ch_start));
+				////if (!(outputState & (std::ios_base::badbit | std::ios_base::failbit))) {
+				//if (!writeError && ch_start < ch_end) {
+				//	throw std::runtime_error("Write operation Error");
+				//	//return interrupted_idx; // it will not be executed but I have to report where the operation interrupted to continue after.
 				//}
 
+				//// Read - _Count: remaining
+				//readError = !input.read(input_vec_data, remaining);
+				//if (readError) {
+				//	throw std::runtime_error("Read operation Error");
+				//}
+				////input_vec.shrink_to_fit();
+				////Write - _Count: remaining
+				//writeError = !output.write(input_vec_data, remaining);
+				//if (writeError) {
+				//	throw std::runtime_error("Write operation Error");
+				//}
+			};
+			auto Write = [&output, &input_vec, &writeError, &check_progress, &WriteSome](auto& ch_start, auto& ch_end) {
+				/*writeError = !output.write(input_vec_data, BufferSize);
+				if (writeError) throw std::runtime_error("Write operation Error");*/
+				WriteSome(ch_start, ch_end);
+				auto interrupted_output_idx = check_progress(output, writeError, ch_start, ch_end, "WriteSome Operation Error");
+				return interrupted_output_idx;
+			};
+			auto process_meter = [&process, &oldprocess](auto&& chunk, auto&& chunks) {
+				/*
+				  * Get progress from 0 to 10 and print .s
+				  *
+				  * I'm calculating the percentage of the chunks copied. However, I multiply it by
+				  * 10 to ensure its value is greater than 0 and I can compare it with its old value
+				  * later. Conversion to integer is necessary because we cannot compare two float
+				  * values precisely. If the old and new values of percentage are different,
+				  * then we print the period on the screen.
+			  */
+				const auto& fchunk = static_cast<float>(chunk);
+				process = static_cast<size_t>(10 * fchunk / chunks); // show process every %10
+				if (process != oldprocess)
+					std::cout << '.';
+				oldprocess = process; // process gets age and become old :)
+			};
+			auto read_write_all = [&input_vec, &input_vec_reset, &Read, &interrupted_input_idx, &Write, &interrupted_output_idx]
+			(auto& ch_start, auto& ch_end, bool isRemaining = false) {
+				if (isRemaining) input_vec.resize(isRemaining, 0);
+				// Read - _Count: file_size
+				input_vec_reset(isRemaining);
+				interrupted_input_idx = Read(ch_start, ch_end);
+				/*ReadSome(ch_start, ch_end);
+				interrupted_input_idx = check_progress(input, readError, ch_start, ch_end, "ReadSome Operation Error");*/
+
+				if (isRemaining) input_vec.resize(isRemaining, 0);
+				// Write - _Count: BUFFER_SIZE
+				input_vec_reset(isRemaining);
+				interrupted_output_idx = Write(ch_start, ch_end);
+			};
+			if (file_size < BufferSize) {
 				//Read - _Count: fileSize
 				// * get also known as ifstream "file location pointer"
 				//auto state
-				while (input.get(ch) && input_vec_counter < input_vec.size()) { // as long as "!eof" bit is set // as long as there are enough characters to read, the loop will continue
-					//std::cout << ch;
-					input_vec[input_vec_counter++] = ch;
-					// TODO: Control errors. fail|bad|
-				}
-				input_vec.shrink_to_fit();
-				//Write - _Count: fileSize
-				for (auto&& ch : input_vec) {
-					output.put(ch);
-					// TODO: Control errors.
-				}
+				//while (!readError) { // as long as "!eof" bit is set // as long as there are enough characters to read, the loop will continue
+				//	!readError = input.get(ch) && input_vec_counter < file_size;
+				//	//std::cout << ch;
+				//	input_vec[input_vec_counter++] = ch;
+				//	// TODO: Control errors. fail|bad|
+				//}
+				//input_vec.shrink_to_fit();
+				////Write - _Count: fileSize
+				//for (auto&& ch : input_vec) {
+				//	output.put(ch);
+				//	// TODO: Control errors.
+				//}
+
+				// Read - _Count: file_size
+				input_vec_reset(isRemaining);
+				//interrupted_input_idx = Read(ch_start, ch_end);
+				ReadSome(ch_start, ch_end);
+				interrupted_input_idx = check_progress(input, readError, ch_start, ch_end, "ReadSome Operation Error");
+
+				// Write - _Count: BUFFER_SIZE
+				input_vec_reset(isRemaining);
+				//interrupted_output_idx = Write(ch_start, ch_end);
+				WriteSome(ch_start, ch_end);
+				interrupted_output_idx = check_progress(output, writeError, ch_start, ch_end, "WriteSome Operation Error");
 			}
 			else {
 				// * Split the file into chunks
-				auto chunks = static_cast<uint32_t>(floor(file_size / BufferSize));
-				auto remaining = static_cast<uint32_t>(file_size % BufferSize);
-				int process{}, oldprocess{};
-				for (size_t i = 0; i < chunks; ++i) {
-					// TODO: reallocate and continue to the process.
+				// more than one chunk
+				auto chunks = static_cast<size_t>(floor(file_size / BufferSize - 1));
+				auto remaining = static_cast<size_t>(BufferSize + file_size % BufferSize); // remaining bytes
+
+				size_t chunk = 0;
+				for (; chunk < chunks; ++chunk) {
 					// Read - _Count: BUFFER_SIZE
+					input_vec_reset(isRemaining);
+					interrupted_input_idx = Read(ch_start, ch_end);
+					//ReadSome(ch_start, ch_end);
+					//interrupted_input_idx = check_progress(input, readError, ch_start, ch_end, "ReadSome Operation Error");
 
-					//Write - _Count: BUFFER_SIZE
+					// Write - _Count: BUFFER_SIZE
+					input_vec_reset(isRemaining);
+					interrupted_output_idx = Write(ch_start, ch_end);
+					//WriteSome(ch_start, ch_end);
+					//interrupted_output_idx = check_progress(output, writeError, ch_start, ch_end, "WriteSome Operation Error");
 
+					process_meter(chunk, chunks);
 				}
+				/*
+					The next read operation will read less than BUFFER_SIZE & the input_vec(that means my buffer) may
+					contain leftover characters from the last read operation.
+					Therefore, zero out the buffer.
+				*/
+				// one of them faster case to case.
+				//memset(input_vec_data, '\0', BufferSize);
+				//input_vec.assign(BufferSize, '\0');
+				//input_vec.clear(); // makes size zero
+
 				if (remaining > 0) {
-					ch = 0;
-					input_vec_counter = 0;
+					isRemaining = true;
+					input_vec.resize(remaining, 0);
 					// Read - _Count: remaining
-					while (input.get(ch) && input_vec_counter < input_vec.size()) { // as long as "!eof" bit is set // as long as there are enough characters to read, the loop will continue
-						//std::cout << ch;
-						input_vec[input_vec_counter++] = ch;
-						// TODO: Control errors. fail|bad|
-					}
-					input_vec.shrink_to_fit();
-					//Write - _Count: fileSize
-					for (auto&& ch : input_vec) {
-						output.put(ch);
-						// TODO: Control errors.
-					}
-				}
+					input_vec_reset(isRemaining);
+					interrupted_input_idx = Read(ch_start, ch_end);
+					//ReadSome(ch_start, ch_end);
+					//interrupted_input_idx = check_progress(input, readError, ch_start, ch_end, "ReadSome Operation Error");
+					input_vec.resize(interrupted_input_idx, 0);
+					//input_vec.shrink_to_fit(); // possible reallocation!
 
+					// Write - _Count: BUFFER_SIZE
+					input_vec_reset(isRemaining);
+					interrupted_output_idx = Write(ch_start, ch_end);
+					//WriteSome(ch_start, ch_end);
+					//interrupted_output_idx = check_progress(output, writeError, ch_start, ch_end, "WriteSome Operation Error");
+
+					std::cout << '.';  // show last process every
+				}
 			}
+
+			// -*-*-* Done *-*-*-
+			std::cout << "\nDone!\n";
+			input.close();
+			output.close();
+			return 0; // Success
 		}
-		return 0; // success
 	}
 }
-
 namespace Assignments
 {
 	namespace Assignment1 {
