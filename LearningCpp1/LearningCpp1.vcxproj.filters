@@ -411,4 +411,17 @@
       <Filter>Lessons\9%29 Files Input &amp; Output\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="CppLands.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="CppMountain.jpeg">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="1 Minute Timer.mp4">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
 </Project>

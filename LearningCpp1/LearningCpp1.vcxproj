@@ -227,6 +227,13 @@
     <ClInclude Include="Transact.h" />
     <ClInclude Include="UtilityHeader.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="CppLands.png" />
+    <Image Include="CppMountain.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="1 Minute Timer.mp4" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
