@@ -710,9 +710,9 @@ namespace Assignments
 	void TextFileCopy() {
 		using namespace std::filesystem;
 		path source(current_path());
-		source /= "Source.cpp";
+		source /= "Integer.cpp";
 		path dest(current_path());
-		dest /= "Copy.cpp";
+		dest /= "Integer_Copy.cpp";
 
 		std::ifstream input{ source };
 		if (!input) {
@@ -792,22 +792,35 @@ namespace Assignments
 		fs::remove(destination_filename);
 	}
 	void Copy(const path& source, const path& destination) {
+		// -*-*-* Source *-*-*-
 		std::ifstream input(source, std::ios::in | std::ios::binary);
 		if (!input) {
 			throw std::runtime_error("Could not open the source file");
+		}
+
+		// -*-*-* Destination *-*-*-
+		if (std::filesystem::exists(destination)) {
+			throw std::runtime_error("Copied File already exist");
 		}
 		std::ofstream output(destination, std::ios::out | std::ios::binary);
 		if (!output) {
 			throw std::runtime_error("Could not open the destination file");
 		}
-		auto fileSize = file_size(source);
-		const unsigned int BUFFER_SIZE = 512;
-		//char buffer[BUFFER_SIZE]{};
+
+		// define buffer
+		const size_t fileSize = file_size(source);
+		constexpr size_t BUFFER_SIZE = 512;
 		std::vector<char> buffer{};
 		buffer.reserve(BUFFER_SIZE);
 		buffer.resize(BUFFER_SIZE, 0);
 		auto&& buffer_data = buffer.data();
 
+		//Split the file into chunks
+		size_t chunks = fileSize / BUFFER_SIZE;
+		int remaining = fileSize % BUFFER_SIZE;
+		int progress{}, oldProgress{};
+
+		// Operation
 		std::cout << "-*-*-*-*-* Copying *-*-*-*-*-" << source << '\n';
 		if (fileSize < BUFFER_SIZE) {
 			//Source file is small, so read completely and write into target
@@ -820,10 +833,20 @@ namespace Assignments
 		}
 		else {
 			//Split the file into chunks
-			auto chunks = fileSize / BUFFER_SIZE;
-			int remaining = fileSize % BUFFER_SIZE;
-			int progress{}, oldProgress{};
-			for (int i = 0; i < chunks; i++) {
+			for (int chunk = 0; chunk < chunks; ++chunk) {
+				// TODO! : Continue where it interrupted(chunk). hold read and write chunk
+
+				while (input.bad() || output.bad()) {
+					// "Error occurred during operation", "Error during copy operation", ...
+					// if media has corrupted or plugged-out continue after plug-in
+					auto second = 1;
+					std::this_thread::sleep_for(std::chrono::seconds(second));
+					std::clog << "Copy failed at (chunk): " << chunk << '\n';
+					std::cerr
+						<< "Error during copy operation, media has corrupted or plugged-out."
+						<< "Operation will continue after plug-in. Please reconnect!"
+						<< '\n';
+				}
 				if (!input.read(buffer_data, BUFFER_SIZE)) {
 					throw std::runtime_error("Error occurred during read operation");
 				}
@@ -843,7 +866,7 @@ namespace Assignments
 				 * values of percentage are different,
 				 * then we print the period on the screen.
 				 */
-				progress = static_cast<int>((10 * static_cast<float>(i) / chunks));
+				progress = static_cast<int>((10 * static_cast<float>(chunk) / chunks));
 				if (progress != oldProgress)
 					std::cout << ".";
 				oldProgress = progress;
@@ -853,7 +876,6 @@ namespace Assignments
 			contain leftover characters from the last read operation.
 			Therefore, zero out the buffer.
 			*/
-			//memset(buffer_data, '\0', BUFFER_SIZE);
 			buffer.resize(BUFFER_SIZE, 0);
 
 			//Read and write the remaining bytes
