@@ -386,6 +386,32 @@ namespace CopyUtility {
 		// Stop eating new lines in binary mode!!!
 		output.unsetf(std::ios::skipws);
 	}
+	void TextFileCopy() {
+		using namespace std::filesystem;
+		path source(current_path());
+		source /= "Integer.cpp";
+		path dest(current_path());
+		dest /= "Integer_Copy.cpp";
+
+		std::ifstream input{ source };
+		if (!input) {
+			std::cout << "Source file not found" << std::endl;
+			return;
+		}
+		std::ofstream output{ dest };
+
+		std::string line;
+		/*
+		getline returns input (ifstream). The while condition checks for failbit
+		through the overloaded bool operator of ifstream. When it fails to read
+		any more lines, it sets the fail bit & the bool operator return false for !failbit().
+		*/
+		while (std::getline(input, line)) {
+			output << line << std::endl;
+		}
+		input.close();
+		output.close();
+	}
 	void all_in_one_time(uintmax_t file_size, std::ifstream& input, ofstream& output) {
 		// read-write all in one time. pre-allocationg is good :)
 		// you cannot do anything while copying and writing is bad :(
@@ -444,167 +470,162 @@ namespace CopyUtility {
 		output.close();
 		fs::remove(destination_filename);
 	}
+	void Copy(const path& source, const path& destination) {
+		// -*-*-* Source *-*-*-
+		std::ifstream input(source, std::ios::in | std::ios::binary);
+		if (!input) {
+			throw std::runtime_error("Could not open the source file");
+		}
+
+		// -*-*-* Destination *-*-*-
+		if (std::filesystem::exists(destination)) {
+			throw std::runtime_error("Copied File already exist");
+		}
+		std::ofstream output(destination, std::ios::out | std::ios::binary);
+		if (!output) {
+			throw std::runtime_error("Could not open the destination file");
+		}
+
+		// define buffer
+		const size_t fileSize = file_size(source);
+		constexpr size_t BUFFER_SIZE = 512;
+		std::vector<char> buffer{};
+		buffer.reserve(BUFFER_SIZE);
+		buffer.resize(BUFFER_SIZE, 0);
+		auto&& buffer_data = buffer.data();
+
+		//Split the file into chunks
+		size_t chunks = fileSize / BUFFER_SIZE;
+		int remaining = fileSize % BUFFER_SIZE;
+		int progress{}, oldProgress{};
+
+		// Operation
+		std::cout << "-*-*-*-*-* Copying *-*-*-*-*-" << source << '\n';
+		if (fileSize < BUFFER_SIZE) {
+			//Source file is small, so read completely and write into target
+			if (!input.read(buffer_data, fileSize)) {
+				throw std::runtime_error("Error occurred during read operation");
+			}
+			if (!output.write(buffer_data, fileSize)) {
+				throw std::runtime_error("Error occurred during write operation");
+			}
+		}
+		else {
+			//Split the file into chunks
+			for (int chunk = 0; chunk < chunks; ++chunk) {
+				// TODO! : Continue where it interrupted(chunk). hold read and write chunk
+
+				while (input.bad() || output.bad()) {
+					// "Error occurred during operation", "Error during copy operation", ...
+					// if media has corrupted or plugged-out continue after plug-in
+					auto second = 1;
+					std::this_thread::sleep_for(std::chrono::seconds(second));
+					std::clog << "Copy failed at (chunk): " << chunk << '\n';
+					std::cerr
+						<< "Error during copy operation, media has corrupted or plugged-out."
+						<< "Operation will continue after plug-in. Please reconnect!"
+						<< '\n';
+				}
+				if (!input.read(buffer_data, BUFFER_SIZE)) {
+					throw std::runtime_error("Error occurred during read operation");
+				}
+				if (!output.write(buffer_data, BUFFER_SIZE)) {
+					throw std::runtime_error("Error occurred during write operation");
+				}
+				/*
+				 * Get progress from 0 to 10 and print .s
+				 *
+				 * I'm calculating the percentage of the
+				 * chunks copied. However, I multiply it by
+				 * 10 to ensure its value is greater than 0
+				 * and I can compare it with its old value
+				 * later. Conversion to integer is necessary
+				 * because we cannot compare two float
+				 * values precisely. If the old and new
+				 * values of percentage are different,
+				 * then we print the period on the screen.
+				 */
+				progress = static_cast<int>((10 * static_cast<float>(chunk) / chunks));
+				if (progress != oldProgress)
+					std::cout << ".";
+				oldProgress = progress;
+			}
+			/*
+			The next read operation will read less than BUFFER_SIZE & the buffer may
+			contain leftover characters from the last read operation.
+			Therefore, zero out the buffer.
+			*/
+			buffer.resize(BUFFER_SIZE, 0);
+
+			//Read and write the remaining bytes
+			if (remaining > 0) {
+				if (!input.read(buffer_data, remaining)) {
+					throw std::runtime_error("Error occurred during read operation");
+				}
+				if (!output.write(buffer_data, remaining)) {
+					throw std::runtime_error("Error occurred during write operation");
+				}
+				std::cout << ".";
+			}
+		}
+		std::cout << " Done!" << std::endl;
+		input.close();
+		output.close();
+	}
 	int chunk_by_chunk_test()
 	{
 		// -*-*-* source *-*-*-
-		std::string source_filename = "Integer.cpp";
-		ifstream input;
-		source_subroutine(input, source_filename);
-		auto file_size = fs::file_size(source_filename);
+		std::vector<std::string> source_filenames{
+		"1 Minute Timer.mp4", // much much large size
+		"CppLands.png", // much large size
+		"CppMountain.jpeg", // large size
+		"Integer.cpp", // medium size
+		"lyrics.txt", // small size
+		"empty.txt" // empty
+		};
+
+		std::vector<path> sources(source_filenames.size(), current_path());
+		std::cout << "current source path: " << sources[0] << '\n';
+		for (size_t idx = 0; idx < sources.size(); ++idx) {
+			sources[idx] /= source_filenames[idx]; // current_path() + "FileIO.cpp" string operation
+		}
 
 		// -*-*-* destination *-*-*-
-		std::string destination_filename("Integer_Copy.cpp");
-		ofstream output;
-		destination_subroutine(output, destination_filename);
-
-		// -*-*-* Copying *-*-*-
-		std::cout << "Copying\n";
-		resetLocationCursor(input, output);
-		const size_t BufferSize(512); // number of bytes
-		//BYTE input_vec[Buffer_size]{};
-		std::vector<BYTE> input_vec;
-		input_vec.reserve(BufferSize); // pre-allocate but smaller chunks not all of them. May be there is not enough memory ;)
-		input_vec.resize(BufferSize, 0);
-		auto ch_start = input_vec.begin(); // I can tell where i crashed and continue to the process.
-		auto ch_end = input_vec.end();
-		auto input_vec_size = input_vec.size();
-
-		auto&& input_vec_data = input_vec.data(); // I don't want to copy inner data
-		bool readError{}, writeError{};
-		size_t process{}, oldprocess{}; // no way to negative
-		size_t interrupted_input_idx = 0, interrupted_output_idx = 0;  // I can tell where i crashed and continue to the process.
-		bool isRemaining = false;
-		// * Split the file into chunks
-		// more than one chunk
-		auto chunks = static_cast<size_t>(floor(file_size / BufferSize - 1));
-		auto remaining = static_cast<size_t>(BufferSize + file_size % BufferSize); // remaining bytes
-		size_t chunk = 0;
-
-		auto input_vec_reset = [&input_vec, &ch_start, &ch_end](bool isRemaining = false) {
-			ch_start = input_vec.begin();
-			if (isRemaining)
-				ch_end = --input_vec.end();
-			else
-				ch_end = input_vec.end();
+		std::vector<std::string> destination_filenames{
+			"1 Minute Timer_Copy.mp4", // much much large size
+			"CppLands_Copy.png", // much large size
+			"CppMountain_Copy.jpeg", // large size
+			"Integer_Copy.cpp", // medium size
+			"lyrics_Copy.txt", // small size
+			"empty_Copy.txt" // empty
 		};
-		auto check_progress = [&input_vec]
-		(auto& file_stream, const auto& readError, const auto& ch_start, const auto& ch_end, std::string error_message = "Operation Error") {
-			auto inputState = file_stream.rdstate();
-			auto interrupted_idx = static_cast<size_t>(std::distance(input_vec.begin(), ch_start)); // last is good
-			//if (!(inputState & (std::ios_base::badbit | std::ios_base::failbit))) {
-			if (!readError && ch_start < ch_end) {
-				throw std::runtime_error(std::string(error_message));
-			}
-			return interrupted_idx; // it will not be executed but I have to report where the operation interrupted to continue after.
-		};
-		auto ReadSome = [&input, &input_vec, &readError, &check_progress](auto&& ch_start, auto&& ch_end) {
-			for (; !readError && ch_start < ch_end; ++ch_start) {
-				readError = !input.get(*ch_start);
-			}
-			//while (!readError) { // as long as "!eof" bit is set // as long as there are enough characters to read, the loop will continue
-			//	readError = !input.get(ch) && input_vec_counter < remaining;
-			//	input_vec[input_vec_counter++] = ch;
-			//	// TODO: Control errors. fail|bad|
-			//}
-		};
-		auto Read = [&input, &input_vec, &readError, &ReadSome, &check_progress](auto&& ch_start, auto&& ch_end) {
-			/*readError = !input.read(input_vec_data, BufferSize);
-			if (readError) throw std::runtime_error("Read operation Error");*/
-			ReadSome(ch_start, ch_end);
-			auto interrupted_input_idx = check_progress(input, readError, ch_start, ch_end, "ReadSome Operation Error");
-			return interrupted_input_idx;
-		};
-		auto WriteSome = [&output, &input_vec, &writeError, &check_progress](auto& ch_start, auto& ch_end) {
-			//Write - _Count: fileSize
-			for (; !writeError && ch_start < ch_end; ++ch_start) {
-				writeError = !output.put(*ch_start);
-			}
-			//auto outputState = output.rdstate();
-			//auto interrupted_idx = static_cast<size_t>(std::distance(input_vec.begin(), ch_start));
-			////if (!(outputState & (std::ios_base::badbit | std::ios_base::failbit))) {
-			//if (!writeError && ch_start < ch_end) {
-			//	throw std::runtime_error("Write operation Error");
-			//	//return interrupted_idx; // it will not be executed but I have to report where the operation interrupted to continue after.
-			//}
+		std::vector<path> destinations(destination_filenames.size(), current_path());
+		std::cout << "destination source path: " << destinations[0] << '\n';
 
-			//// Read - _Count: remaining
-			//readError = !input.read(input_vec_data, remaining);
-			//if (readError) {
-			//	throw std::runtime_error("Read operation Error");
-			//}
-			////input_vec.shrink_to_fit();
-			////Write - _Count: remaining
-			//writeError = !output.write(input_vec_data, remaining);
-			//if (writeError) {
-			//	throw std::runtime_error("Write operation Error");
-			//}
-		};
-		auto Write = [&output, &input_vec, &writeError, &check_progress, &WriteSome](auto& ch_start, auto& ch_end) {
-			/*writeError = !output.write(input_vec_data, BufferSize);
-			if (writeError) throw std::runtime_error("Write operation Error");*/
-			WriteSome(ch_start, ch_end);
-			auto interrupted_output_idx = check_progress(output, writeError, ch_start, ch_end, "WriteSome Operation Error");
-			return interrupted_output_idx;
-		};
-		auto process_meter = [&process, &oldprocess](auto&& chunk, auto&& chunks) {
-			/*
-			  * Get progress from 0 to 10 and print .s
-			  *
-			  * I'm calculating the percentage of the chunks copied. However, I multiply it by
-			  * 10 to ensure its value is greater than 0 and I can compare it with its old value
-			  * later. Conversion to integer is necessary because we cannot compare two float
-			  * values precisely. If the old and new values of percentage are different,
-			  * then we print the period on the screen.
-		  */
-			const auto& fchunk = static_cast<float>(chunk);
-			process = static_cast<size_t>(10 * fchunk / chunks); // show process every %10
-			if (process != oldprocess)
-				std::cout << '.';
-			oldprocess = process; // process gets age and become old :)
-		};
-
-		for (; chunk < chunks; ++chunk) {
-			// Read - _Count: BUFFER_SIZE
-			input_vec_reset(isRemaining);
-			interrupted_input_idx = Read(ch_start, ch_end);
-
-			// Write - _Count: BUFFER_SIZE
-			input_vec_reset(isRemaining);
-			interrupted_output_idx = Write(ch_start, ch_end);
-
-			process_meter(chunk, chunks);
-		}
-		if (remaining > 0) {
-			isRemaining = true;
-			input_vec.resize(remaining, 0);
-
-			// Read - _Count: remaining
-			input_vec_reset(isRemaining);
-			interrupted_input_idx = Read(ch_start, ch_end);
-			input_vec.resize(interrupted_input_idx, 0);
-			//input_vec.shrink_to_fit(); // possible reallocation!
-
-			// Write - _Count: BUFFER_SIZE
-			input_vec_reset(isRemaining);
-			interrupted_output_idx = Write(ch_start, ch_end);
-
-			std::cout << '.';  // show last process every
+		for (size_t idx = 0; idx < destinations.size(); ++idx) {
+			destinations[idx] /= destination_filenames[idx]; // current_path() + "FileIO_Copy.cpp" string operation
 		}
 
-		// -*-*-* Done *-*-*-
-		std::cout << "\nDone!\n";
-		input.close();
-		output.close();
-		return 0; // Success
+		// Operation
+		for (size_t idx = 0; idx < sources.size(); ++idx) {
+			Copy(sources[idx], destinations[idx]);
+		}
+
+
+		return 0;
 	}
 	void CopyBinaryUtility_Main() {
+		// only text copy
+		// TextFileCopy();
+
 		// all in one
-		all_in_one_test();
+		//all_in_one_test();
 
 		// chunk by chunk read and write
 		chunk_by_chunk_test();
 	}
 }
+
 namespace Assignments
 {
 	typedef uint8_t BYTE;
@@ -710,9 +731,9 @@ namespace Assignments
 	void TextFileCopy() {
 		using namespace std::filesystem;
 		path source(current_path());
-		source /= "Source.cpp";
+		source /= "Integer.cpp";
 		path dest(current_path());
-		dest /= "Copy.cpp";
+		dest /= "Integer_Copy.cpp";
 
 		std::ifstream input{ source };
 		if (!input) {
@@ -792,22 +813,35 @@ namespace Assignments
 		fs::remove(destination_filename);
 	}
 	void Copy(const path& source, const path& destination) {
+		// -*-*-* Source *-*-*-
 		std::ifstream input(source, std::ios::in | std::ios::binary);
 		if (!input) {
 			throw std::runtime_error("Could not open the source file");
+		}
+
+		// -*-*-* Destination *-*-*-
+		if (std::filesystem::exists(destination)) {
+			throw std::runtime_error("Copied File already exist");
 		}
 		std::ofstream output(destination, std::ios::out | std::ios::binary);
 		if (!output) {
 			throw std::runtime_error("Could not open the destination file");
 		}
-		auto fileSize = file_size(source);
-		const unsigned int BUFFER_SIZE = 512;
-		//char buffer[BUFFER_SIZE]{};
+
+		// define buffer
+		const size_t fileSize = file_size(source);
+		constexpr size_t BUFFER_SIZE = 512;
 		std::vector<char> buffer{};
 		buffer.reserve(BUFFER_SIZE);
 		buffer.resize(BUFFER_SIZE, 0);
 		auto&& buffer_data = buffer.data();
 
+		//Split the file into chunks
+		size_t chunks = fileSize / BUFFER_SIZE;
+		int remaining = fileSize % BUFFER_SIZE;
+		int progress{}, oldProgress{};
+
+		// Operation
 		std::cout << "-*-*-*-*-* Copying *-*-*-*-*-" << source << '\n';
 		if (fileSize < BUFFER_SIZE) {
 			//Source file is small, so read completely and write into target
@@ -820,10 +854,20 @@ namespace Assignments
 		}
 		else {
 			//Split the file into chunks
-			auto chunks = fileSize / BUFFER_SIZE;
-			int remaining = fileSize % BUFFER_SIZE;
-			int progress{}, oldProgress{};
-			for (int i = 0; i < chunks; i++) {
+			for (int chunk = 0; chunk < chunks; ++chunk) {
+				// TODO! : Continue where it interrupted(chunk). hold read and write chunk
+
+				while (input.bad() || output.bad()) {
+					// "Error occurred during operation", "Error during copy operation", ...
+					// if media has corrupted or plugged-out continue after plug-in
+					auto second = 1;
+					std::this_thread::sleep_for(std::chrono::seconds(second));
+					std::clog << "Copy failed at (chunk): " << chunk << '\n';
+					std::cerr
+						<< "Error during copy operation, media has corrupted or plugged-out."
+						<< "Operation will continue after plug-in. Please reconnect!"
+						<< '\n';
+				}
 				if (!input.read(buffer_data, BUFFER_SIZE)) {
 					throw std::runtime_error("Error occurred during read operation");
 				}
@@ -843,7 +887,7 @@ namespace Assignments
 				 * values of percentage are different,
 				 * then we print the period on the screen.
 				 */
-				progress = static_cast<int>((10 * static_cast<float>(i) / chunks));
+				progress = static_cast<int>((10 * static_cast<float>(chunk) / chunks));
 				if (progress != oldProgress)
 					std::cout << ".";
 				oldProgress = progress;
@@ -853,7 +897,6 @@ namespace Assignments
 			contain leftover characters from the last read operation.
 			Therefore, zero out the buffer.
 			*/
-			//memset(buffer_data, '\0', BUFFER_SIZE);
 			buffer.resize(BUFFER_SIZE, 0);
 
 			//Read and write the remaining bytes
