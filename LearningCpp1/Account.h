@@ -12,10 +12,8 @@ polymorphic function, that means when these functions are invoked, they will be 
 on the correct that Account pointer is pointing at.
 */
 
-namespace Banking
-{
-	class Account
-	{
+namespace Banking {
+	class Account {
 	private:
 		std::string accName;
 		int accNo;
@@ -57,8 +55,7 @@ namespace Banking
 			acc1.WithDraw(300); // -300
 			std::cout << "Balance: " << acc1.GetBalance() << '\n'; // 900
 		}
-		void Account_TEST_main()
-		{
+		void Account_TEST_main() {
 			Account_TEST1();
 		}
 	};

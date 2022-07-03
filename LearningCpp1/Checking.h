@@ -6,10 +6,8 @@ Not inherited member functions
 - destructor
 - assignment operator
 */
-namespace Banking
-{
-	class Checking : public Account
-	{
+namespace Banking {
+	class Checking : public Account {
 	private:
 		float minimumBalance;
 		// doesn't have any variables ;)

@@ -47,21 +47,22 @@ void TypeId() {
 	const std::type_info& ti_save = typeid(save);
 	const std::type_info& ti_acc = typeid(p1);
 	const std::type_info& ti_acc_pointer = typeid(*p1);
-	std::cout << "int: " << ti_i.name() << '\n'
+	std::cout
+		<< "int: " << ti_i.name() << '\n'
 		<< "float: " << ti_f.name() << '\n'
 		<< "Checking: " << ti_ch1.name() << '\n'
 		<< "Savings: " << ti_save.name() << '\n'
 		<< "Account: " << ti_acc.name() << '\n'
 		<< "Account*: " << ti_acc_pointer.name() << '\n';
 
-	//const std::type_info& ti = typeid(*p1);
-	const std::type_info& ti = typeid(*p2);
-	if (ti == typeid(Banking::Savings)) {
-		std::cout << "points to Savings object\n";
-	}
-	else {
-		std::cout << "not pointing to Savings object\n";
-	}
+	const std::type_info& ti1 = typeid(*p1);
+	const std::type_info& ti2 = typeid(*p2);
+
+	auto TypeCheckMessage =
+		ti2 == typeid(Banking::Savings) ?
+		"points to Savings object\n" : // true
+		"not pointing to Savings object\n";	// false
+	std::cout << TypeCheckMessage;
 
 }
 

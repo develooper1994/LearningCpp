@@ -3,8 +3,7 @@
 #include <random>
 #include <iostream>
 
-namespace Banking
-{
+namespace Banking {
 	int Account::AccGenerator = 1000;
 	// constructors
 	Account::Account(const std::string& name, float accBalance)
@@ -24,8 +23,7 @@ namespace Banking
 	}
 
 	// destructors
-	Account::~Account()
-	{
+	Account::~Account() {
 #ifdef _BANKING_DEBUG
 		std::clog << __FUNCSIG__ << '\n';
 #endif // _BANKING_DEBUG

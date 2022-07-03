@@ -1,7 +1,6 @@
 #include "Banking.h"
 
-namespace Banking
-{
+namespace Banking {
 	void Banking_Main_Test() {
 		std::cout << "\n-*-*-*-*-* " << "Account_TEST" << " *-*-*-*-*-\n\n";
 		Account_TEST accTest;

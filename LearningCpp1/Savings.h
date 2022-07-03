@@ -21,8 +21,7 @@ namespace Banking
 		float GetInterestRate() const;
 	};
 
-	struct Savings_TEST
-	{
+	struct Savings_TEST {
 		inline void Savings_TEST1() {
 			Savings savings1("Save", 100, 2);
 			auto rate = savings1.GetInterestRate();
