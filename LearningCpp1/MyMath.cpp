@@ -242,3 +242,47 @@ namespace HomeWork1 {
 		std::cout << "x = " << x << " || " << "custom_abs(x) = " << custom_abs(x) << '\n';
 	}
 }
+
+
+
+// I like it :)
+std::string stringSum(std::string a, std::string b)
+{
+	/*
+	* Sum of really big integers
+	* reference: https://stackoverflow.com/questions/42357976/how-to-get-the-sum-of-two-strings-of-numbers-c
+	TEST:
+		string result = doSum("1234567890", "123789456123");
+		cout << result << "\n";
+
+	Small Integers:
+	// use standard library
+	std::string num1 = "12";
+	std::string num2 = "4";
+	std::string sum = std::to_string(std::stoi(num1) + std::stoi(num2));
+	*/
+	if (a.size() < b.size())
+		std::swap(a, b);
+
+	size_t i = b.size() - 1;
+	size_t j = a.size() - 1;
+	for (; i >= 0; i--, j--)
+		a[j] += (b[i] - '0');
+
+	for (size_t i = a.size() - 1; i > 0; i--) {
+		if (a[i] > '9') {
+			int d = a[i] - '0';
+			a[i - 1] = ((a[i - 1] - '0') + d / 10) + '0';
+			a[i] = (d % 10) + '0';
+		}
+	}
+	if (a[0] > '9')
+	{
+		std::string k;
+		k += a[0];
+		a[0] = ((a[0] - '0') % 10) + '0';
+		k[0] = ((k[0] - '0') / 10) + '0';
+		a = k + a;
+	}
+	return a;
+}

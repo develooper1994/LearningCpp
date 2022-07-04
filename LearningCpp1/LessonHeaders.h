@@ -10,3 +10,4 @@
 #include "OOPS.h"
 #include "ExceptionHandling.h"
 #include "FileIO.h"
+#include "Template.h"

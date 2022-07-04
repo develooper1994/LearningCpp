@@ -300,6 +300,9 @@
     <ClCompile Include="FileIO.cpp">
       <Filter>Lessons\9%29 Files Input &amp; Output\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Template.cpp">
+      <Filter>Lessons\10%29 Template\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -410,6 +413,9 @@
     <ClInclude Include="FileIO.h">
       <Filter>Lessons\9%29 Files Input &amp; Output\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Template.h">
+      <Filter>Lessons\10%29 Template\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="CppLands.png">
@@ -423,5 +429,10 @@
     <Media Include="1 Minute Timer.mp4">
       <Filter>Resource Files</Filter>
     </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="x64\Debug\Template.asm">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
