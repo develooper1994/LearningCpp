@@ -26,45 +26,36 @@ Using extern C on a C++ functions allows us to call that function from C or othe
 //	return x + y;
 //}
 extern "C" {
-	int add(int x = 0, int y = 0)
-	{
+	int add(int x = 0, int y = 0) {
 		return x + y;
 	}
-	int substract(int x, int y)
-	{
+	int substract(int x, int y) {
 		return x - y;
 	}
 }
-int add(const int& x, const int& y)
-{
+int add(const int& x, const int& y) {
 	return x + y;
 }
-float add(float x, float y)
-{
+float add(float x, float y) {
 	return x + y;
 }
-float add(float x, int y)
-{
+float add(float x, int y) {
 	return float(x + y);
 }
 
-size_t factorial(uint32_t x)
-{
-	if (x < 0)
-	{
+size_t factorial(uint32_t x) {
+	if (x < 0) {
 		std::cerr << "Error! Factorial of a negative number doesn't exist.";
 		return -1;
 	}
 	size_t temp = 1;
 	for (size_t i = 1; i <= x; ++i)
-	{
 		temp *= i;
-	}
+
 	return temp;
 }
 
-std::vector<int> fibonacci_series(uint32_t n)
-{
+std::vector<int> fibonacci_series(uint32_t n) {
 	// 0, 1, 2, 3, 4, 5, 6,  7,  8,  9, 10, 11,  12, ……..
 	// 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ……..
 	auto temp1 = 0; // first index= 0
@@ -73,16 +64,13 @@ std::vector<int> fibonacci_series(uint32_t n)
 	std::vector<int> vec{ 0, 1 };
 	auto& result = vec; // store the result and quit whenever i want.
 	if (n < 0)
-	{
 		n = abs((int)n);
-	}
-	if (n == 0)
+	else if (n == 0)
 		vec.pop_back();
 	result = vec; // don't quit now.
 
 	auto fibonacci_generator = [&n, &temp1, &temp2, &next, &vec]() {
-		for (size_t i = 2; i < n; ++i)
-		{
+		for (size_t i = 2; i < n; ++i) {
 			next = temp1 + temp2;
 			temp1 = temp2;
 			temp2 = next;
@@ -94,10 +82,8 @@ std::vector<int> fibonacci_series(uint32_t n)
 	auto fibonacci_print = [&n, &vec](const int& line_max = 15) {
 		if ((n >= 0)) std::cout << 0 << ", ";
 		if ((n >= 1)) std::cout << 1 << ", ";
-		for (size_t i = 2; i < n; ++i)
-		{
-			if ((i % line_max + 1) == line_max)
-			{
+		for (size_t i = 2; i < n; ++i) {
+			if ((i % line_max + 1) == line_max) {
 				// enter the new line
 				std::cout << '\n';
 			}
@@ -115,8 +101,7 @@ std::vector<int> fibonacci_series(uint32_t n)
 	Fibonacci with matrix multiply
 	There is some math involved.
 */
-void multiply(int F[2][2])
-{
+void multiply(int F[2][2]) {
 	int x = F[0][0] * F[0][0] +
 		F[0][1] * F[1][0];
 	int y = F[0][0] * F[0][1] +
@@ -131,11 +116,9 @@ void multiply(int F[2][2])
 	F[1][0] = z;
 	F[1][1] = w;
 }
-void power(int F[2][2], int n)
-{
+void power(int F[2][2], int n) {
 	// optimized(halving method)
-	if (n == 0 || n == 1)
-	{
+	if (n == 0 || n == 1) {
 		return;
 	}
 	power(F, n / 2);
@@ -147,12 +130,10 @@ void power(int F[2][2], int n)
 		multiply(F);
 	}*/
 }
-int fib_power(int n)
-{
+int fib_power(int n) {
 	int f[2][2] = { {1, 1} , {1, 0} };
 
-	if (n == 0)
-	{
+	if (n == 0) {
 		return 0;
 	}
 	power(f, n);
@@ -165,10 +146,8 @@ namespace HomeWork1 {
 	size_t LinearSearch(const std::vector<int>& vec, int item) {
 		// find item return first index
 		size_t size = vec.size();
-		for (size_t i = 0; i < size; i++)
-		{
-			if (vec.at(i) == item)
-			{
+		for (size_t i = 0; i < size; i++) {
+			if (vec.at(i) == item) {
 				std::cout << "buldu";
 				return i;
 			}
@@ -185,11 +164,9 @@ namespace HomeWork1 {
 		float temp{ 0 };
 		float avg{ 0 };
 		std::vector<float> avg_vec{};
-		for (auto&& i = 0; i < size - block_size; ++i)
-		{
+		for (auto&& i = 0; i < size - block_size; ++i) {
 			temp = 0;
-			for (size_t j = i; j < block_size + i; ++j)
-			{
+			for (size_t j = i; j < block_size + i; ++j) {
 				temp += vec.at(i);
 			}
 			avg = temp / block_size;
@@ -246,8 +223,7 @@ namespace HomeWork1 {
 
 
 // I like it :)
-std::string stringSum(std::string a, std::string b)
-{
+std::string stringSum(std::string a, std::string b) {
 	/*
 	* Sum of really big integers
 	* reference: https://stackoverflow.com/questions/42357976/how-to-get-the-sum-of-two-strings-of-numbers-c
@@ -276,8 +252,8 @@ std::string stringSum(std::string a, std::string b)
 			a[i] = (d % 10) + '0';
 		}
 	}
-	if (a[0] > '9')
-	{
+
+	if (a[0] > '9') {
 		std::string k;
 		k += a[0];
 		a[0] = ((a[0] - '0') % 10) + '0';
