@@ -21,4 +21,6 @@ void EndMessage();
 #include <string>
 std::string repeat(int n);
 
-void log_function_detail();
+void log_function_detail(const std::string_view message = "", const std::source_location location = std::source_location::current());
+
+void log(const std::string_view message = "", const std::source_location location = std::source_location::current());

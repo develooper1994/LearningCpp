@@ -1,3 +1,5 @@
+#include "UtilityHeader.h"
+#include "Integer.h"
 #include "Template.h"
 
 #include <iostream>
@@ -164,9 +166,173 @@ namespace Template {
 	}
 
 }
-
 namespace PerfectForwarding {
+	/*
+	Note: try it with template and without template. It gives different result!
+	I couldn't pass underlying data into the constructor. Why?
+	* calling by value calls underlying parametrized constructor
+	* calling by creating object calls underlying copy constructor
+	* calling by variable name calls underlying copy constructor
+
+	Solution? perfect forwarding. "std::forward"
+	* calls underlying move constructor as long as variable is r-value
+	*** Take advantage of perfect forwarding function templates is invoking some other function template internally and you want to preserve the information about the types ***
+	R-value?
+	* doesn't have a variable name
+	* just a value exp: 3210, "Mustafa"
+	* * if information about type is lost in some process(passing as argument)
+	*/
+	class Employee {
+	private:
+		std::string name;
+		Integer id;
+	public:
+		Employee() = default;
+		//Employee(const std::string& name, const Integer& id)
+		//	: name{ name }, id{ id }
+		//{
+		//	// copy constructor
+		//	log_function_detail("Employee(const std::string& name, const Integer& id) : name{ name }, id{ id }");
+		//}
+		//Employee(std::string&& name, Integer&& id)
+		//	: name{ name }, 
+		// id{ std::move(id) } // I am forcing to call move constructor
+		//{
+		//	// move constructor
+		//	log_function_detail("Employee(std::string&& name, Integer&& id) : name{ name }, id{ id }");
+		//}
+
+		template<typename T1, typename T2>
+		Employee(const T1& name, const T2& id)
+			: name{ name }, id{ id }
+		{
+			// copy constructor
+			log_function_detail("Employee(const std::string& name, const Integer& id) : name{ name }, id{ id }");
+		}
+
+		template<>
+		Employee(const std::string& name, const Integer& id)
+			: name{ name },
+			id{ id }  // I am forcing to call move constructor
+		{
+			// copy constructor
+			log_function_detail("Employee(std::string&& name, Integer&& id) : name{ name }, id{ id }");
+		}
+
+		//template<typename T1, typename T2>
+		//Employee(T1&& name, T2&& id)
+		//	: name{ name }, id{ id }
+		//{
+		//	// doesn't preserve underlying type data // calls "Integer(const Integer& obj)"
+		//	// templates calls parameterized constructor directly instead of "Integer move constructor"
+		//	// move constructor
+		//	log_function_detail("Employee(std::string&& name, Integer&& id) : name{ name }, id{ id }");
+		//}
+
+		template<typename T1, typename T2>
+		Employee(T1&& name, T2&& id)
+			: name{ std::forward<T1>(name) }, id{ std::forward<T2>(id) }
+		{
+			//preserve underlying type data // calls "Integer(Integer&& obj)" as long as variable is r-value
+			//templates calls parameterized constructor directly instead of "Integer move constructor"
+			//move constructor
+			log_function_detail("Employee(std::string&& name, Integer&& id) : name{ name }, id{ id }");
+		}
+
+		template<>
+		Employee(std::string&& name, Integer&& id)
+			: name{ name },
+			id{ std::move(id) }  // I am forcing to call move constructor
+		{
+			// move constructor
+			log_function_detail("Employee(std::string&& name, Integer&& id) : name{ name }, id{ id }");
+		}
+
+		~Employee() {
+			//log_function_detail("~Employee()");
+		}
+	};
+
+	// factory method
+	template<typename T1, typename T2>
+	Employee* CreateEmployee(T1&& name, T2&& id) {
+		//return new Employee(name, id); // "Integer(const Integer& obj)"
+		return new Employee(std::forward<T1>(name), std::forward<T2>(id)); // "Integer(Integer&& obj)"
+	}
+
 	void PerfectForwarding_Main() {
+		Employee emp1{ "Mustafa", 3210 }; // r-value
+		Employee emp11{ "Mustafa", Integer{3210} }; // r-value Integer(doesn't have a name)
+		std::string name = "Selcuk";
+		Integer val{ 10 };
+		Employee emp2{ name, 9876 };
+		Employee emp3{ "Mustafa", val };
+		Employee emp33{ std::string{"Mustafa"}, val }; // l-value Integer
+		Employee emp4{ name, val }; // l-value Integer
+
+		auto emp = CreateEmployee("Mustafa", Integer{ 3210 });
+
+	}
+}
+
+namespace variadicTemplates {
+	/*
+	*** compile time variadic parameter packs ***
+	* There is a runtime variadic parameter mechanism inside legacy c-language but it not good as c++ compile-time variadic templates
+	* c++ compile-time variadic templates based on recursion so that we need something to finalize the recursion. It is an other function with the same name(base case)+
+	* In each recursive call "number of arguments" reduced by one. after the last argument, empty(base-case) function will be called.
+	to understand that. look to the "call stack"
+	1. Print(1, 2, 3.5, '4')
+	2. Print(2, 3.5, '4')
+	3. Print(3.5, '4')
+	4. Print('4')
+	5. Print()   -->> base-case ends recursion
+	*/
+
+	template<typename T>
+	void Print(std::initializer_list<T> args)
+	{
+		// accepts only one type arguments
+		// Print({ 1,2,3.5,'4' }); // !!! ERROR !!! //It will fail argument deduction
+		for (auto&& arg : args)
+		{
+			std::cout << arg << " ";
+		}
+		std::cout << '\n';
+	}
+
+	// base-case ends recursion
+	void Print() {
+		//std::cout << '\n' << ','; // to remove extra "," check with sizeof...()
+		std::cout << '\n';
+	}
+
+	// template parameter pack. It will be automatically expanded by the compiler. It will excepts any number of arguments. It is like a "c# params" keyword
+	// You have to rely on the recursion
+	template<typename T, typename... Parameters>
+	void Print(T a, Parameters... args) {
+		//std::cout << sizeof...(Parameters);
+		//std::cout << sizeof...(args);
+		std::cout << a;
+		if (sizeof...(args) != 0) {
+			std::cout << ',';
+		}
+
+		// call at the end of function
+		//Print(args...); // runtime-stack-overflow without base-case function and second argument
+		Print(std::forward<Parameters>(args)...); // runtime-stack-overflow without base-case function and second argument // perfect forwarding
+	}
+
+	void variadicTemplates_Main() {
+		Print({ 1,2,3,4 });
+		// Print({ 1,2,3.5,'4' }); // !!! ERROR !!! //It will fail argument deduction
+		Print(1, 2, 3.5, '4', Integer{ 506 }); // use perfect forwarding to move
+
+
+	}
+}
+namespace classTemplates {
+	void classTemplates_Main() {
 
 	}
 }
@@ -239,8 +405,8 @@ namespace Assignment {
 	template<size_t arrSize>
 	const char& max(const char(&pArr)[arrSize]) {
 		size_t idx = 0;
-		T temp = pArr[idx];
-		T maxValue = temp;
+		const char temp = pArr[idx];
+		const char maxValue = temp;
 		for (idx += 0; idx < arrSize; idx++) {
 			temp = pArr[idx];
 			if (std::strcmp(maxValue, temp) < 0) {
@@ -253,8 +419,8 @@ namespace Assignment {
 	template<size_t arrSize>
 	const char* max(const char(*pArr)[arrSize]) {
 		size_t idx = 0;
-		T temp = *pArr[idx];
-		T maxValue = temp;
+		const char temp = *pArr[idx];
+		const char maxValue = temp;
 		for (idx += 0; idx < arrSize; idx++) {
 			temp = *pArr[idx];
 			if (std::strcmp(maxValue, temp) < 0) {
@@ -267,8 +433,8 @@ namespace Assignment {
 	template<size_t arrSize>
 	std::string& max(std::string(&pArr)[arrSize]) {
 		size_t idx = 0;
-		T temp = pArr[idx];
-		T maxValue = temp;
+		std::string temp = pArr[idx];
+		std::string maxValue = temp;
 		for (idx += 0; idx < arrSize; idx++) {
 			temp = *pArr[idx];
 			if (maxValue < temp) {
@@ -311,8 +477,8 @@ namespace Assignment {
 	template<size_t arrSize>
 	const char& min(const char(&pArr)[arrSize]) {
 		size_t idx = 0;
-		T temp = pArr[idx];
-		T minValue = temp;
+		const char temp = pArr[idx];
+		const char minValue = temp;
 		for (idx += 0; idx < arrSize; idx++) {
 			temp = pArr[idx];
 			if (std::strcmp(minValue, temp) > 0) {
@@ -325,8 +491,8 @@ namespace Assignment {
 	template<size_t arrSize>
 	const char* min(const char(*pArr)[arrSize]) {
 		size_t idx = 0;
-		T temp = *pArr[idx];
-		T minValue = temp;
+		const char temp = *pArr[idx];
+		const char minValue = temp;
 		for (idx += 0; idx < arrSize; idx++) {
 			temp = *pArr[idx];
 			if (std::strcmp(minValue, temp) > 0) {
@@ -339,8 +505,8 @@ namespace Assignment {
 	template<size_t arrSize>
 	std::string& min(std::string(&pArr)[arrSize]) {
 		size_t idx = 0;
-		T temp = pArr[idx];
-		T minValue = temp;
+		std::string temp = pArr[idx];
+		std::string minValue = temp;
 		for (idx += 0; idx < arrSize; idx++) {
 			temp = pArr[idx];
 			if (minValue > temp) {
@@ -393,9 +559,9 @@ namespace Assignment {
 	template<size_t arrSize>
 	std::pair<const char&, const char&> MinMax(const char(&pArr)[arrSize]) {
 		size_t idx = 0;
-		T temp = pArr[idx];
-		T maxValue = temp;
-		T minValue = temp;
+		const char temp = pArr[idx];
+		const char maxValue = temp;
+		const char minValue = temp;
 		for (idx += 0; idx < arrSize; idx++) {
 			temp = pArr[idx];
 			if (std::strcmp(maxValue, temp) < 0) {
@@ -412,9 +578,9 @@ namespace Assignment {
 	template<size_t arrSize>
 	std::pair<const char*, const char*> MinMax(const char(*pArr)[arrSize]) {
 		size_t idx = 0;
-		T temp = *pArr[idx];
-		T maxValue = temp;
-		T minValue = temp;
+		const char temp = *pArr[idx];
+		const char maxValue = temp;
+		const char minValue = temp;
 		for (idx += 0; idx < arrSize; idx++) {
 			temp = *pArr[idx];
 			if (std::strcmp(maxValue, temp) < 0) {
@@ -431,9 +597,9 @@ namespace Assignment {
 	template<size_t arrSize>
 	std::pair<std::string&, std::string&> MinMax(std::string(&pArr)[arrSize]) {
 		size_t idx = 0;
-		T temp = pArr[idx];
-		T maxValue = temp;
-		T minValue = temp;
+		std::string temp = pArr[idx];
+		std::string maxValue = temp;
+		std::string minValue = temp;
 		for (idx += 0; idx < arrSize; idx++) {
 			temp = pArr[idx];
 			if (maxValue < temp) {
@@ -454,7 +620,7 @@ namespace Assignment {
 
 		// generate bunch of numbers
 		std::random_device rndDev;
-		std::default_random_engine engine(rndDev);
+		std::default_random_engine engine(rndDev());
 		std::uniform_real_distribution distribution(1.0, 10.0);
 		auto generator = [&engine, &distribution]() {
 			return distribution(engine);
@@ -496,7 +662,9 @@ namespace Assignment {
 
 void Template_Main() {
 	//Template::Template1_Subroutine();
-	Assignment::Assignment_Tests_subroutine();
 	//Template::Template2_Subroutine();
-	PerfectForwarding::PerfectForwarding_Main;
+	//PerfectForwarding::PerfectForwarding_Main();
+	variadicTemplates::variadicTemplates_Main();
+	classTemplates::classTemplates_Main();
+	//Assignment::Assignment_Tests_subroutine();
 }
