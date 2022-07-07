@@ -39,12 +39,17 @@ std::string repeat(int n) {
 }
 
 
-void log_function_detail() // = std::source_location::current()
+void log_function_detail(const std::string_view message,
+	const std::source_location location) // = std::source_location::current()
 {
-	const std::source_location location = std::source_location::current();
-	std::cout << "file: "
+	std::clog << "file: "
 		<< location.file_name() << "("
 		<< location.line() << ":"
 		<< location.column() << ") `"
 		<< location.function_name() << "`: " << '\n';
+}
+
+void log(const std::string_view message,
+	const std::source_location location) {
+	log_function_detail(message, location);
 }
