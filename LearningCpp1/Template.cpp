@@ -6,6 +6,7 @@
 #include <random>
 #include <chrono>
 #include <typeinfo>
+#include <string>
 
 // Also known as meta-programing and generic programing
 /*
@@ -164,6 +165,11 @@ namespace Template {
 
 }
 
+namespace PerfectForwarding {
+	void PerfectForwarding_Main() {
+
+	}
+}
 namespace Assignment {
 	// -*-*-* Add *-*-*-
 	template<typename T>
@@ -230,6 +236,48 @@ namespace Assignment {
 		}
 		return maxValue;
 	}
+	template<size_t arrSize>
+	const char& max(const char(&pArr)[arrSize]) {
+		size_t idx = 0;
+		T temp = pArr[idx];
+		T maxValue = temp;
+		for (idx += 0; idx < arrSize; idx++) {
+			temp = pArr[idx];
+			if (std::strcmp(maxValue, temp) < 0) {
+				// new value bigger than old maximum
+				maxValue = temp;
+			}
+		}
+		return maxValue;
+	}
+	template<size_t arrSize>
+	const char* max(const char(*pArr)[arrSize]) {
+		size_t idx = 0;
+		T temp = *pArr[idx];
+		T maxValue = temp;
+		for (idx += 0; idx < arrSize; idx++) {
+			temp = *pArr[idx];
+			if (std::strcmp(maxValue, temp) < 0) {
+				// new value bigger than old maximum
+				maxValue = temp;
+			}
+		}
+		return maxValue;
+	}
+	template<size_t arrSize>
+	std::string& max(std::string(&pArr)[arrSize]) {
+		size_t idx = 0;
+		T temp = pArr[idx];
+		T maxValue = temp;
+		for (idx += 0; idx < arrSize; idx++) {
+			temp = *pArr[idx];
+			if (maxValue < temp) {
+				// new value bigger than old maximum
+				maxValue = temp;
+			}
+		}
+		return maxValue;
+	}
 
 	// -*-*-* min *-*-*-
 	template<typename T>
@@ -255,6 +303,48 @@ namespace Assignment {
 			temp = pArr[idx];
 			if (minValue > temp) {
 				// new value smaller than old minimum
+				minValue = temp;
+			}
+		}
+		return minValue;
+	}
+	template<size_t arrSize>
+	const char& min(const char(&pArr)[arrSize]) {
+		size_t idx = 0;
+		T temp = pArr[idx];
+		T minValue = temp;
+		for (idx += 0; idx < arrSize; idx++) {
+			temp = pArr[idx];
+			if (std::strcmp(minValue, temp) > 0) {
+				// new value bigger than old maximum
+				minValue = temp;
+			}
+		}
+		return minValue;
+	}
+	template<size_t arrSize>
+	const char* min(const char(*pArr)[arrSize]) {
+		size_t idx = 0;
+		T temp = *pArr[idx];
+		T minValue = temp;
+		for (idx += 0; idx < arrSize; idx++) {
+			temp = *pArr[idx];
+			if (std::strcmp(minValue, temp) > 0) {
+				// new value bigger than old maximum
+				minValue = temp;
+			}
+		}
+		return minValue;
+	}
+	template<size_t arrSize>
+	std::string& min(std::string(&pArr)[arrSize]) {
+		size_t idx = 0;
+		T temp = pArr[idx];
+		T minValue = temp;
+		for (idx += 0; idx < arrSize; idx++) {
+			temp = pArr[idx];
+			if (minValue > temp) {
+				// new value bigger than old maximum
 				minValue = temp;
 			}
 		}
@@ -300,13 +390,71 @@ namespace Assignment {
 		}
 		return std::pair<T, T>(minValue, maxValue);
 	}
+	template<size_t arrSize>
+	std::pair<const char&, const char&> MinMax(const char(&pArr)[arrSize]) {
+		size_t idx = 0;
+		T temp = pArr[idx];
+		T maxValue = temp;
+		T minValue = temp;
+		for (idx += 0; idx < arrSize; idx++) {
+			temp = pArr[idx];
+			if (std::strcmp(maxValue, temp) < 0) {
+				// new value bigger than old maximum
+				maxValue = temp;
+			}
+			else if (std::strcmp(minValue, temp) > 0) {
+				// new value bigger than old maximum
+				minValue = temp;
+			}
+		}
+		return std::pair<const char*, const char*>(minValue, maxValue);
+	}
+	template<size_t arrSize>
+	std::pair<const char*, const char*> MinMax(const char(*pArr)[arrSize]) {
+		size_t idx = 0;
+		T temp = *pArr[idx];
+		T maxValue = temp;
+		T minValue = temp;
+		for (idx += 0; idx < arrSize; idx++) {
+			temp = *pArr[idx];
+			if (std::strcmp(maxValue, temp) < 0) {
+				// new value bigger than old maximum
+				maxValue = temp;
+			}
+			else if (std::strcmp(minValue, temp) > 0) {
+				// new value bigger than old maximum
+				minValue = temp;
+			}
+		}
+		return std::pair<const char*, const char*>(minValue, maxValue);
+	}
+	template<size_t arrSize>
+	std::pair<std::string&, std::string&> MinMax(std::string(&pArr)[arrSize]) {
+		size_t idx = 0;
+		T temp = pArr[idx];
+		T maxValue = temp;
+		T minValue = temp;
+		for (idx += 0; idx < arrSize; idx++) {
+			temp = pArr[idx];
+			if (maxValue < temp) {
+				// new value bigger than old maximum
+				maxValue = temp;
+			}
+			else if (minValue > temp) {
+				// new value bigger than old maximum
+				minValue = temp;
+			}
+		}
+		return std::pair<const char*, const char*>(minValue, maxValue);
+	}
 
 	void Assignment1_Test() {
 		int x = 1, y = 2;
 		std::cout << "R(T Add(T x, T y)): " << Add(x, y) << '\n';
 
 		// generate bunch of numbers
-		std::default_random_engine engine;
+		std::random_device rndDev;
+		std::default_random_engine engine(rndDev);
 		std::uniform_real_distribution distribution(1.0, 10.0);
 		auto generator = [&engine, &distribution]() {
 			return distribution(engine);
@@ -347,7 +495,8 @@ namespace Assignment {
 }
 
 void Template_Main() {
-	Template::Template1_Subroutine();
+	//Template::Template1_Subroutine();
 	Assignment::Assignment_Tests_subroutine();
-	Template::Template2_Subroutine();
+	//Template::Template2_Subroutine();
+	PerfectForwarding::PerfectForwarding_Main;
 }
