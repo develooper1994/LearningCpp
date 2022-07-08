@@ -7,8 +7,9 @@
 #include <algorithm>
 #include <random>
 #include <chrono>
-#include <typeinfo>
 #include <string>
+#include <typeinfo>
+#include <type_traits>
 
 // Also known as meta-programing and generic programing
 /*
@@ -274,7 +275,6 @@ namespace PerfectForwarding {
 
 	}
 }
-
 namespace variadicTemplates {
 	/*
 	*** compile time variadic parameter packs ***
@@ -533,8 +533,6 @@ namespace classTemplates {
 		}
 	};
 
-
-
 	void classTemplates_subroutine2() {
 		{
 			auto data = 5;
@@ -592,16 +590,157 @@ namespace classTemplates {
 
 	}
 
-
-
 	void classTemplates_Main() {
 		// Note: Explicit specialization: Specialize all of them
 		// Note: Partial specialization: Specialize small portion of it
 		classTemplates_subroutine1();
 		classTemplates_subroutine2();
 	}
-
 }
+
+namespace typedef_typealias {
+	template<typename T = int, size_t size>
+	size_t CountSomething(T(&arr)[size], bool(&match)(T)) {
+		size_t counter{};
+		for (size_t idx = 0; idx < size; ++idx) {
+			auto element = arr[idx];
+			auto matchResult = match(element);
+			if (matchResult) {
+				//return idx;
+				++counter;
+			}
+		}
+		return counter;
+	}
+
+	template<typename T>
+	inline bool isEvenOdd(T val, char oddEven) {
+		return (val & 1) == oddEven;
+	}
+
+	template<typename T1 = int, char oddEven = 0>
+	bool isEven(T1 val) {
+		return isEvenOdd(val, oddEven);
+	}
+
+	template<typename T1 = int, char oddEven = 1>
+	bool isOdd(T1 val) {
+		return isEvenOdd(val, oddEven);
+	}
+
+	// !!! compile-time ERROR !!!
+	//bool(&matchEven)(int) = IsEven<oddEven = 0>;
+	//bool(&matchOdd)(int) = isOdd<oddEven = 1>;
+
+	bool(&matchEven)(int) = isEven;
+	bool(&matchOdd)(int) = isOdd;
+
+	// cannot use template
+	typedef std::vector<std::forward_list<std::string>> myDatabase1;
+	// I can use template with type alias
+	template<typename T>
+	using myDatabase2 = std::vector<std::forward_list<T>>;
+	void typedef_typealias_subroutine1() {
+		/*
+		* It is useful for callback functions and event listeners
+		*/
+		int arr[]{ 1,2,3,4,5 };
+		auto counterEven = CountSomething<int>(arr, matchEven);
+		std::cout << "How many even values? : " << counterEven << '\n';
+		auto counterOdd = CountSomething<int>(arr, matchOdd);
+		std::cout << "How many even values? : " << counterOdd << '\n';
+
+		// typedef vs type-alias
+		myDatabase1 names1;
+		// myDatabase1<std::string> names1; // !!! ERROR !!!
+
+		//myDatabase2 names2; // !!! ERROR !!!
+		myDatabase2<std::string> names2;
+		myDatabase2<myDatabase2<std::string>> names22;
+	}
+
+	template<typename T>
+	T Divide(T a, T b) {
+		// gives wrong result with "int" (5/2). check it!
+		// std::is_floating_point<T>::value is a compile-time expression BUT!
+		// inside if calculated at run-time
+		// to check it use static_assert
+		// use it to check compilation environment
+		static_assert(std::is_floating_point<T>::value, "Only floating point types supported");
+		if (std::is_floating_point<T>::value == false) // run-time check
+		{
+			std::cout << "Use floating point types";
+			return 0;
+		}
+		return a / b;
+	}
+
+	template<typename T>
+	void Check(T&&) {
+		// accepts r-value and l-value
+		std::cout << std::boolalpha
+			<< "Is reference? " << std::is_reference<T>::value << '\n';
+
+		std::cout << "Removing reference\n";
+		std::cout << "After removing...: " <<
+			std::is_reference<
+			typename std::remove_reference<T>::type // depended type to the is_reference
+			>::value
+			<< '\n';
+	}
+
+	void CheckBitSize_runtime() {
+		// dynamic dispatch
+		if (sizeof(void*) == 4) {
+			std::cout << "32 bit env\n";
+		}
+		else {
+			std::cout << "Not 32 bit env\n";
+		}
+	}
+
+	void CheckBitSize_compiletime() {
+		// prevent compilation for specific reason
+
+		//static_assert(sizeof(void*) == 4, "32 bit env\n");
+		static_assert(sizeof(void*) != 4, "Not 32 bit env\n");
+	}
+
+	void type_traits_subroutine1() {
+		/*
+		* NOTE: Modern C++(c++11 and c++14)
+		* Type traits give the ability to introspect
+			* find the characteristics of types at compile time
+			* transform the properties of the type
+		* Useful in template programing
+		* Will either return a boolean or a type when inspecting types
+		* Provides template-based interface and defined in header <type_traits>
+		* Some traits require support from the compiler
+			* compiler provides intrinsics for such traits.
+
+		Note: It is useful when creating extremely high performance application especially calculating at compile time
+		*/
+
+		std::cout << std::boolalpha
+			<< "Is integer? " << std::is_integral<int>::value << '\n'
+			<< "Is integer? " << std::is_integral<double>::value << '\n';
+
+		std::cout << Divide(3.14, 2.78) << '\n';
+
+		Check(5); // r-value
+		Integer a{};
+		Check(a); // l-value
+
+		CheckBitSize_runtime();
+		CheckBitSize_compiletime();
+	}
+
+	void typedef_typealias_Main() {
+		typedef_typealias_subroutine1();
+		type_traits_subroutine1();
+	}
+}
+
 namespace Assignment {
 	// -*-*-* Add *-*-*-
 	template<typename T>
@@ -1136,6 +1275,7 @@ void Template_Main() {
 	//Template::Template2_Subroutine();
 	//PerfectForwarding::PerfectForwarding_Main();
 	//variadicTemplates::variadicTemplates_Main();
-	classTemplates::classTemplates_Main();
+	//classTemplates::classTemplates_Main();
+	typedef_typealias::typedef_typealias_Main();
 	//Assignment::Assignment_Tests_subroutine();
 }
