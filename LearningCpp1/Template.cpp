@@ -249,7 +249,7 @@ namespace PerfectForwarding {
 		}
 
 		~Employee() {
-			//log_function_detail("~Employee()");
+			log_function_detail("~Employee()");
 		}
 	};
 
@@ -332,9 +332,275 @@ namespace variadicTemplates {
 	}
 }
 namespace classTemplates {
-	void classTemplates_Main() {
+	// This is much better than using a constant value in Buffer because the template argument is compile-time constant
+	template<typename T, size_t Buffer_size = 512>
+	class Stack {
+	private:
+		T Buffer[Buffer_size];
+		int top{ -1 };
+	public:
+		// -*-*-* Constructors *-*-*-
+		Stack() = default;
+		// Copy Constructor
+		// Stack(const Stack<T, Buffer_size>& obj) // not required inside of the class
+		Stack(const Stack& obj) {
+			top = obj.top;
+			for (size_t i = 0; i <= sizeof(obj.Buffer); ++i) { // check until to the top of object that copying is not a good idea in my opinion
+				Buffer[i] = obj.Buffer[i];
+			}
+		}
+		Stack(std::initializer_list<int> li) {
+			int count = 0;
+			for (auto i = li.begin(); i < li.end(); ++i) {
+				Buffer[count++] = *i;
+			}
+		}
+		// -*-*-* Methods *-*-*-
+		void Push(int element) {
+			Buffer[++top] = element;
+		}
+		void Pop() {
+			--top;
+		}
+		const T& Top() {
+			return Buffer[top];
+		}
+		bool isEmpty() {
+			return top == -1;
+		}
+		// factory method
+
+		//static Stack Create() {
+		//	// short-hand notion. You can only write it inside of the class
+		//	return Stack<T, Buffer_size>();
+		//}
+		static Stack Create();
+	};
+	template<typename T, size_t Buffer_size>
+	Stack<T, Buffer_size> Stack<T, Buffer_size>::Create() {
+		// I have to specift all the template types
+		return Stack<T, Buffer_size>();
+	}
+	void classTemplates_subroutine1() {
+		Stack<int, 9> stack = Stack<int, 9>::Create();
+		Stack<float, 10> s{ 1,2,3,4,5 };
+		auto s2(s); // copy constructor
+		while (!s.isEmpty())
+		{
+			std::cout << s.Top() << " ";
+			s.Pop();
+		}
+	}
+
+	// Class Template Specialization
+	template<typename T>
+	class PrettyPrinter {
+	private:
+		T* data;
+	public:
+		PrettyPrinter(T* data) : data(data) {}
+		void Print() const {
+			std::cout << "{" << *data << "}" << '\n';
+		}
+		T* GetData() const {
+			return data;
+		}
+		void SetData(T* data) {
+			*this->data = *data;
+		}
+	};
+	// Explicit specialization has to be outside the class.
+	// I don't need to rewrite all the class for one function
+	template<>
+	void PrettyPrinter<std::vector<int>>::Print() const {
+		std::cout << "class PrettyPrinter<std::vector<int>>: " << "{";
+		for (const auto& elem : *data) {
+			std::cout << elem << ", ";
+		}
+		std::cout << "}" << '\n';
+	}
+
+	template<>
+	class PrettyPrinter<char*> {
+	private:
+		char* data;
+	public:
+		PrettyPrinter(char* data) : data(data) {}
+		void Print() const {
+			std::cout << "class PrettyPrinter<char*>: " << "{" << data << "}" << '\n';
+		}
+		char* GetData() const {
+			return data;
+		}
+		void SetData(char* data) {
+			*this->data = *data;
+		}
+	};
+	template<>
+	class PrettyPrinter<std::vector<std::vector<int>>> {
+	private:
+		std::vector<std::vector<int>>* data;
+	public:
+		PrettyPrinter(std::vector<std::vector<int>>* data) : data(data) {}
+		void Print() const {
+			std::cout << "class PrettyPrinter<std::vector<int>>: " << '\n' << "{" << '\n';
+			for (const auto& vec_inner : *data) {
+				std::cout << "{";
+				for (const auto& elem : vec_inner) {
+					std::cout << elem << ", ";
+				}
+				std::cout << "}" << '\n';
+			}
+			std::cout << "}" << '\n';
+		}
+		std::vector<std::vector<int>>* GetData() const {
+			return data;
+		}
+		void SetData(std::vector<std::vector<int>>* data) {
+			*this->data = *data;
+		}
+	};
+
+	// non-type template specialization for classes
+	template<typename T = int, size_t maxSize = 512>
+	class BUFFER {
+	private:
+		T buffer[maxSize];
+	public:
+		BUFFER() = default;
+		void Print() {
+			std::cout << "Using Buffer size: " << maxSize << '\n';
+			std::cout << '{' << *buffer << '}' << '\n';
+		}
+	};
+	template<typename T>
+	class BUFFER<T, 128> {
+	private:
+		static const size_t maxSize = 128;
+		T buffer[maxSize];
+	public:
+		BUFFER() = default;
+		BUFFER(std::initializer_list<T> li) {
+			size_t count = 0;
+			for (auto&& elem : li) {
+				buffer[count++] = elem;
+			}
+		}
+		void Print() {
+			std::cout << "Using Buffer size: " << maxSize << '\n';
+			std::cout << '{' << *buffer << '}' << '\n';
+		}
+	};
+	// Partially specialize for array types
+	template<typename T>
+	class SmartPTR {
+	private:
+		T* ptr;
+	public:
+		SmartPTR(T* ptr) : ptr{ ptr }
+		{}
+		~SmartPTR() {
+			delete ptr;
+		}
+
+		T* operator->() {
+			return ptr;
+		}
+		T& operator*() {
+			return *ptr;
+		}
+	};
+
+	template<typename T>
+	class SmartPTR<T[]> {
+	private:
+		T* ptr;
+	public:
+		SmartPTR(T* ptr) : ptr{ ptr }
+		{}
+		~SmartPTR() {
+			delete[] ptr;
+		}
+
+		//T* operator->() {
+		//	return ptr;
+		//}
+		//T& operator*() {
+		//	return *ptr;
+		//}
+		T& operator[](size_t idx) {
+			return *(ptr + idx);
+		}
+	};
+
+
+
+	void classTemplates_subroutine2() {
+		{
+			auto data = 5;
+			auto dataf = 8.5f;
+			PrettyPrinter<int> p1(&data);
+			p1.Print();
+			PrettyPrinter<float> p2(&dataf);
+			p2.Print();
+
+			// one pointer
+			const char* str1{ "Mustafa" };
+			PrettyPrinter<const char> p3(str1); // T* -> (const char*)* => input is (const char)**
+			p3.Print(); // Prints {M}
+			const char* theData1 = (p3).GetData(); // T* returns (const char)**
+			// two pointer
+			const char* str2{ "Mustafa" };
+			PrettyPrinter<const char*> p33(&str2); // T* -> (const char*)* => input is (const char)**
+			p33.Print(); // prints {Mustafa}
+			const char** theData2 = p33.GetData(); // T* returns (const char)**
+
+			// class template specialized for "char*"
+			auto str3{ const_cast<char*>("Mustafa") };
+			PrettyPrinter<char*> p333(str3); // T* -> (const char*) => input is (const char)*
+			p333.Print(); // prints {Mustafa}
+			const char* theData22 = p333.GetData(); // T* returns (const char)*
+		}
+
+		{
+			// class template specialized for "std::vector<int>*"
+			std::vector<int> vec{ 1,2,3,4,5 };
+			PrettyPrinter<std::vector<int>> pv(&vec);
+			pv.Print();
+
+			// class template specialized for "std::vector<std::vector<int>>*"
+			std::vector<std::vector<int>> matrix
+			{
+				{1,2,3,4,5},
+				{6,7,8,9,10}
+			};
+			PrettyPrinter<std::vector<std::vector<int>>> pMatrix(&matrix);
+			pMatrix.Print();
+		}
+
+		{
+			//BUFFER<int, 20> buf{ 1,2,3,4,5,6,7,8,9 }; // !!! ERROR !!! there is no std::initializer implementation constructor
+			BUFFER<int, 128> buf{ 1,2,3,4,5,6,7,8,9 }; // specialized for 128
+
+			SmartPTR<int> smartPtr{ new int(2) };
+			std::cout << "smartPtr: " << *smartPtr << '\n';
+
+			SmartPTR<int[]> smartPtrArr{ new int(9) };
+			smartPtrArr[0] = 8;
+			std::cout << "smartPtr: " << smartPtrArr[0] << '\n';
+		}
 
 	}
+
+
+
+	void classTemplates_Main() {
+		// Note: Explicit specialization: Specialize all of them
+		// Note: Partial specialization: Specialize small portion of it
+		classTemplates_subroutine1();
+		classTemplates_subroutine2();
+	}
+
 }
 namespace Assignment {
 	// -*-*-* Add *-*-*-
@@ -651,10 +917,176 @@ namespace Assignment {
 			<< "minValue: " << MinMaxValue.first << '\n'
 			<< "maxValue: " << MinMaxValue.second << '\n';
 	}
-
 	void Assignment2_Test() {
 
 	}
+
+	class Employee
+	{
+	private:
+		std::string name;
+		Integer id;
+		Integer salaray;
+	public:
+		// -*-*-* Constructors *-*-*-
+		Employee() = default;
+		// -*-*-* Copy Constructor *-*-*-
+		template<typename T1, typename T2, typename T3>
+		Employee(const T1& name, const T2& id, const T3& salary)
+			: name{ name }, id{ id }, salaray{ salary }
+		{
+			log_function_detail("Employee(const T1& name, const T2& id, const T3& salary)");
+		}
+		template<>
+		Employee(const std::string& name, const Integer& id, const Integer& salary)
+			: name{ name }, id{ id }, salaray{ salary }
+		{
+			log_function_detail("Employee(const std::string& name, const Integer& id, const Integer& salary)");
+		}
+		// -*-*-* Move Constructor *-*-*-
+		template<typename T1, typename T2, typename T3>
+		Employee(T1&& name, T2&& id, T3&& salary)
+			: name{ std::forward<T1>(name) }, id{ std::forward<T2>(id) }, salaray{ std::forward<T3>(salary) }
+		{
+			log_function_detail("Employee(T1&& name, T2&& id, T3&& salary)");
+		}
+		template<>
+		Employee(std::string&& name, Integer&& id, Integer&& salary)
+			: name{ std::move(name) }, id{ std::move(id) }, salaray{ std::move(salary) }
+		{
+			log_function_detail("Employee(std::string&& name, Integer&& id, Integer&& salary)");
+		}
+
+		// factory method
+		template<typename T1, typename T2, typename T3>
+		static Employee* CreateEmployee(T1&& name, T2&& id, T3&& salary) {
+			return new Employee(std::forward<T1>(name), std::forward<T2>(id), std::forward<T3>(salary));
+		}
+
+		// -*-*-* Destructor *-*-*-
+		~Employee()
+		{
+			log_function_detail("~Employee()");
+		}
+	};
+
+
+	class Contact
+	{
+	private:
+		std::string name;
+		Integer phoneNumber;
+		std::string address;
+		std::string email;
+	public:
+		// Constructors
+		// Default Constructor
+		Contact() = default;
+		// Copy Constructor
+		template<typename T1, typename T2, typename T3, typename T4>
+		Contact(const T1& name, const T2& phoneNumber, const T3& address, const T4& email)
+			: name{ name }, phoneNumber{ phoneNumber }, address{ address }, email{ email }
+		{
+			log_function_detail("ntact(const T1& name, const T2& phoneNumber, const T3& adress, const T4& email)");
+		}
+		template<>
+		Contact(const std::string& name, const uint32_t& phoneNumber, const std::string& address, const std::string& email)
+			: name{ name }, phoneNumber{ phoneNumber }, address{ address }, email{ email }
+		{
+			log_function_detail("ntact(const T1& name, const T2& phoneNumber, const T3& adress, const T4& email)");
+		}
+		// Move Constructor
+		template<typename T1, typename T2, typename T3, typename T4>
+		Contact(T1&& name, T2&& phoneNumber, T3&& address, T4&& email)
+			: name{ std::forward<T1>(name) }, phoneNumber{ std::forward<T2>(phoneNumber) }, address{ std::forward<T3>(address) }, email{ std::forward<T4>(email) }
+		{
+			log_function_detail("ntact(const T1& name, const T2& phoneNumber, const T3& adress, const T4& email)");
+		}
+		template<>
+		Contact(std::string&& name, uint32_t&& phoneNumber, std::string&& address, std::string&& email)
+			: name{ std::move(name) }, phoneNumber{ std::move(phoneNumber) }, address{ std::move(address) }, email{ std::move(email) }
+		{
+			log_function_detail("ntact(const T1& name, const T2& phoneNumber, const T3& adress, const T4& email)");
+		}
+
+		template<typename T1, typename T2, typename T3, typename T4>
+		static Contact* CreateContact(T1&& name, T2&& phoneNumber, T3&& address, T4&& email) {
+			return new Contact(std::forward<T1>(name), std::forward<T2>(phoneNumber), std::forward<T3>(address), std::forward<T4>(email));
+		}
+
+		// Destructor
+		~Contact() {
+			log_function_detail("~Contact()");
+		}
+	};
+
+
+	// empty creation
+	template<typename T>
+	T* CreateObject() {
+		return new T();
+	}
+	template<>
+	int* CreateObject() {
+		return new int;
+	}
+	template<>
+	std::string* CreateObject() {
+		return new std::string();
+	}
+	template<>
+	Employee* CreateObject() {
+		return new Employee(std::move(std::string()), std::move(Integer{}), std::move(Integer{}));
+	}
+	template<>
+	Contact* CreateObject() {
+		return new Contact(std::move(std::string()), std::move(Integer{}), std::move(std::string()), std::move(std::string()));
+	}
+
+	// not-empty creation
+	template<typename T>
+	T* CreateObject(T&& object) {
+		return new T(std::forward<T>(object));
+	}
+	template<>
+	int* CreateObject(int&& object) {
+		return new int(std::move(object));
+	}
+	template<>
+	std::string* CreateObject(std::string&& object) {
+		return new std::string(std::move(object));
+	}
+
+	// create with Object itself
+	template<>
+	Employee* CreateObject(Employee&& contact) {
+		return new Employee(std::forward<Employee>(contact));
+	}
+	template<>
+	Contact* CreateObject(Contact&& contact) {
+		return new Contact(std::forward<Contact>(contact));
+	}
+
+	// create with members
+	template<typename T1, typename T2, typename T3>
+	Employee* CreateObject(T1&& name, T2&& id, T3&& salary) {
+		return CreateEmployee(std::forward<T1>(name), std::forward<T2>(id), std::forward<T3>(salary));
+	}
+	template<typename T1, typename T2, typename T3, typename T4>
+	Contact* CreateObject(T1&& name, T2&& phoneNumber, T3&& address, T4&& email) {
+		return CreateContact(std::forward<T1>(name), std::forward<T2>(phoneNumber), std::forward<T3>(address), std::forward<T4>(email));
+	}
+
+	// create with only one type
+	template<typename T>
+	T* CreateObject(std::string&& name, Integer&& id, Integer&& salary) {
+		return new T(std::move(name), std::move(id), std::move(salary));
+	}
+	template<typename T>
+	T* CreateObject(std::string&& name, Integer&& phoneNumber, std::string&& address, std::string&& email) {
+		return new T(std::move(name), std::move(phoneNumber), std::move(address), std::move(email));
+	}
+
 	void Assignment3_Test() {
 		/*
 		Create a factory that creates an instance of some type T, initializes it with arguments and returns it.
@@ -677,6 +1109,19 @@ namespace Assignment {
 		"joey@poash.com") ;    //Email
 
 		*/
+		int* p1 = CreateObject<int>(5);
+		std::string* s = CreateObject<std::string>();//Default construction
+
+		Employee* emp = CreateObject<Employee>(
+			"Bob",    //Name
+			101,      //Id
+			1000);   //Salary
+
+		Contact* p = CreateObject<Contact>(
+			"Joey",                //Name
+			987654321,             //Phone number
+			"Boulevard Road, Sgr", //Address
+			"joey@poash.com");    //Email
 	}
 	void Assignment_Tests_subroutine() {
 		Assignment1_Test();
@@ -690,7 +1135,7 @@ void Template_Main() {
 	//Template::Template1_Subroutine();
 	//Template::Template2_Subroutine();
 	//PerfectForwarding::PerfectForwarding_Main();
-	variadicTemplates::variadicTemplates_Main();
+	//variadicTemplates::variadicTemplates_Main();
 	classTemplates::classTemplates_Main();
 	//Assignment::Assignment_Tests_subroutine();
 }
