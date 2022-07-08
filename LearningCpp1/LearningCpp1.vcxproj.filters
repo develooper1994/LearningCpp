@@ -214,6 +214,24 @@
     <Filter Include="Lessons\10%29 Template\Source Files">
       <UniqueIdentifier>{088c5188-4631-4fbc-a2c1-98827e6cd75a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lessons\11%29 Lambda - Callback">
+      <UniqueIdentifier>{cc79a9a3-2f0e-4656-af5f-74f9eb52d61c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\11%29 Lambda - Callback\Classes">
+      <UniqueIdentifier>{f6c199f3-62b4-4594-84fe-599dcc46cc18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\11%29 Lambda - Callback\Source Files">
+      <UniqueIdentifier>{65be0532-6f90-409c-81b4-22eeabff0174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\11%29 Lambda - Callback\Header Files">
+      <UniqueIdentifier>{b68dcf44-48b8-491e-b61f-3eebbdf38d4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\11%29 Lambda - Callback\Classes\Header Files">
+      <UniqueIdentifier>{ec46e72f-152c-4eae-9c41-8aed34a3158f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\11%29 Lambda - Callback\Classes\Source Files">
+      <UniqueIdentifier>{2d1dced6-2b81-4561-88d1-f65ec068e8f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -302,6 +320,9 @@
     </ClCompile>
     <ClCompile Include="Template.cpp">
       <Filter>Lessons\10%29 Template\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Lambda.cpp">
+      <Filter>Lessons\11%29 Lambda - Callback\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -415,6 +436,9 @@
     </ClInclude>
     <ClInclude Include="Template.h">
       <Filter>Lessons\10%29 Template\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lambda.h">
+      <Filter>Lessons\11%29 Lambda - Callback\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

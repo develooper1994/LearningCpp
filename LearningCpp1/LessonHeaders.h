@@ -11,3 +11,4 @@
 #include "ExceptionHandling.h"
 #include "FileIO.h"
 #include "Template.h"
+#include "Lambda.h"
