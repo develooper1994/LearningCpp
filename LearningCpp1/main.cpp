@@ -18,7 +18,8 @@ auto main() -> int // modern c++ way
 	//OOPS_Main();
 	//ExceptionHandling_Main();
 	//File_InputOutput_Main();
-	Template_Main();
+	//Template_Main();
+	Lambda_Main();
 
 	return EXIT_SUCCESS;
 }

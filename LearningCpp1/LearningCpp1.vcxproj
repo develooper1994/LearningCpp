@@ -175,6 +175,7 @@
     <ClCompile Include="ExceptionHandling.cpp" />
     <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="Integer.cpp" />
+    <ClCompile Include="Lambda.cpp" />
     <ClCompile Include="LanguageBasics.cpp" />
     <ClCompile Include="L_R_Values.cpp" />
     <ClCompile Include="main.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="FileIO.h" />
     <ClInclude Include="Integer.h" />
     <ClInclude Include="IntegerCpp11.h" />
+    <ClInclude Include="Lambda.h" />
     <ClInclude Include="LessonHeaders.h" />
     <ClInclude Include="L_R_Values.h" />
     <ClInclude Include="main.h" />

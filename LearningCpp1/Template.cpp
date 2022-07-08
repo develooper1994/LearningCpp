@@ -1271,11 +1271,11 @@ namespace Assignment {
 }
 
 void Template_Main() {
-	//Template::Template1_Subroutine();
-	//Template::Template2_Subroutine();
-	//PerfectForwarding::PerfectForwarding_Main();
-	//variadicTemplates::variadicTemplates_Main();
-	//classTemplates::classTemplates_Main();
+	Template::Template1_Subroutine();
+	Template::Template2_Subroutine();
+	PerfectForwarding::PerfectForwarding_Main();
+	variadicTemplates::variadicTemplates_Main();
+	classTemplates::classTemplates_Main();
 	typedef_typealias::typedef_typealias_Main();
-	//Assignment::Assignment_Tests_subroutine();
+	Assignment::Assignment_Tests_subroutine();
 }
