@@ -13,13 +13,13 @@ auto main() -> int // modern c++ way
 	//ClassesObjects_Main();
 	//L_R_Values_Main();
 	//OperatorOverloading_Main();
-	SmartPointers_main(); // It is actually a garbage collector of modern c++
+	//SmartPointers_main(); // It is actually a garbage collector of modern c++
 	//MoreCpp_Main();
 	//OOPS_Main();
 	//ExceptionHandling_Main();
 	//File_InputOutput_Main();
 	//Template_Main();
-	//Lambda_Main();
+	Lambda_Main();
 
 	return EXIT_SUCCESS;
 }

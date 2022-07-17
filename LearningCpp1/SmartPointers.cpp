@@ -239,7 +239,6 @@ namespace WEAK {
 		prt.Display();
 		//delete p;	// smart pointer throws error.
 	}
-
 	void subCircularReference() {
 		// Brain out
 		// You have to give your attention
@@ -426,8 +425,8 @@ namespace Others {
 	void subMakeSmart() {
 		/*
 		I cannot...
-		* cannot initialize with initializer_list(there is some resource. I tested and completion failed)
-		* cannot specify deleter. If you are using custom deleter, you have to construct custom smart pointer and allocate the memory for your resource yourself.
+		* initialize with initializer_list(there is some resource. I tested and completion failed)
+		* specify deleter. If you are using custom deleter, you have to construct custom smart pointer and allocate the memory for your resource yourself.
 		* so that...
 		I recommend "make_unique" and "make_shared" if you are not using custom deleters. Otherwise choose "unique_ptr" and "shared_ptr"
 		*/
@@ -451,10 +450,10 @@ namespace Others {
 			auto bArr = std::make_shared<short[]>(128); // it is like a short* bArr = new short[128]{0};
 			bArr[0] = 10;
 			// shared_ptr to a value-initialized short[128]; // initialized with zero
-			auto sp5 = std::make_shared<short[128]>(); // it is like a short sp5[128]{}; 
+			auto sp4 = std::make_shared<short[128]>(); // it is like a short sp5[128]{}; 
 
 			// shared_ptr to a value-initialized long[5][3][4];
-			auto sp4 = std::make_shared<long[][3][4]>(5); // long*** sp6 = new long[5]; long j[3][4]; *sp6 = j;
+			auto sp5 = std::make_shared<long[][3][4]>(5); // long*** sp6 = new long[5]; long j[3][4]; *sp6 = j;
 			// shared_ptr to a value-initialized long[5][3][4];
 			auto sp6 = std::make_shared<long[5][3][4]>(); // long sp6[5][3][4]{};
 
@@ -462,11 +461,11 @@ namespace Others {
 			auto sp7 = std::make_shared<double[]>(256, 2.0); // double sp7  = new double[256]{2.0};
 
 			// shared_ptr to a vector<int>[4], where each vector has contents {5, 6};
-			// std::vector<int> sp9 = new std::vector<int>[4]{5, 6}; // has contents {5, 6};
-			auto sp9 = std::make_shared<std::vector<int>[]>(4, { 5, 6 });
+			// std::vector<int> sp8 = new std::vector<int>[4]{5, 6}; // has contents {5, 6};
+			auto sp8 = std::make_shared<std::vector<int>[]>(4, { 5, 6 });
 			// shared_ptr to a vector<int>[4], where each vector has contents {5, 6};
 			// std::vector<int> sp9[4]; // each std::vector<int> has contents {5, 6};
-			auto spC = std::make_shared<std::vector<int>[4]>({ 5, 6 });
+			auto sp9 = std::make_shared<std::vector<int>[4]>({ 5, 6 });
 		}
 	}
 
@@ -480,8 +479,7 @@ namespace Others {
 	}
 }
 
-void SmartPointers_main()
-{
+void SmartPointers_main() {
 	UNIQUEandSHARED::subroutineUNIQUEANDSHARED();
 	WEAK::subroutineWEAK();
 	Others::subroutineOthers();

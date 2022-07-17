@@ -19,7 +19,9 @@ void PrinterShared::Display() {
 
 
 // -*-*-* PrinterWeak *-*-*-
-void PrinterWeak::Set(std::shared_ptr<int> val) {
+// underlying pointer is std::weak_ptr ;)
+//void PrinterWeak::Set(std::weak_ptr<int> val) { // if (*p > 10) !!! value.expired() == true !!!
+void PrinterWeak::Set(std::shared_ptr<int> val) { // if (*p > 10) !!! value.expired() == true !!!
 	value = val;
 }
 
