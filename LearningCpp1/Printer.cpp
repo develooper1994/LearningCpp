@@ -1,10 +1,8 @@
 #include <iostream>
-
 #include "Printer.h"
 
 // -*-*-* PrinterShared *-*-*-
-void PrinterShared::Set(std::shared_ptr<int> val)
-{
+void PrinterShared::Set(std::shared_ptr<int> val) {
 	value = val;
 }
 
@@ -21,8 +19,7 @@ void PrinterShared::Display() {
 
 
 // -*-*-* PrinterWeak *-*-*-
-void PrinterWeak::Set(std::shared_ptr<int> val)
-{
+void PrinterWeak::Set(std::shared_ptr<int> val) {
 	value = val;
 }
 
@@ -31,8 +28,7 @@ void PrinterWeak::Display() {
 	std::cout << "PrinterWeak Reference Counter: " << value.use_count() << '\n';
 #endif
 	//check if it is still valid
-	if (value.expired())
-	{
+	if (value.expired()) {
 		std::cout << "Resource is no longer available\n";
 		return;
 	}

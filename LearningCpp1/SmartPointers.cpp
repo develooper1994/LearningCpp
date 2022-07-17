@@ -1,15 +1,12 @@
 // input-output
 #include <iostream>
 #include <iosfwd>
+#include <cmath>
 // containers
 #include <vector>
 #include <array>
 // memory
 #include <memory>
-// math
-#include <cmath>
-// 
-#include <array>
 
 // custom
 #include "Integer.h"
@@ -43,8 +40,7 @@
 namespace UNIQUEandSHARED {
 	// -*-*-* UNIQUE *-*-*-
 	void Display(Integer* p) {
-		if (!p) // check the null
-		{
+		if (!p) { // check the null
 			return;
 		}
 		std::cout << p->GetValue() << '\n';
@@ -67,8 +63,7 @@ namespace UNIQUEandSHARED {
 		// It becomes a little hard to read and we humans in these cases forget to delete!
 		// In these cases we should use "smart pointers" to don't forget delete.
 		Integer* p = GetPointer(value);
-		if (p == nullptr)
-		{
+		if (p == nullptr) {
 			p = new Integer{};
 		}
 		p->SetValue(11);
@@ -87,8 +82,7 @@ namespace UNIQUEandSHARED {
 		// unique_ptr deletes object end of the scope. I don't have to deal with memory management at all.
 		// unique_ptr has explicit constructors. So that we have to use direct initialization.
 		std::unique_ptr<Integer> p{ GetPointer(value) };
-		if (p == nullptr)
-		{
+		if (p == nullptr) {
 			// p = new Integer{};
 			// 1) holds an existing pointer, that will be deleted
 			// 2) and then takes ownership of this pointer.
@@ -164,12 +158,10 @@ namespace UNIQUEandSHARED {
 		//e3.reset(); // decrements the reference counter of smart pointer.
 		// also I can assign a new Employee. counter = 0 => delete underlying pointer || Otherwise do nothing but take ownership of this new pointer. count inside this smart pointer will be 1.
 		//e3.reset(new Employee{});
-		if (e3) // I can check e3 is it a valid pointer.(is this null, it this deleted?)
-		{
+		if (e3) { // I can check e3 is it a valid pointer.(is this null, it this deleted?)
 			// Valid
 		}
-		else
-		{
+		else {
 			// Not Valid
 		}
 
@@ -186,16 +178,14 @@ namespace UNIQUEandSHARED {
 	void subroutineUNIQUEANDSHARED() {
 		// -*-*-* UNIQUE *-*-*-
 		auto value = 5;
-		//notRecommended1(value);
-		//unique(value);
+		notRecommended1(value);
+		unique(value);
 
 		// -*-*-* SHARED *-*-*-
 		std::string name = "Validator";
 		//notRecommended2(name);
 		shared(name);
 	}
-
-	// -*-*-* WEAK *-*-*-
 }
 
 // -*-*-* WEAK *-*-*-
@@ -209,8 +199,7 @@ namespace WEAK {
 	// expire method return 0 when control block is 0. that indicates the shared_ptr and underlying memory is no longer available.
 	// lock method return shared_pointer. refc incremented by one
 
-	void subPrinterShared()
-	{
+	void subPrinterShared() {
 		PrinterShared prt;
 		int num{};
 		std::cin >> num;
@@ -220,8 +209,7 @@ namespace WEAK {
 		prt.Set(p);
 		// <body>
 
-		if (*p > 10)
-		{
+		if (*p > 10) {
 			//delete p;
 			p = nullptr; // decreases reference counter, but not deleted in this line.
 			//p.reset(); // makes same thing.
@@ -241,8 +229,7 @@ namespace WEAK {
 		prt.Set(p);
 		// <body>
 
-		if (*p > 10)
-		{
+		if (*p > 10) {
 			//delete p;
 			p = nullptr; // decreases reference counter, but not deleted in this line.
 			//p.reset(); // makes same thing.
@@ -256,7 +243,7 @@ namespace WEAK {
 	void subCircularReference() {
 		// Brain out
 		// You have to give your attention
-		std::cout << "\nraw pointer\n";
+		std::cout << "\n-*-*-* raw pointer *-*-*-\n";
 		{
 			/*
 			EmployeeRAW()
@@ -273,11 +260,12 @@ namespace WEAK {
 			delete employee;
 			delete prj;
 		}
-		std::cout << "shared pointer\n";
+		std::cout << "\n-*-*-* shared pointer *-*-*-\n";
 		{
 			/*
 			EmployeeSmart()
 			ProjectSmart()
+			* !There is no detractors!
 			*/
 			std::shared_ptr<EmployeeSmart> employee{ new EmployeeSmart{} }; // employee-refc = 1 owner
 			std::shared_ptr<ProjectSmart> prj{ new ProjectSmart{} }; // prj-refc = 1 owner
@@ -285,24 +273,85 @@ namespace WEAK {
 			employee->prj = prj; // employee-refc = 2 owner
 			prj->employee = employee; // prj-refc = 2 owner
 
-			//refc decreases by 1 end of the scope. both of refc is 1 end of the scope. !They are never delete!
+			//refc decreases by 1 end of the scope. both of refc is 1 end of the scope. !They are never delete automatically!
 		}
-
-		std::cout << "weak pointer\n";
+		std::cout << "\n-*-*-* weak pointer *-*-*-\n";
 		{
-			std::shared_ptr<EmployeeSmart> employee{ new EmployeeSmart{} }; // employee-refc = 1 owner
-			std::shared_ptr<ProjectSmart> prj{ new ProjectSmart{} }; // prj-refc = 1 owner
+			std::shared_ptr<EmployeeWeak> employee{ new EmployeeWeak{} }; // employee-refc = 1 owner
+			std::shared_ptr<ProjectWeak> prj{ new ProjectWeak{} }; // prj-refc = 1 owner
 
 			employee->prj = prj; // employee member prj initialized with prj control block
 			prj->employee = employee; // prj-refc = 2 owner
 
+			std::cout << employee.use_count() << '\n';
+			std::cout << prj.use_count() << '\n';
 		}
 
+		/*
+		Source: https://www.nextptr.com/tutorial/ta1382183122/using-weak_ptr-for-circular-references
+		* Circular dependency, Circular Reference is a memory problem.
+		* Look carefully to the "void dispatchEvent(Event e)" methods.
+		*
+		// !!! WRONG !!!
+		struct Event {
+			//..
+		};
+
+		class Listener {
+		public:
+		 void onEvent(Event e) {
+		  //Handle event from Source
+		 }
+		 //...
+		};
+
+		class Source {
+		public:
+			void dispatchEvent(Event e) {
+				if(listener)
+					listener->onEvent(e);
+			}
+
+		 void
+		 registerListener(const std::shared_ptr<Listener>& lp) {
+		  listener = lp;
+		 }
+		 //...
+		private:
+		 //Strong reference to Listener
+		 std::shared_ptr<Listener> listener;
+		};
+
+
+		// !!! CORRECT !!!
+		class Source {
+		public:
+			void dispatchEvent(Event e) {
+				//Acquire strong ref to listener
+				if(auto listener = weakListener.lock()) {
+					listener->onEvent(e);
+				}
+				else {
+					//Handle if required
+				}
+		 }
+
+		 void
+		 registerListener(const std::shared_ptr<Listener>& lp) {
+		  weakListener = lp;
+		 }
+		 //...
+		private:
+		 //Weak reference to Listener
+		 std::weak_ptr<Listener> weakListener;
+		};
+
+		*/
 	}
 
 	void subroutineWEAK() {
-		//subPrinterShared();	// !memory leak!
-		//subPrinterWeak();
+		subPrinterShared();	// !memory leak!
+		subPrinterWeak();
 		subCircularReference();
 	}
 }
@@ -433,7 +482,7 @@ namespace Others {
 
 void SmartPointers_main()
 {
-	//UNIQUEandSHARED::subroutineUNIQUEANDSHARED();
+	UNIQUEandSHARED::subroutineUNIQUEANDSHARED();
 	WEAK::subroutineWEAK();
 	Others::subroutineOthers();
 }

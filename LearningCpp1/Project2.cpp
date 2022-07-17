@@ -1,28 +1,22 @@
-#include "Project2.h"
-
 #include <iostream>
-
+#include "Project2.h"
 
 
 // -*-*-* RAW *-*-*-
 //ProjectRAW
-ProjectRAW::ProjectRAW()
-{
+ProjectRAW::ProjectRAW() {
 	std::cout << "ProjectRAW()\n";
 }
 
-ProjectRAW::~ProjectRAW()
-{
+ProjectRAW::~ProjectRAW() {
 	std::cout << "~ProjectRAW()\n";
 }
 //EmployeeRAW
-EmployeeRAW::EmployeeRAW()
-{
+EmployeeRAW::EmployeeRAW() {
 	std::cout << "EmployeeRAW()\n";
 }
 
-EmployeeRAW::~EmployeeRAW()
-{
+EmployeeRAW::~EmployeeRAW() {
 	std::cout << "~EmployeeRAW()\n";
 
 }
@@ -30,45 +24,37 @@ EmployeeRAW::~EmployeeRAW()
 
 // -*-*-* Smart *-*-*-
 //ProjectSmart
-ProjectSmart::ProjectSmart()
-{
+ProjectSmart::ProjectSmart() {
 	std::cout << "ProjectSmart()\n";
 }
 
-ProjectSmart::~ProjectSmart()
-{
+ProjectSmart::~ProjectSmart() {
 	std::cout << "~ProjectSmart()\n";
 }
 //EmployeeSmart
-EmployeeSmart::EmployeeSmart()
-{
+EmployeeSmart::EmployeeSmart() {
 	std::cout << "EmployeeSmart()\n";
 }
 
-EmployeeSmart::~EmployeeSmart()
-{
+EmployeeSmart::~EmployeeSmart() {
 	std::cout << "~EmployeeSmart()\n";
 }
 
 
 // -*-*-* Weak *-*-*-
 // one of them must be weak_ptr
-ProjectWeak::ProjectWeak()
-{
+ProjectWeak::ProjectWeak() {
 	std::cout << "ProjectWeak()\n";
 }
 
-ProjectWeak::~ProjectWeak()
-{
+ProjectWeak::~ProjectWeak() {
 	std::cout << "~ProjectWeak()\n";
 }
 //EmployeeSmart
-EmployeeWeak::EmployeeWeak()
-{
+EmployeeWeak::EmployeeWeak() {
 	std::cout << "EmployeeWeak()\n";
 }
 
-EmployeeWeak::~EmployeeWeak()
-{
+EmployeeWeak::~EmployeeWeak() {
 	std::cout << "~EmployeeWeak()\n";
 }

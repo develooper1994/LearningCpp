@@ -1,14 +1,11 @@
 #include "Project.h"
 
-void Project::SetName(const std::string& name)
-{
+void Project::SetName(const std::string& name) {
 	this->name = name;
 }
-
 std::string Project::GetName() const {
 	return name;
 }
-
 std::string Project::GetProjectDetails() const {
 	return GetName();
 }

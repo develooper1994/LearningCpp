@@ -290,14 +290,11 @@ namespace variadicTemplates {
 	*/
 
 	template<typename T>
-	void Print(std::initializer_list<T> args)
-	{
+	void Print(std::initializer_list<T> args) {
 		// accepts only one type arguments
 		// Print({ 1,2,3.5,'4' }); // !!! ERROR !!! //It will fail argument deduction
 		for (auto&& arg : args)
-		{
 			std::cout << arg << " ";
-		}
 		std::cout << '\n';
 	}
 
@@ -314,9 +311,8 @@ namespace variadicTemplates {
 		//std::cout << sizeof...(Parameters);
 		//std::cout << sizeof...(args);
 		std::cout << a;
-		if (sizeof...(args) != 0) {
+		if (sizeof...(args) != 0)
 			std::cout << ',';
-		}
 
 		// call at the end of function
 		//Print(args...); // runtime-stack-overflow without base-case function and second argument
@@ -327,8 +323,6 @@ namespace variadicTemplates {
 		Print({ 1,2,3,4 });
 		// Print({ 1,2,3.5,'4' }); // !!! ERROR !!! //It will fail argument deduction
 		Print(1, 2, 3.5, '4', Integer{ 506 }); // use perfect forwarding to move
-
-
 	}
 }
 namespace classTemplates {

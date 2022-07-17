@@ -199,15 +199,6 @@
     <Filter Include="Lessons\10%29 Template">
       <UniqueIdentifier>{e6266a3a-6975-4476-85ce-f2edb2095e0f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lessons\10%29 Template\Classes">
-      <UniqueIdentifier>{a829055a-70fe-457b-8de1-55971fb28d37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lessons\10%29 Template\Classes\Header Files">
-      <UniqueIdentifier>{aa842b3f-da7e-4170-aae8-80ed7d3d4ffe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lessons\10%29 Template\Classes\Source Files">
-      <UniqueIdentifier>{82d0a6a3-757b-4c29-8e3d-d5dbda481832}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Lessons\10%29 Template\Header Files">
       <UniqueIdentifier>{f1c472f0-7f3a-49f4-b8c4-cbdf622ab525}</UniqueIdentifier>
     </Filter>
