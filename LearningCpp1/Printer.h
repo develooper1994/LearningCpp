@@ -2,8 +2,7 @@
 #include <memory>
 
 // -*-*-* PrinterShared *-*-*-
-class PrinterShared
-{
+class PrinterShared {
 private:
 	std::shared_ptr<int> value;	// !memory leak!
 public:
@@ -14,11 +13,11 @@ public:
 
 
 // -*-*-* PrinterWeak *-*-*-
-class PrinterWeak
-{
+class PrinterWeak {
 private:
 	std::weak_ptr<int> value; // prevents unnecessary refc increments.
 public:
+	//void Set(std::weak_ptr<int> val);
 	void Set(std::shared_ptr<int> val);
 	void Display();
 };
