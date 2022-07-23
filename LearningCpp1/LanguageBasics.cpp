@@ -241,22 +241,22 @@ void switchCase() {
 	switch (c)
 	{
 	case 'M':
-		std::cout << "Chiose is M";
+		std::cout << "Choose is M";
 		break;
 	case 'u':
-		std::cout << "Chiose is u";
+		std::cout << "Choose is u";
 		break;
 	case 's':
-		std::cout << "Chiose is s";
+		std::cout << "Choose is s";
 		break;
 	case 't':
-		std::cout << "Chiose is t";
+		std::cout << "Choose is t";
 		break;
 	case 'a':
-		std::cout << "Chiose is a";
+		std::cout << "Choose is a";
 		break;
 	case 'f':
-		std::cout << "Chiose is f";
+		std::cout << "Choose is f";
 		break;
 		/* // duplication Error
 		case 'a':
@@ -349,7 +349,7 @@ void pointers() {
 
 	// DEREFERENCE OPERATOR
 	int x1 = 10;
-	int* ptr = &x;
+	int* ptr = &x1;
 	*ptr = 5; //Assign 5 of address of x
 	int y = *ptr; // Read a value from address of x
 	cout << " x= " << x << " \n "
