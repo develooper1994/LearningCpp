@@ -55,7 +55,7 @@ void ascii() {
 
 void BasicTypes() {
 	std::cout << "Bare bone types \n";
-	std::cout << "char: " << "min=" << std::numeric_limits<char>::min() << " " << "max=" << std::numeric_limits<char>::max() << "\n";
+	std::cout << "char: " << "min=" << (int)std::numeric_limits<char>::min() << " " << "max=" << (int)std::numeric_limits<char>::max() << "\n";
 	std::cout << "bool: " << "min=" << std::numeric_limits<bool>::min() << " " << "max=" << std::numeric_limits<bool>::max() << "\n";
 	std::cout << "int: " << "min=" << std::numeric_limits<int>::min() << " " << "max=" << std::numeric_limits<int>::max() << "\n";
 	std::cout << "float: " << "min=" << std::numeric_limits<float>::min() << " " << "max=" << std::numeric_limits<float>::max() << "\n";
@@ -702,7 +702,7 @@ namespace Weirdness {
 void LanguageBasics_Main() {
 	// helloWorld();
 	// comments();
-	// ascii();
+	ascii();
 	// BasicTypes();
 	// OutputInput();
 
