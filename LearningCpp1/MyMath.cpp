@@ -54,6 +54,20 @@ size_t factorial(uint32_t x) {
 
 	return temp;
 }
+size_t factorial_rec(uint32_t x) {
+	if (x < 1) {
+		return 1; // factorial_rec(0)
+	}
+	return x * factorial_rec(x - 1);
+	//factorial_rec(7);
+	// 7 * factorial_rec(6);
+	// 6 * factorial_rec(5);
+	// 5 * factorial_rec(4);
+	// 4 * factorial_rec(3);
+	// 3 * factorial_rec(2);
+	// 2 * factorial_rec(1);
+	// 1 * factorial_rec(0);
+}
 
 std::vector<int> fibonacci_series(uint32_t n) {
 	// 0, 1, 2, 3, 4, 5, 6,  7,  8,  9, 10, 11,  12, ……..

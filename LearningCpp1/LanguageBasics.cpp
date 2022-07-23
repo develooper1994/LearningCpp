@@ -55,7 +55,7 @@ void ascii() {
 
 void BasicTypes() {
 	std::cout << "Bare bone types \n";
-	std::cout << "char: " << "min=" << std::numeric_limits<char>::min() << " " << "max=" << std::numeric_limits<char>::max() << "\n";
+	std::cout << "char: " << "min=" << (int)std::numeric_limits<char>::min() << " " << "max=" << (int)std::numeric_limits<char>::max() << "\n";
 	std::cout << "bool: " << "min=" << std::numeric_limits<bool>::min() << " " << "max=" << std::numeric_limits<bool>::max() << "\n";
 	std::cout << "int: " << "min=" << std::numeric_limits<int>::min() << " " << "max=" << std::numeric_limits<int>::max() << "\n";
 	std::cout << "float: " << "min=" << std::numeric_limits<float>::min() << " " << "max=" << std::numeric_limits<float>::max() << "\n";
@@ -70,7 +70,7 @@ void BasicTypes() {
 	std::cout << "\nBare bone signed types \n";
 	std::cout << "unsigned short int: " << "min=" << std::numeric_limits<unsigned short int>::min() << " " << "max=" << std::numeric_limits<unsigned short int>::max() << "\n";
 	std::cout << "unsigned int: " << "min=" << std::numeric_limits<unsigned int>::min() << " " << "max=" << std::numeric_limits<unsigned int>::max() << "\n";
-	std::cout << "unsigned short int: " << "min=" << std::numeric_limits<unsigned long int>::min() << " " << "max=" << std::numeric_limits<unsigned long int>::max() << "\n";
+	std::cout << "unsigned long int: " << "min=" << std::numeric_limits<unsigned long int>::min() << " " << "max=" << std::numeric_limits<unsigned long int>::max() << "\n";
 	std::cout << "unsigned long long int: " << "min=" << std::numeric_limits<unsigned long long int>::min() << " " << "max=" << std::numeric_limits<unsigned long long int>::max() << "\n";
 }
 
@@ -162,7 +162,7 @@ void loopWhile() {
 	uint8_t x = 0, y = 0;
 	int	trace = 0;
 	float normal = 0;
-	//while
+
 	{
 		while (x < myArray_outter_size)
 		{
@@ -176,11 +176,10 @@ void loopWhile() {
 				if (x == y)
 				{
 					trace += tempxy;
-					y = 0;
-					break;
 				}
 				++y;
 			}
+			y = 0;
 			++x;
 		}
 
@@ -203,11 +202,10 @@ void loopWhile() {
 				if (x == y)
 				{
 					trace += tempxy;
-					y = 0;
-					break;
 				}
 				++y;
 			} while (y < myArray_inner_size);
+			y = 0;
 			++x;
 		} while (x < myArray_outter_size);
 
@@ -702,7 +700,7 @@ namespace Weirdness {
 void LanguageBasics_Main() {
 	// helloWorld();
 	// comments();
-	// ascii();
+	ascii();
 	// BasicTypes();
 	// OutputInput();
 
