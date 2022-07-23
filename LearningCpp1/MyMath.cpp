@@ -76,12 +76,11 @@ std::vector<int> fibonacci_series(uint32_t n) {
 	auto temp2 = 1; // second index= 1
 	auto next = 0; // 
 	std::vector<int> vec{ 0, 1 };
-	auto& result = vec; // store the result and quit whenever i want.
 	if (n < 0)
 		n = abs((int)n);
 	else if (n == 0)
 		vec.pop_back();
-	result = vec; // don't quit now.
+	auto& result = vec; // don't quit now. // store the result and quit whenever i want.
 
 	auto fibonacci_generator = [&n, &temp1, &temp2, &next, &vec]() {
 		for (size_t i = 2; i < n; ++i) {
