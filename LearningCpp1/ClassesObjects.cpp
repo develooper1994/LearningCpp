@@ -172,11 +172,11 @@ void IntegerCpp11_func()
 void ClassesObjects_Main()
 {
 	FirstClassCar();
-	//BeautifulLines();
+	BeautifulLines();
 
 	// Constructors
-	//SwallowCopy_DeepCopy_program_crashes(); // !!! Program may crash due to security checks(shallow copy) !!!
-	//IntegerClass_SwallowCopy_program_crashes();	// !!! Program will crash due to security checks !!!
+	SwallowCopy_DeepCopy_program_crashes(); // !!! Program may crash due to security checks(shallow copy) !!!
+	IntegerClass_SwallowCopy_program_crashes();	// !!! Program will crash due to security checks !!!
 
 	IntegerCpp11_func();
 }

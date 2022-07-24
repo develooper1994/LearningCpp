@@ -101,6 +101,6 @@ namespace LvsRvalue {
 
 void L_R_Values_Main()
 {
-	//LvsRvalue::LvsR();
+	LvsRvalue::LvsR();
 	LvsRvalue::Move_main();
 }
