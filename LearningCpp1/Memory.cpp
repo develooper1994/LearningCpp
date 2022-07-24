@@ -128,5 +128,5 @@ void OldCppDynamicMemory()
 void Memory_Main()
 {
 	OldCDynamicMemory();
-	//OldCppDynamicMemory();
+	OldCppDynamicMemory();
 }

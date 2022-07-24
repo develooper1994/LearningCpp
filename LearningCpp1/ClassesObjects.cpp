@@ -171,7 +171,7 @@ void IntegerCpp11_func()
 
 void ClassesObjects_Main()
 {
-	//FirstClassCar();
+	FirstClassCar();
 	//BeautifulLines();
 
 	// Constructors
