@@ -177,7 +177,7 @@ namespace HomeWork1 {
 		float temp{ 0 };
 		float avg{ 0 };
 		std::vector<float> avg_vec{};
-		for (auto&& i = 0; i < size - block_size; ++i) {
+		for (size_t i = 0; i < size - block_size; ++i) {
 			temp = 0;
 			for (size_t j = i; j < block_size + i; ++j) {
 				temp += vec.at(i);
@@ -195,12 +195,13 @@ namespace HomeWork1 {
 	void homework1_test() {
 		// std::srand(std::time(nullptr)); // old time based random seed. Not recommended due to security reasons(like timing attacks). 
 		// Modern way recommends random_device
-		// std::random_device rnd_dev;										// random device
+		std::random_device rnd_dev;										// random device
 		//std::mt19937 engine{ rnd_dev() };									// select engine
-		std::default_random_engine engine;									// or just use STL engine
+		std::default_random_engine engine(rnd_dev());						// or just use STL engine
 		std::uniform_int_distribution<int> distribution(1, 10);				// determine the range
-		auto generator = [&distribution, &engine]()			// define the generator
+		auto generator = [&distribution, &engine, &rnd_dev]()			// define the generator
 		{
+			engine.seed(rnd_dev());
 			return distribution(engine);
 		};
 

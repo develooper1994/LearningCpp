@@ -561,7 +561,7 @@ void FunctionPointer() {
 	// atexit has function pointer inside.
 	atexit(EndMessage);
 	using namespace std;
-	cout << "function it self\n";
+	cout << "function itself\n";
 	Print(5, '#');
 	void (*pfn) (int, char) = &Print;
 	cout << "function pointer\n";
