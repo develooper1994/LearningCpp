@@ -19,7 +19,8 @@ auto main() -> int // modern c++ way
 	//ExceptionHandling_Main();
 	//File_InputOutput_Main();
 	//Template_Main();
-	Lambda_Main();
+	//Lambda_Main();
+	STL_main();
 
 	return EXIT_SUCCESS;
 }
