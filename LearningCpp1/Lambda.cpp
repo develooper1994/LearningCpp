@@ -316,7 +316,7 @@ namespace Assignment {
 		auto result = MinMax(std::begin(arr), std::end(arr));
 		std::cout
 			<< "\MinMax.min: " << *result.first << " || "
-			<< "\MinMax.max: " << *result.second << '\n';
+			<< "\MinMax.max: " << *result.second;
 	}
 }
 
