@@ -223,6 +223,15 @@
     <Filter Include="Lessons\11%29 Lambda - Callback\Classes\Source Files">
       <UniqueIdentifier>{2d1dced6-2b81-4561-88d1-f65ec068e8f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lessons\12%29 STL">
+      <UniqueIdentifier>{73ba7977-18ab-4a0f-a791-0245fa0745cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\12%29 STL\Header Files">
+      <UniqueIdentifier>{9ec970c2-2986-454d-b79d-2e6b3569a6ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\12%29 STL\Source Files">
+      <UniqueIdentifier>{f0089d11-b9b1-41e9-9b27-51a3ab3dfc28}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -314,6 +323,9 @@
     </ClCompile>
     <ClCompile Include="Lambda.cpp">
       <Filter>Lessons\11%29 Lambda - Callback\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="STL.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -430,6 +442,9 @@
     </ClInclude>
     <ClInclude Include="Lambda.h">
       <Filter>Lessons\11%29 Lambda - Callback\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="STL.h">
+      <Filter>Lessons\12%29 STL\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

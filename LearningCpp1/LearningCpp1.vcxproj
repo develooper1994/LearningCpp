@@ -191,6 +191,7 @@
     <ClCompile Include="Savings.cpp" />
     <ClCompile Include="Serialization.cpp" />
     <ClCompile Include="SmartPointers.cpp" />
+    <ClCompile Include="STL.cpp" />
     <ClCompile Include="Template.cpp" />
     <ClCompile Include="Transact.cpp" />
     <ClCompile Include="UtilityHeader.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="Savings.h" />
     <ClInclude Include="Serialization.h" />
     <ClInclude Include="SmartPointers.h" />
+    <ClInclude Include="STL.h" />
     <ClInclude Include="Template.h" />
     <ClInclude Include="Transact.h" />
     <ClInclude Include="UtilityHeader.h" />
