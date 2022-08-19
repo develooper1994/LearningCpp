@@ -1,5 +1,7 @@
 #include "Integer.h"
 
+// use noexcept for move operations if you sure about function doesn't throws an exception
+
 Integer::Integer()
 {
 	std::cout << "Integer()\n";
@@ -31,22 +33,21 @@ Integer& Integer::operator=(const Integer& obj)
 	return *this;
 }
 
-inline void Integer::Move(Integer& obj) {
+inline void Integer::Move(Integer& obj) noexcept {
 	int_ptr = obj.int_ptr; // shallow copy
 	obj.int_ptr = nullptr; // place holder // potential memory leak!
 }
 
-Integer::Integer(Integer&& obj)
+Integer::Integer(Integer&& obj) noexcept
 {
 	std::cout << "Integer(Integer&& obj)\n";
 	Move(obj);
 }
 
-Integer& Integer::operator=(Integer&& obj)
+Integer& Integer::operator=(Integer&& obj) noexcept
 {
 	std::cout << "operator=(Integer&& obj)\n";
-	if (int_ptr != obj.int_ptr)
-	{
+	if (int_ptr != obj.int_ptr) {
 		this->Move(obj);
 	}
 	return *this;

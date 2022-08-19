@@ -170,6 +170,7 @@
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="Checking.cpp" />
     <ClCompile Include="ClassesObjects.cpp" />
+    <ClCompile Include="Concurrency.cpp" />
     <ClCompile Include="DrawLine.cpp" />
     <ClCompile Include="Employee.cpp" />
     <ClCompile Include="ExceptionHandling.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="ClassesException.h" />
     <ClInclude Include="ClassesObjects.h" />
     <ClInclude Include="ClassesOOPS.h" />
+    <ClInclude Include="Concurrency.h" />
     <ClInclude Include="DrawLine.h" />
     <ClInclude Include="Employee.h" />
     <ClInclude Include="ExceptionHandling.h" />

@@ -28,11 +28,14 @@ All should be defined if a user implements any of them. !Otherwise it can lead t
 	- Math and other(like comparison) operators(operator+(const <class>&), operator+(<type>, const <tpye>&), operator-(const <class>&), operator-(<type>, const <tpye>&), ...)
 
 */
+
+// use noexcept for move operations if you sure about function doesn't throws an exception
+
 class Integer
 {
 private:
 	int* int_ptr;
-	void Move(Integer& obj);
+	void Move(Integer& obj) noexcept;
 public:
 	//Constructors
 	Integer();
@@ -43,9 +46,9 @@ public:
 	//copy-assignment operator
 	Integer& operator=(const Integer& obj);
 	//move-constructor
-	Integer(Integer&& obj);
+	Integer(Integer&& obj) noexcept;
 	//move-assignment operator
-	Integer& operator=(Integer&& obj);
+	Integer& operator=(Integer&& obj) noexcept;
 	//Destructor
 	~Integer();
 	int GetValue() const;

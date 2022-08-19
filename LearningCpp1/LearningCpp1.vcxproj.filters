@@ -232,6 +232,15 @@
     <Filter Include="Lessons\12%29 STL\Source Files">
       <UniqueIdentifier>{f0089d11-b9b1-41e9-9b27-51a3ab3dfc28}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lessons\13%29 Concurrency">
+      <UniqueIdentifier>{fc934705-d4f3-4426-9d10-6bed5bc5e151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\13%29 Concurrency\Header Files">
+      <UniqueIdentifier>{16dc1bb8-7405-41ae-9dea-b0b2d30e4417}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lessons\13%29 Concurrency\Source Files">
+      <UniqueIdentifier>{bee6a2ab-8515-4c4d-823e-826c87b33b47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -326,6 +335,9 @@
     </ClCompile>
     <ClCompile Include="STL.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Concurrency.cpp">
+      <Filter>Lessons\13%29 Concurrency\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -445,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="STL.h">
       <Filter>Lessons\12%29 STL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Concurrency.h">
+      <Filter>Lessons\13%29 Concurrency\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

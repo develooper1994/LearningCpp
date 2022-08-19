@@ -21,6 +21,7 @@ auto main() -> int // modern c++ way
 	//Template_Main();
 	//Lambda_Main();
 	STL_main();
+	Concurrency();
 
 	return EXIT_SUCCESS;
 }

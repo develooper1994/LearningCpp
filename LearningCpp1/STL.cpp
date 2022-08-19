@@ -1,4 +1,5 @@
 #include "STL.h"
+#include "Integer.h"
 
 
 namespace stl_containers {
@@ -605,10 +606,13 @@ namespace stl_algorithms {
 		bool operator>(const Employee& e)const {
 			return m_Id > e.m_Id;
 		}
+		bool operator==(const Employee& e)const {
+			return m_Id == e.m_Id;
+		}
 	};
 	// !!! Creating a function object is more flexible because that way you can decide, which attribute to use for comparison !!!
-	struct EmpComp {
-		bool operator()(const Employee& e1, const Employee& e2) {
+	struct EmpCompare {
+		bool operator ()(const Employee& e1, const Employee& e2)const {
 			return e1.GetId() < e2.GetId();
 		}
 	};
@@ -639,22 +643,16 @@ namespace stl_algorithms {
 
 		std::cout << "-*-*-*-*-* std::set<Employee, EmpComp> *-*-*-*-*-\n";
 		{
-			std::set<Employee, EmpComp> v{
+			std::set<Employee, EmpCompare> v{
 			Employee{"Mustafa", 101, "Html"},
 			Employee{"Selcuk", 102, "C++"},
 			Employee{"Caglar", 103, "Python"},
 			};
-			// provied default comparison("operator<") and "operator>"
-			// also I can define custom predicate callback function to sort them.
-			std::sort(v.begin(), v.end(), [](const auto& e1, const auto& e2) {
-				return e1.GetName() < e2.GetName();
-				});
 			for (const auto& e : v) {
 				std::cout
-					<< "Id: " << e.GetId() << "  | "
-					<< "Name: " << e.GetName() << " | "
-					<< "Language: " << e.GetProgrammingLanguage()
-					<< '\n';
+					<< "Id:" << e.GetId()
+					<< " | Name:" << e.GetName()
+					<< " | Language:" << e.GetProgrammingLanguage() << std::endl;
 			}
 		}
 	}
@@ -709,7 +707,151 @@ namespace stl_algorithms {
 	}
 }
 
+namespace STL_changes {
+	template<typename Container>
+	void Print(const Container& container, const char* msg = "") {
+		std::cout << msg << '\n';
+		for (auto a : container) {
+			std::cout << a << '\n';
+		}
+	}
+	void changes1() {
+		/*
+		If you created an object and you want to store inside of container without creating a copy -> use emplace, emplace_back, emplace_front
+		*/
+		std::cout << "\n-*-*-*-*-* changes1 *-*-*-*-*-\n";
+		std::vector<Integer> ints;
+		ints.push_back(5);
+
+		// They are the same without "noexcept move contructor and move operator"
+		Integer val{ 5 };
+		ints.push_back(val);
+		ints.emplace_back(val);
+
+		// 
+		std::vector<std::pair<int, std::string>> data;
+		data.push_back(std::make_pair(2, "asdf"));
+		data.emplace_back(2, "asdf");
+
+	}
+	void changes2() {
+		/*
+		* emplace_back requires "noexcept move operations" ("noexcept move assignment and move constructor")
+		*/
+		std::cout << "\n-*-*-*-*-* changes2 *-*-*-*-*-\n";
+		std::vector<Integer> ints;
+		ints.emplace_back(1);
+		ints.emplace_back(2);
+		ints.emplace_back(3);
+	}
+	void changes3() {
+		/*
+		* vector size == capacity => vector allocates more memory, increases capacity
+		* Even remove the element capacity will not shrink. Allocation will be remained
+		*/
+		std::cout << "\n-*-*-*-*-* changes3 *-*-*-*-*-\n";
+		std::vector<int> ints;
+		for (size_t i = 0; i < 10; i++) {
+			ints.emplace_back(i);
+		}
+		std::cout << "Size: " << ints.size() << '\n';
+		std::cout << "Capacity: " << ints.capacity() << '\n';
+		ints.erase(ints.begin(), ints.end() - 10); // capacity will not shrink. Allocation will be remained
+		ints.shrink_to_fit(); // to reduces capacity. frees memory, extra unused memory is trimmed.
+		std::cout << "After erase\n";
+		std::cout << "Size: " << ints.size() << '\n';
+		std::cout << "Capacity: " << ints.capacity() << '\n';
+	}
+	void changes4() {
+		std::cout << "\n-*-*-*-*-* changes4 *-*-*-*-*-\n";
+		std::vector<int> vInts{ 1,2,3,4 };
+		std::list<int> listInts{ 1,2,3,4 };
+		std::deque<int> dequeInts{ 1,2,3,4 };
+
+		std::erase(vInts, 2);
+		std::erase(listInts, 2);
+		std::erase(dequeInts, 2);
+
+		Print(vInts, "vector");
+		Print(listInts, "list");
+		Print(dequeInts, "deque");
+
+
+	}
+	void changes5() {
+		/*
+		If you have an iterator close to the position where the new element can be inserted, then you can use emplacement insert that element.
+		*/
+		std::cout << "\n-*-*-*-*-* changes5 *-*-*-*-*-\n";
+		std::set<int> data{ 1,5,8,9 };
+		data.emplace_hint(data.begin(), 0);
+
+		//before c++20
+		auto it = data.find(6);
+		if (it != data.end()) {
+			std::cout << "Found it!";
+		}
+		//after c++20
+		auto isContains = data.contains(6);
+
+		std::set<std::string> names{ "Erlang", "Nim", "Mesele", "Harry" };
+		auto it2 = names.find("Mesele");
+		//auto& name2 = *it2; // constant iterator
+		//name2[0] = 'U'; // constant iterator
+		auto name = *it2;
+		name[0] = 'U'; // doesn't change underlying data
+		names.erase(it2);
+		names.insert(name);
+
+		// I can access to underlying data of set and map
+		auto node = names.extract(it2); // copy forgotten object
+		node.value()[0] = 'U';
+		names.insert(std::move(node));
+
+	}
+	void STL_changes_main() {
+		std::cout << "\n-*-*-*-*-* STL_changes_main *-*-*-*-*-\n";
+
+		changes1();
+		changes2();
+		changes3();
+		changes4();
+		changes5();
+	}
+}
+
+namespace AssignmentSTL {
+	/*
+	STL Project
+	Create a contacts application that allows users to store contact information:
+
+	First Name
+	Last Name
+	Primary phone number
+	Secondary phone number
+	Email id
+	Address
+	Company
+	Group (Friends, Family, Coworker, Acquaintance)
+	Provide the following features:
+
+	Display all contacts sorted by first or last name (provide an option that users can choose)
+	Display only first name with primary number
+	Display contacts from the same company only
+	Display contacts based on group type
+	Allow contact search by first or last name
+	Display count of contacts by company and group.
+	Decide carefully about the usage of containers and algorithms.
+	*/
+	void AssignmentSTL_main()
+	{
+
+	}
+}
+
 void STL_main() {
-	stl_containers::stl_containers_main();
-	stl_algorithms::stl_algorithms_main();
+	//stl_containers::stl_containers_main();
+	//stl_algorithms::stl_algorithms_main();
+	//STL_changes::STL_changes_main();
+	AssignmentSTL::AssignmentSTL_main();
 }
