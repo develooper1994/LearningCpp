@@ -8,6 +8,10 @@ namespace stl_containers {
 	Associative = set(not repeated, sorted, binary tree), multiset(repeated, sorted, binary tree), map(not repeated, sorted, key-value pairs), multimap(repeated, sorted, key-value pairs)
 	Unordered = unordered_set, unordered_multi_set | unordered_map, unordered_multi_map
 
+	Note:
+	* Associative requires a comparison operator
+	* Unordered requires a hash function
+
 	Note: complexity of operations are different!!!
 	*NA   = not provided
 	*O(1) = not
@@ -567,6 +571,7 @@ namespace stl_containers {
 	}
 
 	void stl_containers_main() {
+		std::cout << "\n-*-*-*-*-* stl_containers_main *-*-*-*-*-\n";
 		stl_containers::Sequential::Sequential_main();
 		stl_containers::Associative::Associative_main();
 		stl_containers::Unordered::Unordered_main();
@@ -578,15 +583,131 @@ namespace stl_algorithms {
 	/*
 	*
 	*/
-	void stl_algorithms_subroutine1() {
+	class Employee {
+		std::string m_Name;
+		int m_Id;
+		std::string m_ProgLang;
+	public:
+		Employee(const std::string& n, int id, std::string pl) :m_Name(n), m_Id(id), m_ProgLang(pl) {}
+		const std::string& GetName()const {
+			return m_Name;
+		}
+		int GetId()const {
+			return m_Id;
+		}
+		const std::string& GetProgrammingLanguage()const {
+			return m_ProgLang;
+		}
+		bool operator<(const Employee& e)const {
+			// default comparison operator
+			return m_Id < e.m_Id;
+		}
+		bool operator>(const Employee& e)const {
+			return m_Id > e.m_Id;
+		}
+	};
+	// !!! Creating a function object is more flexible because that way you can decide, which attribute to use for comparison !!!
+	struct EmpComp {
+		bool operator()(const Employee& e1, const Employee& e2) {
+			return e1.GetId() < e2.GetId();
+		}
+	};
+	void stlSort() {
+		/*
+		*/
+		std::cout << "\n-*-*-*-*-* stlSort *-*-*-*-*-\n";
+		std::cout << "-*-*-*-*-* std::vector<Employee> *-*-*-*-*-\n";
+		{
+			std::vector<Employee> v{
+			Employee{"Mustafa", 101, "Html"},
+			Employee{"Selcuk", 102, "C++"},
+			Employee{"Caglar", 103, "Python"},
+			};
+			// provied default comparison("operator<") and "operator>"
+			// also I can define custom predicate callback function to sort them.
+			std::sort(v.begin(), v.end(), [](const auto& e1, const auto& e2) {
+				return e1.GetName() < e2.GetName();
+				});
+			for (const auto& e : v) {
+				std::cout
+					<< "Id: " << e.GetId() << "  | "
+					<< "Name: " << e.GetName() << " | "
+					<< "Language: " << e.GetProgrammingLanguage()
+					<< '\n';
+			}
+		}
 
+		std::cout << "-*-*-*-*-* std::set<Employee, EmpComp> *-*-*-*-*-\n";
+		{
+			std::set<Employee, EmpComp> v{
+			Employee{"Mustafa", 101, "Html"},
+			Employee{"Selcuk", 102, "C++"},
+			Employee{"Caglar", 103, "Python"},
+			};
+			// provied default comparison("operator<") and "operator>"
+			// also I can define custom predicate callback function to sort them.
+			std::sort(v.begin(), v.end(), [](const auto& e1, const auto& e2) {
+				return e1.GetName() < e2.GetName();
+				});
+			for (const auto& e : v) {
+				std::cout
+					<< "Id: " << e.GetId() << "  | "
+					<< "Name: " << e.GetName() << " | "
+					<< "Language: " << e.GetProgrammingLanguage()
+					<< '\n';
+			}
+		}
+	}
+
+	struct EmpIds {
+		std::vector<int> m_Ids;
+		void operator()(const Employee& emp) {
+			if (emp.GetProgrammingLanguage() == "C++") {
+				m_Ids.push_back(emp.GetId());
+			}
+		}
+	};
+	void count_find_foreach() {
+		/*
+		*/
+		std::cout << "\n-*-*-*-*-* count_find_foreach *-*-*-*-*-\n";
+		std::vector<Employee> v{
+			Employee{"Mustafa", 101, "Html"},
+			Employee{"Selcuk", 102, "C++"},
+			Employee{"Caglar", 103, "Python"},
+		};
+
+		//count
+		auto cppCount = std::count(v.begin(), v.end(), Employee{ "", 0, "C++" });
+		std::cout << "count: " << cppCount << '\n';
+		auto cppCount_if = std::count_if(v.begin(), v.end(), [](const auto& e) {
+			return e.GetProgrammingLanguage() == "C++";
+			});
+		std::cout << "count_if: " << cppCount_if << '\n';
+		//find
+		auto iter = std::find_if(v.begin(), v.end(), [](const auto& e) {
+			return e.GetProgrammingLanguage() == "Java";
+			});
+		if (iter != v.end())
+			std::cout << "Found: " << iter->GetName() << " is a Java programmer\n";
+		//print all to the console
+		std::for_each(v.begin(), v.end(), [](const auto& e) {
+			std::cout << e.GetName() << '\n';
+			});
+		//push all of them
+		// only algorithm that copy and return.
+		auto foundIds = std::for_each(v.begin(), v.end(), EmpIds()); // This functionality only possible with function objects.
+		for (auto id : foundIds.m_Ids) {
+			std::cout << "Id : " << id << '\n';
+		}
 	}
 
 	void stl_algorithms_main() {
-		stl_algorithms_subroutine1();
+		std::cout << "\n-*-*-*-*-* stl_algorithms_main *-*-*-*-*-\n";
+		stlSort();
+		count_find_foreach();
 	}
 }
-
 
 void STL_main() {
 	stl_containers::stl_containers_main();
