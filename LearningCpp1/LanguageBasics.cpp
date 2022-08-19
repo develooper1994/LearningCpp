@@ -301,7 +301,7 @@ void Initializations() {
 	int i1[8]{};
 	char c2[6]{ "Hello" };
 
-	// If you create an object on the heap and you use value initialization 
+	// If you create an object on the heap and you use value initialization
 	// then the object that is created in the heap will have a default value
 	int* p1 = new int{};
 
@@ -554,7 +554,7 @@ void autoKeyWord() {
 
 //	Function Pointer					vs		Function Reference
 // void (*pfn) (int, char) = &Print;		void(&prn)(int, char) = Print;
-// 
+//
 // Function Pointer
 void FunctionPointer() {
 	// It is an old c language function. Location of it doesn't matter. It will be executed at the exit. It is guarantied.
