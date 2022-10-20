@@ -17,11 +17,11 @@ auto main() -> int // modern c++ way
 	//MoreCpp_Main();
 	//OOPS_Main();
 	//ExceptionHandling_Main();
-	//File_InputOutput_Main();
+	File_InputOutput_Main();
 	//Template_Main();
 	//Lambda_Main();
-	STL_main();
-	Concurrency();
+	//STL_main();
+	//Concurrency();
 
 	return EXIT_SUCCESS;
 }

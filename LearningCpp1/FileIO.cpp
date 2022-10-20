@@ -470,7 +470,7 @@ namespace CopyUtility {
 		output.close();
 		fs::remove(destination_filename);
 	}
-	void Copy(const path& source, const path& destination) {
+	void Copy(const std::string& source, const std::string& destination, const unsigned long long BUFFER_SIZE = 512) {
 		// -*-*-* Source *-*-*-
 		std::ifstream input(source, std::ios::in | std::ios::binary);
 		if (!input) {
@@ -478,26 +478,28 @@ namespace CopyUtility {
 		}
 
 		// -*-*-* Destination *-*-*-
+		/*
 		if (std::filesystem::exists(destination)) {
 			throw std::runtime_error("Copied File already exist");
 		}
+		*/
 		std::ofstream output(destination, std::ios::out | std::ios::binary);
 		if (!output) {
 			throw std::runtime_error("Could not open the destination file");
 		}
 
 		// define buffer
-		const size_t fileSize = file_size(source);
-		constexpr size_t BUFFER_SIZE = 512;
+		const unsigned long long fileSize = file_size(source);
 		std::vector<char> buffer{};
 		buffer.reserve(BUFFER_SIZE);
 		buffer.resize(BUFFER_SIZE, 0);
-		auto&& buffer_data = buffer.data();
+		char* buffer_data = buffer.data();
 
 		//Split the file into chunks
-		size_t chunks = fileSize / BUFFER_SIZE;
-		int remaining = fileSize % BUFFER_SIZE;
-		int progress{}, oldProgress{};
+		unsigned long long chunks = fileSize / BUFFER_SIZE;
+		unsigned long long remaining = fileSize % BUFFER_SIZE;
+		int progress=0, oldProgress=0;
+		int second = 1;
 
 		// Operation
 		std::cout << "-*-*-*-*-* Copying *-*-*-*-*-" << source << '\n';
@@ -518,7 +520,6 @@ namespace CopyUtility {
 				while (input.bad() || output.bad()) {
 					// "Error occurred during operation", "Error during copy operation", ...
 					// if media has corrupted or plugged-out continue after plug-in
-					auto second = 1;
 					std::this_thread::sleep_for(std::chrono::seconds(second));
 					std::clog << "Copy failed at (chunk): " << chunk << '\n';
 					std::cerr
@@ -830,11 +831,11 @@ namespace Assignments
 
 		// define buffer
 		const size_t fileSize = file_size(source);
-		constexpr size_t BUFFER_SIZE = 512;
+		const size_t BUFFER_SIZE = 512;
 		std::vector<char> buffer{};
 		buffer.reserve(BUFFER_SIZE);
 		buffer.resize(BUFFER_SIZE, 0);
-		auto&& buffer_data = buffer.data();
+		char* buffer_data = buffer.data();
 
 		//Split the file into chunks
 		size_t chunks = fileSize / BUFFER_SIZE;
@@ -1016,6 +1017,6 @@ void File_InputOutput_Main() {
 	//standard_filesystem::standard_filesystem_Main();
 	//BasicFileIO::FileIO_Main();
 	//CopyUtility::CopyTextUtility_Main();
-	//CopyUtility::CopyBinaryUtility_Main();
-	Assignments::Assignment_Tests();
+	CopyUtility::CopyBinaryUtility_Main();
+	//Assignments::Assignment_Tests();
 }
